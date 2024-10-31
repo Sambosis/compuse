@@ -1,0 +1,25 @@
+[
+  {
+    "name": "Activate",
+    "properties": {
+      "WranglerHost": "vscode",
+      "configurations": "{\"dataWrangler.debug\":true,\"dataWrangler.enabledFileTypes\":{\"csv\":true,\"tsv\":true,\"parquet\":true,\"xlsx\":true,\"xls\":true,\"jsonl\":false},\"dataWrangler.startInEditModeForNotebookEntrypoints\":true,\"dataWrangler.columnInsights.displayOnOpen\":true,\"dataWrangler.useRelativePath\":true,\"dataWrangler.experiments.autoDetectCsvDelimiter\":true,\"dataWrangler.experiments.fastCsvParsing\":true,\"dataWrangler.experiments.useJupyterProposedAPI\":true,\"dataWrangler.experiments.copilot.enabled\":true,\"dataWrangler.experiments.datatypes.pyspark\":false}",
+      "abexp.assignmentcontext": "vsliv368cf:30146710;vspor879:30202332;vspor708:30202333;vspor363:30204092;binariesv615:30325510;vsaa593cf:30376535;c4g48928:30535728;asynctok:30898717;dsvsc020:30976470;dwaa612cf:30983454;jg8ic977:31013176;dvdeprecation:31068756;dwnewjupyter:31046869;dwcopilot:31164048;"
+    },
+    "measurements": {
+      "duration": 0.032
+    }
+  },
+  {
+    "name": "LaunchDataWrangler",
+    "properties": {
+      "WranglerHost": "vscode",
+      "entryPoint": "Reopen",
+      "format": "csv",
+      "viewMode": "dataWrangler",
+      "abexp.assignmentcontext": "vsliv368cf:30146710;vspor879:30202332;vspor708:30202333;vspor363:30204092;binariesv615:30325510;vsaa593cf:30376535;c4g48928:30535728;asynctok:30898717;dsvsc020:30976470;dwaa612cf:30983454;jg8ic977:31013176;dvdeprecation:31068756;dwnewjupyter:31046869;",
+      "sessionUriHash": "1bd7f7081ac479d07318d739d784ca34e530546dc75b9da36891f5190a719ede",
+      "originalUriHash": "52f6b17b03e7441282a80196b56543d9481ad8d9032be422cc1109343a716316"
+    }
+  }
+]

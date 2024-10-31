@@ -1,0 +1,214 @@
+display_name,url,class,style,id,title,target,url_type
+,https://www.autochlor.com,,,,,_blank,Other
+LOGOUT,javascript: TSModalUpdating_Show(); document.location.href=`Default.aspx?Module=b1e95ff9-bf6a-42b7-8bab-1b639a96f123`;,SiteMap,,,,,JavaScript
+PASSWORD,javascript:TSModalUpdating_Show(); document.location.href=`Default.aspx?Module=54b0ce9a-ae8d-4c9d-8fd0-6c434dfb31fd`;,SiteMap,,,,,JavaScript
+,FileOperator.aspx?FileKey=6bad6944-0f6c-4d82-ba4e-72c699b62327,,,,,WPS_HELPWIN,File
+,#_MenuModule_SkipLink,,height:100%;width:100%;display:block;,,,,Anchor
+AGREEMENT,#,_MenuModule_1 _MenuModule_3,cursor:text;,,,,Anchor
+DATA MAINTENANCE,#,_MenuModule_1 _MenuModule_3,cursor:text;,,,,Anchor
+FILE MANAGEMENT,#,_MenuModule_1 _MenuModule_3,cursor:text;,,,,Anchor
+HR,#,_MenuModule_1 _MenuModule_3,cursor:text;,,,,Anchor
+OPERATIONS,#,_MenuModule_1 _MenuModule_3,cursor:text;,,,,Anchor
+PURCHASE,#,_MenuModule_1 _MenuModule_3,cursor:text;,,,,Anchor
+REPORTS,#,_MenuModule_1 _MenuModule_3,cursor:text;,,,,Anchor
+SCM,#,_MenuModule_1 _MenuModule_3,cursor:text;,,,,Anchor
+SEARCH,#,_MenuModule_1 _MenuModule_3,cursor:text;,,,,Anchor
+TICKET,#,_MenuModule_1 _MenuModule_3,cursor:text;,,,,Anchor
+TOOLS,#,_MenuModule_1 _MenuModule_3,cursor:text;,,,,Anchor
+TRAINING VIDEO,Default.aspx?Module=4f389441-a849-433d-ac37-91b2aed1ec8a,_MenuModule_1 _MenuModule_3,height:100%;width:100%;display:block;,,,,Module
+AGREEMENT,Default.aspx?Module=96094bdd-79c2-4b88-be7c-33acb3515348,_MenuModule_1 _MenuModule_6,height:100%;width:100%;display:block;,,,,Module
+ELECTRONIC AGREEMENT MACHINE,Default.aspx?Module=bbf7921d-a949-44fb-959a-800ae1a7d87e,_MenuModule_1 _MenuModule_6,height:100%;width:100%;display:block;,,,,Module
+MULTI-UNIT AGREEMENT,Default.aspx?Module=122a66c0-273d-41c8-b334-bfa5455f0325,_MenuModule_1 _MenuModule_6,height:100%;width:100%;display:block;,,,,Module
+BILL TO,Default.aspx?Module=fa9dd1c1-3fbc-4c72-a18e-3b769419e707,_MenuModule_1 _MenuModule_6,height:100%;width:100%;display:block;,,,,Module
+BRANCH,Default.aspx?Module=a3bd61f1-4ac6-41f8-b4b3-2e7f9beb635d,_MenuModule_1 _MenuModule_6,height:100%;width:100%;display:block;,,,,Module
+COMMENT MASTER,Default.aspx?Module=981384a9-99dc-4289-a9d1-4d2169e61d8d,_MenuModule_1 _MenuModule_6,height:100%;width:100%;display:block;,,,,Module
+CUSTOMER GROUP,Default.aspx?Module=5a1697e2-7ddf-482a-b27d-27847192c399,_MenuModule_1 _MenuModule_6,height:100%;width:100%;display:block;,,,,Module
+DISCOUNT,Default.aspx?Module=3a7bac7f-e757-49ca-a45d-183b3c77c207,_MenuModule_1 _MenuModule_6,height:100%;width:100%;display:block;,,,,Module
+MACHINE,Default.aspx?Module=961110f8-d3cf-4b57-b763-7d88bdd6a0a7,_MenuModule_1 _MenuModule_6,height:100%;width:100%;display:block;,,,,Module
+MACHINE MODEL,Default.aspx?Module=371ec997-f6c4-4148-8896-6162b57b63cc,_MenuModule_1 _MenuModule_6,height:100%;width:100%;display:block;,,,,Module
+MACHINE TRANSFER,Default.aspx?Module=1b8bdcc6-4855-4a4c-9d7e-99e7f9345688,_MenuModule_1 _MenuModule_6,height:100%;width:100%;display:block;,,,,Module
+MATERIAL,Default.aspx?Module=b016da90-56c3-4726-af0e-6ac2aa4401e4,_MenuModule_1 _MenuModule_6,height:100%;width:100%;display:block;,,,,Module
+NEIGHBORHOOD,Default.aspx?Module=515459d6-a76e-4115-86c8-3e68a1b4f901,_MenuModule_1 _MenuModule_6,height:100%;width:100%;display:block;,,,,Module
+NOTIFICATION PREFERENCE,Default.aspx?Module=6840b4d0-c714-46f4-81a5-e8adf589bb3e,_MenuModule_1 _MenuModule_6,height:100%;width:100%;display:block;,,,,Module
+PRODUCT,Default.aspx?Module=79e2f7c0-a99e-41fb-a167-08a59fcb5ad1,_MenuModule_1 _MenuModule_6,height:100%;width:100%;display:block;,,,,Module
+REPORT,Default.aspx?Module=f101f0d9-f448-48e9-8f23-09db7a4eec68,_MenuModule_1 _MenuModule_6,height:100%;width:100%;display:block;,,,,Module
+SALES GROUP,Default.aspx?Module=a3c99ec8-4e43-4f11-922d-3305dc7bf8eb,_MenuModule_1 _MenuModule_6,height:100%;width:100%;display:block;,,,,Module
+SALES TAX,Default.aspx?Module=06c25a94-26b8-4c59-8da6-2e3315ac4946,_MenuModule_1 _MenuModule_6,height:100%;width:100%;display:block;,,,,Module
+FILE,Default.aspx?Module=559b547d-f5b5-45d9-9b96-4b4ea5986778,_MenuModule_1 _MenuModule_6,height:100%;width:100%;display:block;,,,,Module
+FILE EXPLORER,Default.aspx?Module=0e82f1ee-d1bf-46ba-9a03-3dfd41f330e4,_MenuModule_1 _MenuModule_6,height:100%;width:100%;display:block;,,,,Module
+FILE FOLDER,Default.aspx?Module=34748e5e-b0b1-4810-9372-62445ed0a2ac,_MenuModule_1 _MenuModule_6,height:100%;width:100%;display:block;,,,,Module
+FILE FOLDER PERMISSION,Default.aspx?Module=c738b195-bf90-4249-bf27-879c07a716a3,_MenuModule_1 _MenuModule_6,height:100%;width:100%;display:block;,,,,Module
+QUICK SEARCH,Default.aspx?Module=4316f333-1027-417b-bfe1-499c00151379,_MenuModule_1 _MenuModule_6,height:100%;width:100%;display:block;,,,,Module
+TRAINING,#,_MenuModule_1 _MenuModule_6,cursor:text;,,,,Anchor
+USER GENERAL,Default.aspx?Module=0e0f758b-4286-484b-b344-19ee4393d910,_MenuModule_1 _MenuModule_6,height:100%;width:100%;display:block;,,,,Module
+USER MAINTENANCE,Default.aspx?Module=fad0e787-46a2-4c2a-a4c9-9b8d9db5fd9b,_MenuModule_1 _MenuModule_6,height:100%;width:100%;display:block;,,,,Module
+COURSE,Default.aspx?Module=d78dffa2-82d2-40ea-a192-cb6b55d8ab6f,_MenuModule_1 _MenuModule_6,height:100%;width:100%;display:block;,,,,Module
+BATCH,#,_MenuModule_1 _MenuModule_6,cursor:text;,,,,Anchor
+BRANCH RESOURCES,Default.aspx?Module=3ede8b8d-eaea-443e-acb6-b9300a5c06d8,_MenuModule_1 _MenuModule_6,height:100%;width:100%;display:block;,,,,Module
+COMMISSION,Default.aspx?Module=a52b068e-2c28-430d-86f3-79832ea195b2,_MenuModule_1 _MenuModule_6,height:100%;width:100%;display:block;,,,,Module
+COMMISSION USER,Default.aspx?Module=a4010eb1-eee5-448b-a90b-1f880706c05c,_MenuModule_1 _MenuModule_6,height:100%;width:100%;display:block;,,,,Module
+CUSTOMER,#,_MenuModule_1 _MenuModule_6,cursor:text;,,,,Anchor
+DOT,#,_MenuModule_1 _MenuModule_6,cursor:text;,,,,Anchor
+EOP,#,_MenuModule_1 _MenuModule_6,cursor:text;,,,,Anchor
+GL TRANSACTION,Default.aspx?Module=8e5a689a-bc0d-46ce-b6ed-87246a4d2d7b,_MenuModule_1 _MenuModule_6,height:100%;width:100%;display:block;,,,,Module
+HRA MONITOR,Default.aspx?Module=2dd103ec-f401-4e15-a02a-8fd89fcf23f2,_MenuModule_1 _MenuModule_6,height:100%;width:100%;display:block;,,,,Module
+HRA ROUTE SYNC,Default.aspx?Module=0777d7f4-d076-4073-93ef-bed14ffd1fd3,_MenuModule_1 _MenuModule_6,height:100%;width:100%;display:block;,,,,Module
+ON CALL,#,_MenuModule_1 _MenuModule_6,cursor:text;,,,,Anchor
+PO AND RECEIPT,#,_MenuModule_1 _MenuModule_6,cursor:text;,,,,Anchor
+REROUTE,Default.aspx?Module=b64cf514-9d34-42bf-b722-37accf1acfb5,_MenuModule_1 _MenuModule_6,height:100%;width:100%;display:block;,,,,Module
+ROUTE SCHEDULE,Default.aspx?Module=e6242980-6549-42ba-91b2-4fb4530051e0,_MenuModule_1 _MenuModule_6,height:100%;width:100%;display:block;,,,,Module
+ROUTE USER,Default.aspx?Module=bca14049-aefd-4977-9e75-0e978adfadc8,_MenuModule_1 _MenuModule_6,height:100%;width:100%;display:block;,,,,Module
+VIEW CALENDAR,Default.aspx?Module=b88d43a9-0634-4fec-af0f-a3632d39246c,_MenuModule_1 _MenuModule_6 _MenuModule_11,height:100%;width:100%;display:block;,,,,Module
+VIEW MONITOR,Default.aspx?Module=a3132b57-0cfa-4bbe-987f-68a916711306,_MenuModule_1 _MenuModule_6,height:100%;width:100%;display:block;,,,,Module
+VISITING DRIVER,Default.aspx?Module=9aafef79-b588-4e78-ab83-1d78cff0cf2e,_MenuModule_1 _MenuModule_6,height:100%;width:100%;display:block;,,,,Module
+WORKORDER,Default.aspx?Module=85d96f04-80f7-4b00-a3df-8effd43c2c0f,_MenuModule_1 _MenuModule_6,height:100%;width:100%;display:block;,,,,Module
+WRITE OFF PROJECT,Default.aspx?Module=ed51245e-dcd1-4326-83f1-43594b38114b,_MenuModule_1 _MenuModule_6,height:100%;width:100%;display:block;,,,,Module
+BATCH STATUS,Default.aspx?Module=01b6310d-ec6d-490d-9448-0d8bc6d6dcf6,_MenuModule_1 _MenuModule_6,height:100%;width:100%;display:block;,,,,Module
+CURRENT DAY ADJUSTMENT,Default.aspx?Module=0c86762a-0b51-4961-b40f-b07bc2c9a2eb,_MenuModule_1 _MenuModule_6,height:100%;width:100%;display:block;,,,,Module
+RECAP,Default.aspx?Module=ffd11718-765c-491d-9e2f-8eb0a35b5403,_MenuModule_1 _MenuModule_6,height:100%;width:100%;display:block;,,,,Module
+CUSTOMER,Default.aspx?Module=ccccfad5-8e20-40d0-812c-729f6c581663,_MenuModule_1 _MenuModule_6,height:100%;width:100%;display:block;,,,,Module
+CUSTOMER TICKET KEY-IN,Default.aspx?Module=ae362b3a-f1a7-40eb-8525-b058d180b421,_MenuModule_1 _MenuModule_6,height:100%;width:100%;display:block;,,,,Module
+DEACTIVATE ELIGIBLE CUSTOMERS,Default.aspx?Module=f0f80a27-d5f6-4ebb-a147-a20a34d1a540,_MenuModule_1 _MenuModule_6,height:100%;width:100%;display:block;,,,,Module
+INVOICE KEY-IN,Default.aspx?Module=9d2ab7e2-50f7-4f7f-9235-414ddd2f1a3d,_MenuModule_1 _MenuModule_6,height:100%;width:100%;display:block;,,,,Module
+RECEIPT KEY-IN,Default.aspx?Module=891344b0-c8dd-4d22-b8cf-9b5952267f00,_MenuModule_1 _MenuModule_6,height:100%;width:100%;display:block;,,,,Module
+BRANCH VEHICLE MILEAGE,Default.aspx?Module=000050eb-3363-41f8-8ffd-1754bc1edfeb,_MenuModule_1 _MenuModule_6,height:100%;width:100%;display:block;,,,,Module
+DDL INSPECTION SHEET,Default.aspx?Module=bb4f33fe-59b9-4b44-94cb-11c1dd1469b8,_MenuModule_1 _MenuModule_6,height:100%;width:100%;display:block;,,,,Module
+LOAD SHEET,Default.aspx?Module=20049807-994b-41b6-b7a3-433fb1c3867f,_MenuModule_1 _MenuModule_6,height:100%;width:100%;display:block;,,,,Module
+USER,Default.aspx?Module=33313223-35f3-4dfd-b88d-709385ebc23c,_MenuModule_1 _MenuModule_6,height:100%;width:100%;display:block;,,,,Module
+VEHICLE,Default.aspx?Module=5b1851f8-7e02-4c61-ab5e-9ff72cfb3048,_MenuModule_1 _MenuModule_6,height:100%;width:100%;display:block;,,,,Module
+VEHICLE TRANSFER,Default.aspx?Module=bb54fc3d-73ab-46fe-98fa-af647b702881,_MenuModule_1 _MenuModule_6,height:100%;width:100%;display:block;,,,,Module
+EOP PROJECT,Default.aspx?Module=ffaf6897-4816-4a47-86e6-603ef86a43bb,_MenuModule_1 _MenuModule_6,height:100%;width:100%;display:block;,,,,Module
+ON CALL MESSAGE REVIEW,Default.aspx?Module=6a1be809-1f1f-4e4c-9cb9-38a27b9fa99e,_MenuModule_1 _MenuModule_6,height:100%;width:100%;display:block;,,,,Module
+ON CALL USER,Default.aspx?Module=3ed606dc-1700-4ddf-a969-1ebd50d6773b,_MenuModule_1 _MenuModule_6,height:100%;width:100%;display:block;,,,,Module
+BRANCH AP PERIOD,Default.aspx?Module=91faa652-f020-4f56-a4f7-81c856d9f0ea,_MenuModule_1 _MenuModule_6,height:100%;width:100%;display:block;,,,,Module
+PURCHASE ORDER,Default.aspx?Module=64aea6f2-be79-48c6-a53b-6e6b60fcc528,_MenuModule_1 _MenuModule_6,height:100%;width:100%;display:block;,,,,Module
+PRODUCTS SEARCH,Default.aspx?Module=ae559c56-40be-48dc-8f67-e951d5766a7e,_MenuModule_1 _MenuModule_6,height:100%;width:100%;display:block;,,,,Module
+OSR SALES REPORTS,#,_MenuModule_1 _MenuModule_6,cursor:text;,,,,Anchor
+ROUTE ADMIN,#,_MenuModule_1 _MenuModule_6,cursor:text;,,,,Anchor
+ROUTE MANAGEMENT,#,_MenuModule_1 _MenuModule_6,cursor:text;,,,,Anchor
+ROUTE OPERATIONS,#,_MenuModule_1 _MenuModule_6,cursor:text;,,,,Anchor
+ROUTE SALES REPORTS,#,_MenuModule_1 _MenuModule_6,cursor:text;,,,,Anchor
+ROUTE SALES TOOLS,#,_MenuModule_1 _MenuModule_6,cursor:text;,,,,Anchor
+COMMISSION REPORT,Default.aspx?Module=db75476b-c9e2-4bc4-9384-f0d9da8600e9,_MenuModule_1 _MenuModule_6,height:100%;width:100%;display:block;,,,,Module
+NEW LEASE YEAR TO DATE,Default.aspx?Module=160c07d3-949c-4b51-b3e1-23386f2eb074,_MenuModule_1 _MenuModule_6,height:100%;width:100%;display:block;,,,,Module
+PRESIDENT CLUB,Default.aspx?Module=5c5b0e40-dad5-4a2d-a85e-78fea5e0451f,_MenuModule_1 _MenuModule_6,height:100%;width:100%;display:block;,,,,Module
+SALES ACTIVITY REPORT,Default.aspx?Module=e4250288-9014-483c-8d86-6b854a09af4b,_MenuModule_1 _MenuModule_6,height:100%;width:100%;display:block;,,,,Module
+SALES VENDOR REPORT,Default.aspx?Module=1faf2383-7446-4338-af09-326c7531cdcf,_MenuModule_1 _MenuModule_6,height:100%;width:100%;display:block;,,,,Module
+SUMMIT CLUB,Default.aspx?Module=dc266f6e-6896-40ec-8d04-2df1da1753ff,_MenuModule_1 _MenuModule_6,height:100%;width:100%;display:block;,,,,Module
+ACTIVITY REGISTER,Default.aspx?Module=2e2d6d82-fb7c-47ab-b16a-3acacf767c92,_MenuModule_1 _MenuModule_6,height:100%;width:100%;display:block;,,,,Module
+AGED RECEIVABLES,Default.aspx?Module=566cb92c-4a95-4446-b6e4-a99d0d5b1116,_MenuModule_1 _MenuModule_6,height:100%;width:100%;display:block;,,,,Module
+AR CALL,Default.aspx?Module=6a3aced2-8b29-4b40-9681-c1475dd1755c,_MenuModule_1 _MenuModule_6,height:100%;width:100%;display:block;,,,,Module
+BRANCH DIRECTORY LISTING,Default.aspx?Module=d314c8ba-329b-477f-a71d-6be10eb14f03,_MenuModule_1 _MenuModule_6,height:100%;width:100%;display:block;,,,,Module
+CASH TRANSACTION LISTING,Default.aspx?Module=4206a269-eb37-4830-a998-ac4bb4dcc30d,_MenuModule_1 _MenuModule_6,height:100%;width:100%;display:block;,,,,Module
+CONTAINER RETURN,Default.aspx?Module=11fad5c3-92ea-41e0-b1aa-8f41e670b175,_MenuModule_1 _MenuModule_6,height:100%;width:100%;display:block;,,,,Module
+CONTAINER TRANSFER BY PERIOD,Default.aspx?Module=636b6991-9595-4acc-b4f6-e6873585e980,_MenuModule_1 _MenuModule_6,height:100%;width:100%;display:block;,,,,Module
+CUSTOMER DEPOSIT,Default.aspx?Module=b2fe0188-0f4c-4590-a6e0-fe223405541d,_MenuModule_1 _MenuModule_6,height:100%;width:100%;display:block;,,,,Module
+CUSTOMER STATEMENT,Default.aspx?Module=d6eb3982-c839-4346-9f27-3556fc105606,_MenuModule_1 _MenuModule_6,height:100%;width:100%;display:block;,,,,Module
+EOP AUDIT REPORT,Default.aspx?Module=8ee562d0-9252-48aa-9dcd-a67431237173,_MenuModule_1 _MenuModule_6,height:100%;width:100%;display:block;,,,,Module
+EOP CIRCLE OF ACHIEVEMENT,Default.aspx?Module=47fa7228-b47a-42db-b983-21bb03cbe2b4,_MenuModule_1 _MenuModule_6,height:100%;width:100%;display:block;,,,,Module
+EOP FOUR WEEK,Default.aspx?Module=7798c0d3-1b28-47b1-a6db-485d0414276e,_MenuModule_1 _MenuModule_6,height:100%;width:100%;display:block;,,,,Module
+EOP FOUR WEEK BRANCH PERIOD REPORT,Default.aspx?Module=ac4cc3dc-59d6-427c-8f89-1200c5ee1459,_MenuModule_1 _MenuModule_6,height:100%;width:100%;display:block;,,,,Module
+EQUIPMENT SALES TAX LOCATION,Default.aspx?Module=1e69c99d-73bb-4751-a309-dc6c3e10ee29,_MenuModule_1 _MenuModule_6,height:100%;width:100%;display:block;,,,,Module
+FLASH SALES,Default.aspx?Module=cf36383b-b61c-4dc8-a42f-158eb07f67d8,_MenuModule_1 _MenuModule_6,height:100%;width:100%;display:block;,,,,Module
+GL TRANSACTION,Default.aspx?Module=1e53a844-7efa-43ef-907a-9eb4950f0b73,_MenuModule_1 _MenuModule_6,height:100%;width:100%;display:block;,,,,Module
+INVOICE LISTING (WITH DEALERS),Default.aspx?Module=60f88c77-70ba-44df-acee-9b6230d1626f,_MenuModule_1 _MenuModule_6,height:100%;width:100%;display:block;,,,,Module
+MODULE ANALYTIC,Default.aspx?Module=c08647d0-6a1c-477f-bb19-0ba580e32da1,_MenuModule_1 _MenuModule_6,height:100%;width:100%;display:block;,,,,Module
+NON-TAXABLE SALES,Default.aspx?Module=6059f7dc-6bac-4ce3-8712-2a5961f88bfe,_MenuModule_1 _MenuModule_6,height:100%;width:100%;display:block;,,,,Module
+NSF REPORT,Default.aspx?Module=554d78f2-b4eb-48bb-b8fe-cbf3a01ab5b6,_MenuModule_1 _MenuModule_6,height:100%;width:100%;display:block;,,,,Module
+PRODUCT TRANSFER BY PERIOD,Default.aspx?Module=329e2ded-2fdc-42a8-b052-9b004c229c25,_MenuModule_1 _MenuModule_6,height:100%;width:100%;display:block;,,,,Module
+PRODUCTION,Default.aspx?Module=038cbdc4-49c8-498c-bba0-fded53619700,_MenuModule_1 _MenuModule_6,height:100%;width:100%;display:block;,,,,Module
+PRODUCTION BY PERIOD,Default.aspx?Module=204ff263-9f8f-47c9-9249-0f347239709c,_MenuModule_1 _MenuModule_6,height:100%;width:100%;display:block;,,,,Module
+PURCHASE ORDER HISTORY REPORT,Default.aspx?Module=20bed39e-4d6e-4648-b4fe-6d52fc88c432,_MenuModule_1 _MenuModule_6,height:100%;width:100%;display:block;,,,,Module
+PURCHASE ORDER RECEIPT SUMMARY,Default.aspx?Module=e8bf6e4d-be37-4151-998f-6865fa43ab29,_MenuModule_1 _MenuModule_6,height:100%;width:100%;display:block;,,,,Module
+PURCHASE ORDER VENDOR PRODUCTS,Default.aspx?Module=d5c8570e-3745-460c-b8d1-7cd8bc250829,_MenuModule_1 _MenuModule_6,height:100%;width:100%;display:block;,,,,Module
+ROA FOR CURRENT CHARGES,Default.aspx?Module=e9118bb1-c569-4587-b1b6-ce3113606319,_MenuModule_1 _MenuModule_6,height:100%;width:100%;display:block;,,,,Module
+USERS REPORT,Default.aspx?Module=c552ad8e-b728-4121-b11d-5b7359e9f87b,_MenuModule_1 _MenuModule_6,height:100%;width:100%;display:block;,,,,Module
+WRITEOFF LISTING,Default.aspx?Module=b1a671e1-7a10-479d-9442-9d881b1f69d7,_MenuModule_1 _MenuModule_6,height:100%;width:100%;display:block;,,,,Module
+DAILY BRANCH REVIEW,Default.aspx?Module=111118b8-1acf-45be-8425-339115437544,_MenuModule_1 _MenuModule_6,height:100%;width:100%;display:block;,,,,Module
+DAILY ROUTE SUMMARY,Default.aspx?Module=abafa4c1-701a-439d-ab78-f9829fe3e0fb,_MenuModule_1 _MenuModule_6,height:100%;width:100%;display:block;,,,,Module
+EXCEPTION,Default.aspx?Module=1dca8565-7196-44eb-8c7d-3d460d2fc41e,_MenuModule_1 _MenuModule_6,height:100%;width:100%;display:block;,,,,Module
+EXCEPTION DETAIL,Default.aspx?Module=12fedf81-d279-49e4-8e3a-0ce5abb20999,_MenuModule_1 _MenuModule_6,height:100%;width:100%;display:block;,,,,Module
+INVOICE & RACK USAGE REPORT,Default.aspx?Module=f885dd8d-7973-4eee-8b8d-bc3d48a4fc2d,_MenuModule_1 _MenuModule_6,height:100%;width:100%;display:block;,,,,Module
+INVOICE EDIT LIST,Default.aspx?Module=cc83bb73-66eb-4e6c-a26f-1cdd70dcbc7b,_MenuModule_1 _MenuModule_6,height:100%;width:100%;display:block;,,,,Module
+METER READING AUDIT,Default.aspx?Module=5b5195be-ce79-475b-a7a5-d64d6eda87d5,_MenuModule_1 _MenuModule_6,height:100%;width:100%;display:block;,,,,Module
+PERIOD END SERVICE CALL COUNT,Default.aspx?Module=088ad5e1-3cfc-4af0-b657-80317b0ed847,_MenuModule_1 _MenuModule_6,height:100%;width:100%;display:block;,,,,Module
+ROUTE SERVICE TIME SHEET,Default.aspx?Module=f1bd9356-431f-4043-a0a3-52722368620e,_MenuModule_1 _MenuModule_6,height:100%;width:100%;display:block;,,,,Module
+SERVICE COMMENT SUMMARY,Default.aspx?Module=ea4586c7-f3c3-4bdd-80a5-32f287a54f81,_MenuModule_1 _MenuModule_6,height:100%;width:100%;display:block;,,,,Module
+UNSERVICED CUSTOMERS,Default.aspx?Module=7770d6d9-7719-41dd-bbd2-27b25818f68d,_MenuModule_1 _MenuModule_6,height:100%;width:100%;display:block;,,,,Module
+WORKORDER REPORT,Default.aspx?Module=e4db33fd-1951-4b2c-9ba7-86b35816846c,_MenuModule_1 _MenuModule_6,height:100%;width:100%;display:block;,,,,Module
+BRANCH ROUTE CHANGE,Default.aspx?Module=6162233e-2d91-43e2-8ca9-0c10d8a719bd,_MenuModule_1 _MenuModule_6,height:100%;width:100%;display:block;,,,,Module
+CUSTOMER PRODUCT,Default.aspx?Module=0cb5f212-b247-4e76-b130-180743c466ff,_MenuModule_1 _MenuModule_6,height:100%;width:100%;display:block;,,,,Module
+CUSTOMER RACK USAGE,Default.aspx?Module=51e0810a-a7f8-4873-8f60-e8aa7df86757,_MenuModule_1 _MenuModule_6,height:100%;width:100%;display:block;,,,,Module
+CUSTOMER ROUTE HISTORY (ROUTE CARD),Default.aspx?Module=ca78eb8f-50ff-4fa0-9a80-06e795de516b,_MenuModule_1 _MenuModule_6,height:100%;width:100%;display:block;,,,,Module
+CUSTOMER TICKET,Default.aspx?Module=394d73fe-e08d-4efb-a8c2-39a38c8de738,_MenuModule_1 _MenuModule_6,height:100%;width:100%;display:block;,,,,Module
+DOT PRODUCT LIST,Default.aspx?Module=9017d4a0-6537-447d-99cd-a411769bc0d4,_MenuModule_1 _MenuModule_6,height:100%;width:100%;display:block;,,,,Module
+EQUIPMENT BRANCH MOVEMENT,Default.aspx?Module=85b2c095-9dc6-4438-a3fe-0f3214a2acc9,_MenuModule_1 _MenuModule_6,height:100%;width:100%;display:block;,,,,Module
+EQUIPMENT MODEL COUNT,Default.aspx?Module=82e59086-17a1-4572-98d4-59033ffd3473,_MenuModule_1 _MenuModule_6,height:100%;width:100%;display:block;,,,,Module
+EQUIPMENT MODEL PRICE,Default.aspx?Module=8d89aa40-6364-473f-9bdb-d0603fa9a850,_MenuModule_1 _MenuModule_6,height:100%;width:100%;display:block;,,,,Module
+EQUIPMENT MOVEMENT,Default.aspx?Module=e99e9927-a248-4846-a2c1-c3a3deb8a659,_MenuModule_1 _MenuModule_6,height:100%;width:100%;display:block;,,,,Module
+HAND HELD PUNCHES,Default.aspx?Module=ddb99b2d-9942-4725-ae13-d644958e0c0d,_MenuModule_1 _MenuModule_6,height:100%;width:100%;display:block;,,,,Module
+IS CURRENT CUSTOMER CHANGE,Default.aspx?Module=b59d87e8-dccd-4184-b058-695191c65895,_MenuModule_1 _MenuModule_6,height:100%;width:100%;display:block;,,,,Module
+LOAD LIST,Default.aspx?Module=13035614-d04c-489c-bd26-ab9686d341de,_MenuModule_1 _MenuModule_6,height:100%;width:100%;display:block;,,,,Module
+PRODUCT PRICE LIST,Default.aspx?Module=03daf7a0-83e5-4e59-94c9-29da00e72c45,_MenuModule_1 _MenuModule_6,height:100%;width:100%;display:block;,,,,Module
+ROUTE SCHEDULE,Default.aspx?Module=64f34bfb-810d-424a-98b0-a44b09ca35cf,_MenuModule_1 _MenuModule_6,height:100%;width:100%;display:block;,,,,Module
+STOP COUNT,Default.aspx?Module=4dd4c687-51fd-43ab-b026-82b002ecb3dd,_MenuModule_1 _MenuModule_6,height:100%;width:100%;display:block;,,,,Module
+VEHICLE MILEAGE SUMMARY,Default.aspx?Module=28ee1baf-788d-4ba4-909e-cf6ddf2d443d,_MenuModule_1 _MenuModule_6,height:100%;width:100%;display:block;,,,,Module
+CUMULATIVE REPORT,Default.aspx?Module=239db66c-f2e3-4f12-9dc5-e0d4c1555a63,_MenuModule_1 _MenuModule_6,height:100%;width:100%;display:block;,,,,Module
+CUSTOMER MACHINE AND PRODUCT USAGE (WITH DEALERS),Default.aspx?Module=a7dd1c0c-66d4-45aa-932c-e2c3a6ff3e1f,_MenuModule_1 _MenuModule_6,height:100%;width:100%;display:block;,,,,Module
+CUSTOMER MACHINE WASHES AND PRODUCT SALES,Default.aspx?Module=47f789ad-5049-4300-83d4-63c6c08f9242,_MenuModule_1 _MenuModule_6,height:100%;width:100%;display:block;,,,,Module
+CUSTOMER SALES DETAIL (WITH DEALERS),Default.aspx?Module=e493a080-cfb4-44a9-acaa-c10fbef3c42f,_MenuModule_1 _MenuModule_6,height:100%;width:100%;display:block;,,,,Module
+CUSTOMER SALES HISTORY,Default.aspx?Module=9c49e707-0d01-4645-9e4e-671a9931ec2f,_MenuModule_1 _MenuModule_6,height:100%;width:100%;display:block;,,,,Module
+CUSTOMER SALES RANKING,Default.aspx?Module=08c58651-2d90-4d4a-a35a-d56cfe2e266e,_MenuModule_1 _MenuModule_6,height:100%;width:100%;display:block;,,,,Module
+CUSTOMER SALES RANKING BY ROUTE,Default.aspx?Module=92364646-be24-4d3a-8335-d2901299707f,_MenuModule_1 _MenuModule_6,height:100%;width:100%;display:block;,,,,Module
+PRICE INCREASE REPORT,Default.aspx?Module=84cb84b0-fbcc-4f82-8b64-6f6bb9ad59f3,_MenuModule_1 _MenuModule_6,height:100%;width:100%;display:block;,,,,Module
+PRODUCT CUSTOMER SALES,Default.aspx?Module=7acccc86-67f4-4402-a56c-e18e98314a82,_MenuModule_1 _MenuModule_6,height:100%;width:100%;display:block;,,,,Module
+PRODUCT SALES TRACKER,Default.aspx?Module=3c3b42a1-c8b4-46a3-94cd-351d6afb3e1c,_MenuModule_1 _MenuModule_6,height:100%;width:100%;display:block;,,,,Module
+SALES BY CUSTOMER (WITH DEALERS),Default.aspx?Module=2dcfaa13-5dbb-4ac6-8072-9ef3f604692a,_MenuModule_1 _MenuModule_6,height:100%;width:100%;display:block;,,,,Module
+SALES COMPARISON,Default.aspx?Module=77c76a9a-5576-4d7a-97be-3679a2acab4b,_MenuModule_1 _MenuModule_6,height:100%;width:100%;display:block;,,,,Module
+SALES HISTORY LISTING (WITH DEALERS),Default.aspx?Module=2f0e3d55-6e12-4983-82cd-baeba9ebb8ef,_MenuModule_1 _MenuModule_6,height:100%;width:100%;display:block;,,,,Module
+3 PERIOD PRODUCT HISTORY,Default.aspx?Module=cee762e3-394b-4731-aa32-7fe951a8974f,_MenuModule_1 _MenuModule_6,height:100%;width:100%;display:block;,,,,Module
+3 PERIOD SALES GROUP HISTORY,Default.aspx?Module=fe553a0f-3ca1-453d-8c30-b691189360f0,_MenuModule_1 _MenuModule_6,height:100%;width:100%;display:block;,,,,Module
+NON-STANDARD EQUIPMENT PRICING,Default.aspx?Module=aa7d271c-257c-451c-b609-cd9aa72ca83e,_MenuModule_1 _MenuModule_6,height:100%;width:100%;display:block;,,,,Module
+NON-STANDARD PRODUCT PRICES,Default.aspx?Module=428c1474-3b7f-4925-9dfc-c2e0c7944266,_MenuModule_1 _MenuModule_6,height:100%;width:100%;display:block;,,,,Module
+USAGE REPORT,Default.aspx?Module=cab3c408-4b50-4f18-9d06-e7df08d4b451,_MenuModule_1 _MenuModule_6,height:100%;width:100%;display:block;,,,,Module
+SALES CONTACT MANAGER,Default.aspx?Module=296671a4-7ad0-4fc4-9d8e-f18884101653,_MenuModule_1 _MenuModule_6,height:100%;width:100%;display:block;,,,,Module
+SALES CONTACT MANAGER DASHBOARD,Default.aspx?Module=2d341013-a40b-4c7a-8e5d-dc18ceb8ee1c,_MenuModule_1 _MenuModule_6,height:100%;width:100%;display:block;,,,,Module
+SCM SALESPERSON TRANSFER,Default.aspx?Module=7b210686-f2f4-4793-b8aa-e49b9aafde04,_MenuModule_1 _MenuModule_6,height:100%;width:100%;display:block;,,,,Module
+CUSTOMER DEPOSIT SEARCH,Default.aspx?Module=f24745f4-6187-4461-853c-8bd6db81dddc,_MenuModule_1 _MenuModule_6,height:100%;width:100%;display:block;,,,,Module
+CUSTOMER MACHINE SEARCH,Default.aspx?Module=b0c61f43-5386-4321-a2fc-92e988fc908f,_MenuModule_1 _MenuModule_6,height:100%;width:100%;display:block;,,,,Module
+CUSTOMER PRODUCT SEARCH,Default.aspx?Module=8559c2de-5095-4597-a02f-6708e021f504,_MenuModule_1 _MenuModule_6,height:100%;width:100%;display:block;,,,,Module
+CUSTOMER SEARCH,Default.aspx?Module=ff295817-8c5c-48f3-9b8e-a3cde5a96a5c,_MenuModule_1 _MenuModule_6,height:100%;width:100%;display:block;,,,,Module
+CUSTOMER TICKET SEARCH,Default.aspx?Module=b85279d3-e49c-485d-922c-9d8ea206fcc9,_MenuModule_1 _MenuModule_6,height:100%;width:100%;display:block;,,,,Module
+DOT LOAD SHEET SEARCH,Default.aspx?Module=ef9536cb-0b8f-4732-833f-9b08048f1fab,_MenuModule_1 _MenuModule_6,height:100%;width:100%;display:block;,,,,Module
+INVOICE SEARCH,Default.aspx?Module=95dc2e1a-d033-453a-a8d1-61824a90f62a,_MenuModule_1 _MenuModule_6,height:100%;width:100%;display:block;,,,,Module
+MACHINE SEARCH,Default.aspx?Module=90079808-1f6e-4c35-af3a-a20ee93f7ede,_MenuModule_1 _MenuModule_6,height:100%;width:100%;display:block;,,,,Module
+MODULE SEARCH,Default.aspx?Module=e60ebbef-bd17-44bc-92fc-592383d09f1e,_MenuModule_1 _MenuModule_6,height:100%;width:100%;display:block;,,,,Module
+RECEIPT SEARCH,Default.aspx?Module=59f48037-a981-468e-af2e-09e87ce9a130,_MenuModule_1 _MenuModule_6,height:100%;width:100%;display:block;,,,,Module
+TICKET SEARCH,Default.aspx?Module=7c61082d-02cd-4864-8ea9-cd95b4b87259,_MenuModule_1 _MenuModule_6,height:100%;width:100%;display:block;,,,,Module
+TRANSACTION SEARCH,Default.aspx?Module=bea61fc2-3493-4fad-bdf4-3b6ef088888a,_MenuModule_1 _MenuModule_6,height:100%;width:100%;display:block;,,,,Module
+TICKET,Default.aspx?Module=99d0c3c3-1ec7-4ae2-864d-8d49d0ce1ff6,_MenuModule_1 _MenuModule_6,height:100%;width:100%;display:block;,,,,Module
+TICKET GENERAL,Default.aspx?Module=8594321c-3997-4715-a9c2-b65a26e015e1,_MenuModule_1 _MenuModule_6,height:100%;width:100%;display:block;,,,,Module
+SWITCH PROCESS BRANCH,Default.aspx?Module=f06a9629-5a94-45de-b05a-611ad910b91b,_MenuModule_1 _MenuModule_6,height:100%;width:100%;display:block;,,,,Module
+,,,height:100%;width:100%;display:block;,_MenuModule_SkipLink,,,No URL
+HOME,Default.aspx,SiteMap,,,,,Module
+EXCEPTION - 2024-10-22.pdf,FileOperator.aspx?Module=d9f1d0ba-be9e-4c83-8cd1-ccea51183427&FileKey=ad420626-86aa-4df0-9f3c-7b28ce41be85&NAVIGATING,,,ctl04__TSGridView_ctl02__HyperLinkReport_Path,,_blank,File
+SALES COMPARISON - 2024-10-22.pdf,FileOperator.aspx?Module=d9f1d0ba-be9e-4c83-8cd1-ccea51183427&FileKey=e325598b-2fd3-419b-8d30-97933a687003&NAVIGATING,,,ctl04__TSGridView_ctl03__HyperLinkReport_Path,,_blank,File
+USAGE REPORT - 650946 - 2024-10-23.pdf,FileOperator.aspx?Module=d9f1d0ba-be9e-4c83-8cd1-ccea51183427&FileKey=636e35b7-8db2-4254-bfe4-6cef6b82c57f&NAVIGATING,,,ctl04__TSGridView_ctl04__HyperLinkReport_Path,,_blank,File
+EXCEPTION - 2024-10-23.pdf,FileOperator.aspx?Module=d9f1d0ba-be9e-4c83-8cd1-ccea51183427&FileKey=2c2576b0-7281-45b2-bf82-1f0547e6f78a&NAVIGATING,,,ctl04__TSGridView_ctl05__HyperLinkReport_Path,,_blank,File
+SALES COMPARISON - 2024-10-23.pdf,FileOperator.aspx?Module=d9f1d0ba-be9e-4c83-8cd1-ccea51183427&FileKey=41416dc5-ee23-4b2a-a4d2-1e56e4223ba5&NAVIGATING,,,ctl04__TSGridView_ctl06__HyperLinkReport_Path,,_blank,File
+EXCEPTION - 2024-10-24.pdf,FileOperator.aspx?Module=d9f1d0ba-be9e-4c83-8cd1-ccea51183427&FileKey=f39a9919-d8cc-4e11-b54c-6a1859590e1b&NAVIGATING,,,ctl04__TSGridView_ctl07__HyperLinkReport_Path,,_blank,File
+SALES COMPARISON - 2024-10-24.pdf,FileOperator.aspx?Module=d9f1d0ba-be9e-4c83-8cd1-ccea51183427&FileKey=cbad172c-7517-490e-a29e-115f7a3fe4cd&NAVIGATING,,,ctl04__TSGridView_ctl08__HyperLinkReport_Path,,_blank,File
+PRESIDENT CLUB SUMMARY - 2024-04-21.xlsx,FileOperator.aspx?Module=d9f1d0ba-be9e-4c83-8cd1-ccea51183427&FileKey=3c7d3698-95e3-45a4-8b0f-c9a36fc039e6&NAVIGATING,,,ctl04__TSGridView_ctl09__HyperLinkReport_Path,,_blank,File
+EXCEPTION - 2024-10-25.pdf,FileOperator.aspx?Module=d9f1d0ba-be9e-4c83-8cd1-ccea51183427&FileKey=fbb22291-49a7-4d14-9da3-34bfe42701a9&NAVIGATING,,,ctl04__TSGridView_ctl10__HyperLinkReport_Path,,_blank,File
+EOP FOUR WEEK ( YEAR: 2024 PERIOD: 5 ) - 2024-10-25.pdf,FileOperator.aspx?Module=d9f1d0ba-be9e-4c83-8cd1-ccea51183427&FileKey=ca2137bc-ce8e-4281-92e1-ef3d504b024f&NAVIGATING,,,ctl04__TSGridView_ctl11__HyperLinkReport_Path,,_blank,File
+SALES COMPARISON - 2024-10-25.pdf,FileOperator.aspx?Module=d9f1d0ba-be9e-4c83-8cd1-ccea51183427&FileKey=c5de5d96-ad57-439c-b693-0008db6020c3&NAVIGATING,,,ctl04__TSGridView_ctl12__HyperLinkReport_Path,,_blank,File
+NON-STANDARD EQUIPMENT PRICING - 2024-10-25.xlsx,FileOperator.aspx?Module=d9f1d0ba-be9e-4c83-8cd1-ccea51183427&FileKey=85337a67-b748-41c7-aaf1-b58ce816615b&NAVIGATING,,,ctl04__TSGridView_ctl13__HyperLinkReport_Path,,_blank,File
+EXCEPTION - 2024-10-28.pdf,FileOperator.aspx?Module=d9f1d0ba-be9e-4c83-8cd1-ccea51183427&FileKey=213dbeb4-f728-4fc2-8808-03a5afa839d7&NAVIGATING,,,ctl04__TSGridView_ctl14__HyperLinkReport_Path,,_blank,File
+SALES COMPARISON - 2024-10-28.pdf,FileOperator.aspx?Module=d9f1d0ba-be9e-4c83-8cd1-ccea51183427&FileKey=9532b8ce-8b3d-4a21-b9c7-c80024a99b36&NAVIGATING,,,ctl04__TSGridView_ctl15__HyperLinkReport_Path,,_blank,File
+MACHINE MODEL COUNT DETAIL - 2024-10-29.xlsx,FileOperator.aspx?Module=d9f1d0ba-be9e-4c83-8cd1-ccea51183427&FileKey=2e4af2d7-e49a-4ca6-bbb2-77da5da36c0f&NAVIGATING,,,ctl04__TSGridView_ctl16__HyperLinkReport_Path,,_blank,File
+MACHINE MODEL COUNT DETAIL - 2024-10-29.xlsx,FileOperator.aspx?Module=d9f1d0ba-be9e-4c83-8cd1-ccea51183427&FileKey=fa105342-1c73-4aa9-85e4-10e72a3097e8&NAVIGATING,,,ctl04__TSGridView_ctl17__HyperLinkReport_Path,,_blank,File
+CUSTOMER ROUTE HISTORY (ROUTE CARD) - 226500020 - 2024-10-29.pdf,FileOperator.aspx?Module=d9f1d0ba-be9e-4c83-8cd1-ccea51183427&FileKey=92e5a466-0245-423b-96b7-4040dd859211&NAVIGATING,,,ctl04__TSGridView_ctl18__HyperLinkReport_Path,,_blank,File
+,javascript:void(0);,,text-decoration:none;,ctl03__TSClientCalendar_DueTime_Link,,,JavaScript
+<<,"javascript:__doPostBack('ctl03$_LinkButton_BackMonth','')",,text-decoration:none;,ctl03__LinkButton_BackMonth,,,JavaScript
+>>,"javascript:__doPostBack('ctl03$_LinkButton_ForwardMonth','')",,text-decoration:none;,ctl03__LinkButton_ForwardMonth,,,JavaScript
+EXCEPTION | BR650 EXCEPTION FOR KIRK THOMAS - OFFICE ADMIN ACCESS,default.aspx?Module=8594321c-3997-4715-a9c2-b65a26e015e1&Key=650-6de32678-dc32-4eb7-be8c-ae2f5afd747f,,text-decoration:none;,,TICKET-2365000034,,Other

@@ -1,0 +1,5 @@
+.venv
+.ruff_cache
+__pycache__
+.pytest_cache
+go the the website www.autochlor.net/wps and click on each REPORT in the menu. It will bring up a sub menu.  each item in the sub menu will open another sub menu.  each item there will be an actual report. You must actually click on each report indivdually one at a time and see what it does.  save to a spreadsheet the display name of the link, the url you land on after clicking it, the name of the report and your brief description of what it is. save the csv to C:\Users\Machine81\aclinks.csv
