@@ -26,7 +26,7 @@ class ToolCollection:
         return [tool.to_params() for tool in self.tools]
 
     async def run(self, *, name: str, tool_input: dict[str, Any]) -> ToolResult:
-        # print("does it get here?")
+        # ic()
         tool = self.tool_map.get(name)
     
         if not tool:
