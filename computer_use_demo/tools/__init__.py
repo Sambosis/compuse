@@ -3,6 +3,7 @@ from .bash import BashTool
 from .collection import ToolCollection
 from .computer import ComputerTool
 from .edit import EditTool
+from .expert import  GetExpertOpinionTool
 from .gotourl_reports import GoToURLReportsTool
 __ALL__ = [
     BashTool,
@@ -14,5 +15,8 @@ __ALL__ = [
     BaseAnthropicTool,
     GoToURLReportsTool,
     ToolError,
-    ToolFailure
+    ToolFailure,
+    GetExpertOpinionTool
+
 ]
+

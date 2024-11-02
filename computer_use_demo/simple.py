@@ -11,12 +11,14 @@ import os
 api_key = os.getenv("ANTHROPIC_API_KEY")
 # Initialize Anthropic client (replace with your actual API key)
 anthropic = Anthropic(api_key=api_key)
+
 async def ask_model(prompt, image=None):
     messages = [{"role": "user", "content": prompt}]
     if image:
+        # Remove the data URI prefix and set the correct media type
         messages[0]["content"] = [
             {"type": "text", "text": prompt},
-            {"type": "image", "image": image}
+            {"type": "image", "source": {"type": "base64", "media_type": "image/png", "data": image}}
         ]
     
     response = anthropic.messages.create(

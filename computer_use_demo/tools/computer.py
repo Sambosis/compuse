@@ -51,7 +51,7 @@ Action = Literal[
     "double_click",
     "screenshot",
     "cursor_position",
-    "speak",  # Add speak action
+    # "speak",  # Add speak action
     "open_url", # Add open_url action
     "get_window_title", # Add get_window_title
 ]
@@ -76,7 +76,7 @@ class GuiAutomation: # removed unecessary async functions and made synchronous
     @staticmethod
     def open_chrome(url: Optional[str] = None):
         """Open Chrome and optionally navigate to a URL."""
-        pyautogui.press('win')
+        pyautogui.press('start')
         time.sleep(0.5)
         pyautogui.write('chrome')
         time.sleep(0.5)
