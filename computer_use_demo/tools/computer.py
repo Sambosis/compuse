@@ -65,7 +65,7 @@ class ScalingSource(StrEnum):
     COMPUTER = "computer"
     API = "api"
 
-class ComputerToolOptions(TypedDict):
+class Options(TypedDict):
     display_height_px: int
     display_width_px: int
     display_number: Optional[int]
@@ -124,14 +124,13 @@ class GuiAutomation: # removed unecessary async functions and made synchronous
 
 
 
-class ComputerTool(BaseAnthropicTool):
+class WindowsUseTool(BaseAnthropicTool):
     """
-    A cross-platform tool that allows the agent to interact with the screen, keyboard, and mouse.
-    The tool parameters are defined by Anthropic and are not editable.
+    A Windows-specific tool that allows the agent to interact with the screen, keyboard, and mouse.
     """
 
-    name: Literal["computer"] = "computer"
-    api_type: Literal["computer_20241022"] = "computer_20241022"
+    name: Literal["windows"] = "windows"
+    api_type: Literal["custom"] = "custom"
     width: int
     height: int
     display_num: Optional[int]
@@ -140,15 +139,58 @@ class ComputerTool(BaseAnthropicTool):
     _scaling_enabled = True
 
     @property
-    def options(self) -> ComputerToolOptions:
+    def options(self) -> Options:
         return {
             "display_width_px": self.width,
             "display_height_px": self.height,
             "display_number": self.display_num,
         }
 
-    def to_params(self) -> BetaToolComputerUse20241022Param:
-        return {"name": self.name, "type": self.api_type, **self.options}
+    def to_params(self) -> dict:
+        return {
+            "name": self.name,
+            "type": self.api_type,
+            "description": "A tool for controlling Windows GUI elements using mouse and keyboard",
+            "input_schema": {
+                "type": "object",
+                "properties": {
+                    "action": {
+                        "type": "string",
+                        "enum": [
+                            "key",
+                            "type",
+                            "mouse_move",
+                            "left_click",
+                            "left_click_drag",
+                            "right_click",
+                            "middle_click",
+                            "double_click",
+                            "screenshot",
+                            "cursor_position",
+                            "open_url",
+                            "get_window_title"
+                        ],
+                        "description": "The action to perform"
+                    },
+                    "text": {
+                        "type": "string",
+                        "description": "Text to type or key to press"
+                    },
+                    "coordinate": {
+                        "type": "array",
+                        "items": {"type": "integer"},
+                        "minItems": 2,
+                        "maxItems": 2,
+                        "description": "X,Y coordinates for mouse actions"
+                    },
+                    "url": {
+                        "type": "string",
+                        "description": "URL to open in browser"
+                    }
+                },
+                "required": ["action"]
+            }
+        }
 
     def __init__(self):
         super().__init__()
@@ -161,7 +203,7 @@ class ComputerTool(BaseAnthropicTool):
         # Handle display number (Not relevant for Windows, maintain None)
         self.display_num = None
 
-        logging.debug(f"Initialized ComputerTool with resolution: {self.width}x{self.height}")
+        logging.debug(f"Initialized  with resolution: {self.width}x{self.height}")
 
     async def __call__(
         self,

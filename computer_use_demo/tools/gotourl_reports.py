@@ -1,7 +1,7 @@
 import difflib
 import pandas as pd
 from typing import Optional, Literal, TypedDict
-# from tools import ToolResult, ComputerTool, BaseAnthropicTool  # Adjust the import path as necessary
+# from tools import ToolResult, , BaseAnthropicTool  # Adjust the import path as necessary
 from enum import StrEnum
 from .base import CLIResult, ToolError, ToolResult, BaseAnthropicTool
 from icecream import ic
@@ -18,7 +18,7 @@ class ScalingSource(StrEnum):
     COMPUTER = "computer"
     API = "api"
 
-class ComputerToolOptions(TypedDict):
+class Options(TypedDict):
     display_height_px: int
     display_width_px: int
     display_number: Optional[int]
@@ -39,7 +39,7 @@ class GoToURLReportsTool(BaseAnthropicTool):
     _scaling_enabled = True
 
     @property
-    def options(self) -> ComputerToolOptions:
+    def options(self) -> Options:
         return {
             "display_width_px": self.width,
             "display_height_px": self.height,
