@@ -9,7 +9,16 @@ from anthropic.types.beta import BetaToolTextEditor20241022Param
 from .base import BaseAnthropicTool, CLIResult, ToolError, ToolResult
 from .run import maybe_truncate
 from typing import Union, List, Dict, Any, Optional
+from icecream import ic
+import sys
+import logging
+from rich import print as rr
+# Reconfigure stdout to use UTF-8 encoding
+sys.stdout.reconfigure(encoding='utf-8')
+# include the context for the icecream debugger
+ic.configureOutput(includeContext=True)
 
+# Reconfigure stdout to use UTF-8 encoding
 Command = Literal[
     "view",
     "create",
@@ -111,9 +120,9 @@ class EditTool(BaseAnthropicTool):
                 raise ToolError(
                     f"The path {path} is a directory and only the `view` command can be used on directories"
                 )
-
-    async def view(self, path: Path, view_range: list[int] | None = None) -> ToolResult:
+    async def view(self, path: Path, view_range: Optional[List[int]] = None) -> ToolResult:
         """Implement the view command using cross-platform methods."""
+        ic(path)
         if path.is_dir():
             if view_range:
                 raise ToolError(
@@ -132,14 +141,16 @@ class EditTool(BaseAnthropicTool):
                     for item in path.glob(pattern):
                         # Skip hidden files and directories
                         if not any(part.startswith('.') for part in item.parts):
-                            files.append(str(item))
+                            files.append(str(item.resolve()))  # Ensure absolute paths
 
                 stdout = "\n".join(sorted(files))
                 stdout = f"Here's the files and directories up to 2 levels deep in {path}, excluding hidden items:\n{stdout}\n"
-                return ToolResult(output=stdout)
+                return ToolResult(output=stdout, error=None, base64_image=None)
             except Exception as e:
-                return ToolResult(output="", error=str(e))
+                logging.error(f"Error viewing directory {path}: {e}")
+                return ToolResult(output="", error=str(e), base64_image=None)
 
+        # If it's a file, read its content
         file_content = self.read_file(path)
         init_line = 1
         if view_range:
@@ -162,56 +173,62 @@ class EditTool(BaseAnthropicTool):
                 )
 
             if final_line == -1:
-                file_content = "\n".join(file_lines[init_line - 1 :])
+                file_content = "\n".join(file_lines[init_line - 1:])
             else:
                 file_content = "\n".join(file_lines[init_line - 1 : final_line])
-
-        return ToolResult(output=self._make_output(file_content, str(path), init_line=init_line))
-
-    def str_replace(self, path: Path, old_str: str, new_str: str | None) -> ToolResult:
+        ic(file_content)
+        return ToolResult(output=self._make_output(file_content, str(path), init_line=init_line), error=None, base64_image=None)
+    def str_replace(self, path: Path, old_str: str, new_str: Optional[str]) -> ToolResult:
         """Implement the str_replace command, which replaces old_str with new_str in the file content."""
-        # Read the file content
-        file_content = self.read_file(path).expandtabs()
-        old_str = old_str.expandtabs()
-        new_str = new_str.expandtabs() if new_str is not None else ""
+        try:
+            # Read the file content
+            ic(path)
+            file_content = self.read_file(path).expandtabs()
+            old_str = old_str.expandtabs()
+            new_str = new_str.expandtabs() if new_str is not None else ""
 
-        # Check if old_str is unique in the file
-        occurrences = file_content.count(old_str)
-        if occurrences == 0:
-            raise ToolError(f"No replacement was performed, old_str `{old_str}` did not appear verbatim in {path}.")
-        elif occurrences > 1:
-            file_content_lines = file_content.split("\n")
-            lines = [
-                idx + 1
-                for idx, line in enumerate(file_content_lines)
-                if old_str in line
-            ]
-            raise ToolError(
-                f"No replacement was performed. Multiple occurrences of old_str `{old_str}` in lines {lines}. Please ensure it is unique"
-            )
+            # Check if old_str is unique in the file
+            occurrences = file_content.count(old_str)
+            if occurrences == 0:
+                raise ToolError(f"No replacement was performed, old_str `{old_str}` did not appear verbatim in {path}.")
+            elif occurrences > 1:
+                file_content_lines = file_content.split("\n")
+                lines = [
+                    idx + 1
+                    for idx, line in enumerate(file_content_lines)
+                    if old_str in line
+                ]
+                raise ToolError(
+                    f"No replacement was performed. Multiple occurrences of old_str `{old_str}` in lines {lines}. Please ensure it is unique"
+                )
 
-        # Replace old_str with new_str
-        new_file_content = file_content.replace(old_str, new_str)
+            # Replace old_str with new_str
+            new_file_content = file_content.replace(old_str, new_str)
 
-        # Write the new content to the file
-        self.write_file(path, new_file_content)
+            # Write the new content to the file
+            self.write_file(path, new_file_content)
 
-        # Save the content to history
-        self._file_history[path].append(file_content)
+            # Save the content to history
+            self._file_history[path].append(file_content)
 
-        # Create a snippet of the edited section
-        replacement_line = file_content.split(old_str)[0].count("\n")
-        start_line = max(0, replacement_line - SNIPPET_LINES)
-        end_line = replacement_line + SNIPPET_LINES + new_str.count("\n")
-        snippet = "\n".join(new_file_content.split("\n")[start_line : end_line + 1])
+            # Create a snippet of the edited section
+            replacement_line = file_content.split(old_str)[0].count("\n")
+            start_line = max(0, replacement_line - SNIPPET_LINES)
+            end_line = replacement_line + SNIPPET_LINES + new_str.count("\n")
+            snippet = "\n".join(new_file_content.split("\n")[start_line : end_line + 1])
 
-        # Prepare the success message
-        success_msg = f"The file {path} has been edited. "
-        success_msg += self._make_output(snippet, f"a snippet of {path}", start_line + 1)
-        success_msg += "Review the changes and make sure they are as expected. Edit the file again if necessary."
+            # Prepare the success message
+            success_msg = f"The file {path} has been edited. "
+            success_msg += self._make_output(snippet, f"a snippet of {path}", start_line + 1)
+            success_msg += "Review the changes and make sure they are as expected. Edit the file again if necessary."
 
-        return ToolResult(output=success_msg)
-
+            return ToolResult(output=success_msg, error=None, base64_image=None)
+        except ToolError as te:
+            logging.error(f"ToolError in str_replace: {te}")
+            return ToolResult(output=None, error=str(te), base64_image=None)
+        except Exception as e:
+            logging.error(f"Unexpected error in str_replace: {e}")
+            return ToolResult(output=None, error=str(e), base64_image=None)
     def insert(self, path: Path, insert_line: int, new_str: str) -> ToolResult:
         """Implement the insert command, which inserts new_str at the specified line in the file content."""
         file_text = self.read_file(path).expandtabs()
@@ -264,16 +281,15 @@ class EditTool(BaseAnthropicTool):
         )
 
     def read_file(self, path: Path) -> str:
-        """Read the content of a file from a given path; raise a ToolError if an error occurs."""
         try:
-            return path.read_text()
+            return path.read_text(encoding="utf-8").encode('ascii', errors='replace').decode('ascii')
         except Exception as e:
+            ic(f"Error reading file {path}: {e}")
             raise ToolError(f"Ran into {e} while trying to read {path}") from None
-
     def write_file(self, path: Path, file: str):
         """Write the content of a file to a given path; raise a ToolError if an error occurs."""
         try:
-            path.write_text(file)
+            path.write_text(file, encoding="utf-8")
         except Exception as e:
             raise ToolError(f"Ran into {e} while trying to write to {path}") from None
 

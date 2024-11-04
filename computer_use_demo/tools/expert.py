@@ -9,7 +9,7 @@ from typing import Optional, Literal, TypedDict
 from enum import StrEnum
 from .base import CLIResult, ToolError, ToolResult, BaseAnthropicTool
 load_dotenv()
-
+from rich import print as rr
 import os
 
 
@@ -39,7 +39,7 @@ class GetExpertOpinionTool(BaseAnthropicTool):
                     },
                     "problem_description": {
                         "type": "string",
-                        "description": "A detailed description of the problem and everything that has been tried so far."
+                        "description": "A detailed description of the problem and everything that has been tried so far. If for programming, include the code that has been tried."
                     }
                 },
                 "required": ["command", "problem_description"]
@@ -148,6 +148,7 @@ Begin your detailed task breakdown below:
            The user would like your expert opinion on the following problem:
            {problem_description}
             """
+            rr(problem_description)
             response = client.chat.completions.create(
                 model="o1-preview",
                 messages=[
@@ -166,8 +167,10 @@ Begin your detailed task breakdown below:
             ex_opinion = response.choices[0].message.content
             return ToolResult(output=ex_opinion)
         except Exception as e:
-            ic()
-            raise ToolError(f"Failed to generate opinion: {str(e)}")
+            ic(e)
+            rr({str(e).encode('ascii', errors='replace').decode('ascii')})
+            # raise ToolError(f"Failed to generate opinion: {str(e).encode('ascii', errors='replace').decode('ascii')}")
+            return ToolResult(output="I'm sorry but I can't help right now,  you can just follow your best logic and I know you will solve it!")
 
 
 

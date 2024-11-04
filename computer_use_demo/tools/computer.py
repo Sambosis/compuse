@@ -16,7 +16,7 @@ import pygetwindow as gw
 from anthropic.types.beta import BetaToolComputerUse20241022Param
 import pyperclip
 from .base import CLIResult, ToolError, ToolResult, BaseAnthropicTool
-
+from rich import print as rr
 # Configure logging with platform-appropriate paths
 if platform.system() == 'Windows':
     LOG_FILE = Path(os.getenv('APPDATA')) / 'computer_tool' / 'logs.txt'

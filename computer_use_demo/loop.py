@@ -2,6 +2,7 @@
 Agentic sampling loop that calls the Anthropic API and local implementation of anthropic-defined computer use tools.
 """
 from http import client
+from json import tool
 from re import X
 from icecream import ic
 import platform
@@ -160,10 +161,11 @@ def _make_api_tool_result(result: ToolResult, tool_use_id: str) -> dict:
 
 
 
-BETA_FLAG = "computer-use-2024-10-22"
+COMPUTER_USE_BETA_FLAG = "computer-use-2024-10-22"
+PROMPT_CACHING_BETA_FLAG = "prompt-caching-2024-07-31"
 
 
-system_prompt = """You are a eager, pro-active assistant with access to Windows GUI automation, web browsing and a programming environment where you can develop and execute code.
+SYSTEM_PROMPT = """You are a eager, pro-active assistant with access to Windows GUI automation, web browsing and a programming environment where you can develop and execute code.
 * You are utilizing a Windows machine with internet access via the WindowsUseTool.
 * The WindowsUseTool provides actions for:
   - Keyboard input ("key", "type")
@@ -218,11 +220,12 @@ system_prompt = """You are a eager, pro-active assistant with access to Windows 
     * Before interacting with a window, take a screenshot to verify the active window and tab
     * After completing an action, take a screenshot to verify success
     * Always evaluate available applications and choose the best method for the task
-
+    Rembember, you are working in windows and will be working on the C: drive.
+    Directories should look like C:/path/to/directory and files should look like C:/path/to/file.txt
     The current date is {datetime.today()}.
 """
 
-async def sampling_loop(*, model: str, messages: List[BetaMessageParam], api_key: str, max_tokens: int = 8096,) -> List[BetaMessageParam]:
+async def sampling_loop(*, model: str, messages: List[BetaMessageParam], api_key: str, max_tokens: int = 8000,) -> List[BetaMessageParam]:
     ic()
     tool_collection = ToolCollection(
                                         BashTool(),
@@ -233,23 +236,49 @@ async def sampling_loop(*, model: str, messages: List[BetaMessageParam], api_key
                                         # GoToURLReportsTool(),  # Add the GoToURLReportsTool instance
                                     )
     ic(tool_collection)            
+    system = BetaTextBlockParam(
+    type="text",
+    text=f"{SYSTEM_PROMPT}",
+    )
     output_manager = OutputManager(image_dir=Path('logs/computer_tool_images')  )
     client = Anthropic(api_key=api_key)
     i=1
     running = True
     while running:
-        print(f"Iteration {i}")
+        rr(f"Iteration {i}")
         i+=1
+        enable_prompt_caching = True
+        betas = [COMPUTER_USE_BETA_FLAG]
+        image_truncation_threshold = 10
+        only_n_most_recent_images = 3
+        if enable_prompt_caching:
+            betas.append(PROMPT_CACHING_BETA_FLAG)
+            _inject_prompt_caching(messages)
+            # Is it ever worth it to bust the cache with prompt caching?
+            image_truncation_threshold = 50
+            system["cache_control"] = {"type": "ephemeral"}
+
+        if only_n_most_recent_images:
+            _maybe_filter_to_n_most_recent_images(
+                messages,
+                only_n_most_recent_images,
+                min_removal_threshold=image_truncation_threshold,
+            )
+
         try:
             ic(tool_collection.to_params())
             ic(f"Messages: {messages}")
+            if i % 2 == 0:
+                # wait for 10 seconds
+                await asyncio.sleep(10) 
+                
             response = client.beta.messages.create(
                 max_tokens=max_tokens,
                 messages=messages,
                 model=model,
-                system=system_prompt,
+                system=SYSTEM_PROMPT,
                 tools=tool_collection.to_params(),
-                betas=[BETA_FLAG],
+                betas=[COMPUTER_USE_BETA_FLAG],
             )
             ic(f"Response: {response}")
             # output_manager.format_api_response(response)
@@ -277,7 +306,7 @@ async def sampling_loop(*, model: str, messages: List[BetaMessageParam], api_key
                 "content": response_params
             })
             # Process tool uses and collect results
-            tool_result_content = []
+            tool_result_content: list[BetaToolResultBlockParam] = []
             for content_block in response_params:
                 output_manager.format_content_block(content_block)
                 if content_block["type"] == "tool_use":
@@ -309,12 +338,91 @@ async def sampling_loop(*, model: str, messages: List[BetaMessageParam], api_key
                     "role": "user",
                     "content": tool_result_content
                 })
+        except UnicodeEncodeError as ue:
+            ic(f"UnicodeEncodeError: {ue}")
+            rr(f"Unicode encoding error: {ue}")
+            rr(f"ascii: {ue.args[1].encode('ascii', errors='replace').decode('ascii')[:235]}")
+            # Handle or skip the problematic message
+            break        
         except Exception as e:
-            ic(f"Error in sampling loop: {e}")
+            ic(f"Error in sampling loop: {str(e).encode('ascii', errors='replace').decode('ascii')[:235]}")
             ic(f"The error occurred at the following message: {messages[-1]} and line: {e.__traceback__.tb_lineno}")
             # ic(e.__traceback__.tb_frame.f_globals)
             raise
     return messages
+
+
+def _inject_prompt_caching(
+    messages: list[BetaMessageParam],
+):
+    """
+    Set cache breakpoints for the 3 most recent turns
+    one cache breakpoint is left for tools/system prompt, to be shared across sessions
+    """
+
+    breakpoints_remaining = 3
+    for message in reversed(messages):
+        if message["role"] == "user" and isinstance(content := message["content"], list):
+            if breakpoints_remaining:
+                for block in reversed(content): # Iterate through blocks in reverse
+                    if isinstance(block, dict) and block.get("type") == "text":
+                        breakpoints_remaining -= 1
+                        block["cache_control"] = BetaCacheControlEphemeralParam({"type": "ephemeral"})
+                        break  # Only apply to the *last* text block
+            # ... (rest of the function)
+
+            else:
+                content[-1].pop("cache_control", None)
+                # we'll only every have one extra turn per loop
+                break
+
+def _maybe_filter_to_n_most_recent_images(
+    messages: list[BetaMessageParam],
+    images_to_keep: int,
+    min_removal_threshold: int,
+):
+    """
+    With the assumption that images are screenshots that are of diminishing value as
+    the conversation progresses, remove all but the final `images_to_keep` tool_result
+    images in place, with a chunk of min_removal_threshold to reduce the amount we
+    break the implicit prompt cache.
+    """
+    if images_to_keep is None:
+        return messages
+
+    tool_result_blocks = cast(
+        list[BetaToolResultBlockParam],
+        [
+            item
+            for message in messages
+            for item in (
+                message["content"] if isinstance(message["content"], list) else []
+            )
+            if isinstance(item, dict) and item.get("type") == "tool_result"
+        ],
+    )
+
+    total_images = sum(
+        1
+        for tool_result in tool_result_blocks
+        for content in tool_result.get("content", [])
+        if isinstance(content, dict) and content.get("type") == "image"
+    )
+
+    images_to_remove = total_images - images_to_keep
+    # for better cache behavior, we want to remove in chunks
+    images_to_remove -= images_to_remove % min_removal_threshold
+
+    for tool_result in tool_result_blocks:
+        if isinstance(tool_result.get("content"), list):
+            new_content = []
+            for content in tool_result.get("content", []):
+                if isinstance(content, dict) and content.get("type") == "image":
+                    if images_to_remove > 0:
+                        images_to_remove -= 1
+                        continue
+                new_content.append(content)
+            tool_result["content"] = new_content
 
 async def run_sampling_loop(task: str) -> List[BetaMessageParam]:
     """Run the sampling loop with clean output handling."""
@@ -337,35 +445,41 @@ async def run_sampling_loop(task: str) -> List[BetaMessageParam]:
 async def main_async():
     """Async main function with proper error handling."""
     # task = input("Enter the task you want to perform: ")
-    task = "go to the autochlor.com webpage and find the dish machine models.  Save the details to a file. And create a webpage that has links and photos.  The webpage should should be visually appealing."
-
+    task = '''I need you to work on the project located at C:/repo/cherkckerx. read the .py files and the README.md to get an understanding of what's going on. I'd like you to optimize the 2 models.
+    However, I want you to run a small training then have some metrics calculated on it.
+    I want you to personally review the metrics.
+    Based on your evaluation of the metrics I would like you to go in and tweak the hyper parameters, 
+    Then run again.
+    Keep doing this and continue improving the model. 
+    Remember, the project is not in the same directory you are working in so use the absolute paths, including when running a python file, use the full path to the script you are executing.
+    Whenever you are working on a difficult problem, get an expert opinion. This project is on the C: drive on a Windows machine and you must always include the C: drive in the path.'''
     try:
         
         messages = await run_sampling_loop(task)
-        print("\nTask Completed Successfully")
-        print("\nFinal Messages:")
+        rr("\nTask Completed Successfully")
+        rr("\nFinal Messages:")
         for msg in messages:
-            print(f"\n{msg['role'].upper()}:")
+            rr(f"\n{msg['role'].upper()}:")
             # If content is a list of dicts (like tool_result), format accordingly
             if isinstance(msg['content'], list):
                 for content_block in msg['content']:
                     if isinstance(content_block, dict):
                         if content_block.get("type") == "tool_result":
-                            print(f"Tool Result [ID: {content_block.get('tool_use_id', 'unknown')}]:")
+                            rr(f"Tool Result [ID: {content_block.get('tool_use_id', 'unknown')}]:")
                             for item in content_block.get("content", []):
                                 if item.get("type") == "text":
-                                    print(f"Text: {item.get('text')}")
+                                    rr(f"Text: {item.get('text')}")
                                 elif item.get("type") == "image":
-                                    print(f"Image Source: base64 source too big")#{item.get('source', {}).get('data')}")
+                                    rr(f"Image Source: base64 source too big")#{item.get('source', {}).get('data')}")
                         else:
-                            print(content_block)
+                            rr(content_block)
                     else:
-                        print(content_block)
+                        rr(content_block)
             else:
-                print(msg['content'])
+                rr(msg['content'])
 
     except Exception as e:
-        print(f"Error during execution: {e}")
+        rr(f"Error during execution: {e}")
 
 def main():
     """Main entry point with proper async handling."""

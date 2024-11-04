@@ -148,7 +148,7 @@ class GoToURLReportsTool(BaseAnthropicTool):
             for index, row in df.iterrows():
                 if row['url_type'] == 'File':
                     file_url = base_url + row['url']
-                    print(f"Downloading from URL: {file_url}")
+                    rr(f"Downloading from URL: {file_url}")
 
                     try:
                         # Listen for the download event
@@ -158,11 +158,11 @@ class GoToURLReportsTool(BaseAnthropicTool):
                         
                         # Save the downloaded file to the specified path
                         await download.save_as(os.path.join(download_path, download.suggested_filename))
-                        print(f"Downloaded: {download.suggested_filename}")
+                        rr(f"Downloaded: {download.suggested_filename}")
 
                     except Exception as e:
-                        print(f"Error downloading from URL: {file_url}")
-                        print(e)
+                        rr(f"Error downloading from URL: {file_url}")
+                        rr(e)
 
             # Close the browser after all downloads
             await browser.close()   

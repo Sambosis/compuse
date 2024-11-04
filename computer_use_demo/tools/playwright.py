@@ -8,7 +8,7 @@ from bs4 import BeautifulSoup, Comment  # Add Comment to the import
 import re
 from html import unescape
 from .base import CLIResult, ToolError, ToolResult, BaseAnthropicTool
-
+from rich import print as rr
 # Configure logging for user feedback and debugging
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 
@@ -401,6 +401,6 @@ class WebNavigatorTool:
 #         url="https://example.com",
 #         action="read"
 #     )
-#     print(result)
+#     rr(result)
 
 # asyncio.run(main())

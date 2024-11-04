@@ -75,6 +75,10 @@ computer_tool_images/
 *.png
 credentials.json
 Pipfile.lock
+*.pt
+*.pth
+*.pkl
+*.txt
 # A huge collection of files to ignore in Git, covering the superset of tools we
 # use at Inductiva. Based on the .gitignore templates from:
 # https://github.com/github/gitignore

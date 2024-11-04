@@ -1,13 +1,16 @@
 ## bash.py
 import asyncio
+from calendar import c
 import os
 from typing import ClassVar, Literal
 from anthropic.types.beta import BetaToolBash20241022Param
+# from torch import error
 from .base import BaseAnthropicTool, CLIResult, ToolError, ToolResult
 import subprocess
 import platform
 # Using subprocess directly for shell commands
-
+from rich import print as rr
+from icecream import ic
 class BashTool(BaseAnthropicTool):
     """
     A tool that allows the agent to run bash commands. On Windows it uses PowerShell
@@ -22,6 +25,7 @@ class BashTool(BaseAnthropicTool):
     ):
         if command is not None:
              if platform.system() == 'Windows':
+                 
                  command = f"powershell.exe -command {command}" # Run PowerShell commands on Windows
              return await self._run_command(command)
 
@@ -30,6 +34,7 @@ class BashTool(BaseAnthropicTool):
     async def _run_command(self, command: str):
         """Execute a command in the shell."""
         try:
+            rr(command)
             process = await asyncio.create_subprocess_shell(
                 command,
                 stdout=asyncio.subprocess.PIPE,
@@ -40,7 +45,9 @@ class BashTool(BaseAnthropicTool):
 
             output = stdout.decode().strip() if stdout else ""
             error = stderr.decode().strip() if stderr else None
-
+            rr(output)
+            if error:
+                rr(error)
 
             return CLIResult(output=output, error=error)
 
