@@ -12,7 +12,7 @@ import os
 class Resolution(TypedDict):
     width: int
     height: int
-
+from rich import print as rr
 
 class ScalingSource(StrEnum):
     COMPUTER = "computer"
@@ -109,9 +109,12 @@ class GoToURLReportsTool(BaseAnthropicTool):
         try:
             # Example: Replace with your actual data source
             df = pd.read_csv(r"C:\Users\Machine81\code\anthropic-quickstarts\computer-use-demo\computer_use_demo\filtered_links.csv")  # Ensure this path is correct
-            # ic(df.head())
-            matches = difflib.get_close_matches(report_name, df['display_name'], n=1, cutoff=0.6)
-            # ic(matches)
+            ic(df.head())
+            # replace _ with space in report_name
+            report_name = report_name.replace("_", " ")
+            rr(report_name)
+            matches = difflib.get_close_matches(report_name, df['display_name'], n=1, cutoff=0.1,)
+            ic(matches)
             if not matches:
                 raise ToolError(f"No matching report found for '{report_name}'.")
 
@@ -119,10 +122,15 @@ class GoToURLReportsTool(BaseAnthropicTool):
 
             url_suffix = df.loc[df['display_name'] == best_match, 'url'].iloc[0]
             full_url = f"https://www.autochlor.net/wps/{url_suffix}"
+            async with async_playwright() as p:
+                browser = await p.chromium.launch(headless=False)
+                context = await browser.new_context(storage_state=r"C:\mygit\compuse\computer_use_demo\state.json")
+                page = await context.new_page()
+                await page.goto(full_url)
+                # press the PRINT button
+                page.click('input[type="submit"][value="PRINT"]')
 
-
-            return ToolResult(output=f"That report is available at {full_url}. You will need to use your computer use tool to navigate to it. select the proper options and then run the report.")
-
+            return ToolResult(output=f"That report is available ")
         except Exception as e:
             raise ToolError(f"Failed to run report '{report_name}': {str(e)}")
         
@@ -134,7 +142,18 @@ class GoToURLReportsTool(BaseAnthropicTool):
         async with async_playwright() as p:
             # Launch Chromium with specified user data directory
             browser = await p.chromium.launch(channel="chrome", headless=False)
-
+            context = browser.new_context(storage_state=r"C:\mygit\compuse\computer_use_demo\state.json")
+            # Navigate to page (state will be preserved)
+            page.goto('https://www.autochlor.net/wps')
+            
+            # Verify state is loaded
+            cookies = context.cookies()
+            local_storage = page.evaluate("""() => {
+                return Object.entries(localStorage);
+            }""")
+            
+            print("Current cookies:", cookies)
+            print("Current local storage:", local_storage)
 
             # Open a new page
             page = await browser.new_page()

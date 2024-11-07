@@ -26,7 +26,7 @@ class BashTool(BaseAnthropicTool):
         if command is not None:
              if platform.system() == 'Windows':
                  
-                 command = f"powershell.exe -command {command}" # Run PowerShell commands on Windows
+                 command = f"powershell.exe -command cd c:/repo && {command}" # Run PowerShell commands on Windows
              return await self._run_command(command)
 
         raise ToolError("no command provided.")

@@ -61,10 +61,16 @@ class CLIResult(ToolResult):
 
 class ToolFailure(ToolResult):
     """A ToolResult that represents a failure."""
-
 @dataclass(kw_only=True, frozen=True)
 class ToolError(Exception):
     """Raised when a tool encounters an error."""
+    message: str
 
-    def __init__(self, message):
-        self.message = message
+    def __init__(self, message: str):
+        # Use object.__setattr__ to set attributes on frozen dataclass
+        object.__setattr__(self, 'message', message)
+        # Initialize the parent Exception class
+        super().__init__(message)
+
+    def __str__(self):
+        return self.message

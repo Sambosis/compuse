@@ -9,6 +9,7 @@ import re
 from html import unescape
 from .base import CLIResult, ToolError, ToolResult, BaseAnthropicTool
 from rich import print as rr
+from icecream import ic
 # Configure logging for user feedback and debugging
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 
@@ -117,8 +118,8 @@ class WebNavigatorTool:
         """
         params = params or {}
         async with async_playwright() as p:
-            browser = await p.chromium.launch(headless=True)
-            context = await browser.new_context()
+            browser = await p.chromium.launch(headless=False)
+            context = await browser.new_context(storage_state=r"C:\mygit\compuse\computer_use_demo\state.json")
             page = await context.new_page()
 
             try:
@@ -161,8 +162,8 @@ class WebNavigatorTool:
                 error_msg = f"An error occurred while performing action '{action}' on {url}: {str(e)}"
                 logging.error(error_msg)
                 return ToolResult(error=error_msg)  # Return general error
-            finally:
-                await browser.close()
+            # finally:
+            #     await browser.close()
 
     async def read_info(
             self, 
