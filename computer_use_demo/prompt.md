@@ -1,43 +1,24 @@
-# The following app description is partially complete in the directory c:/repo/dish_tracker 
+# Your will be developing a vector database specialized for code.  There is a python file in the directory  c:/repo/code_tools/code_tools.py that contains a Library that can be used to scan and analyze code. 
 
-There have been many additional features added to the html, but they are not all fully implemented.
+You will be using the library to scan a code repository and extract information about the code.  You will then use that information to create a vector database.
 
-Your job is to complete the app as described below. 
+The code stores a lot of metadata about the code, including function and method definitions, class definitions, dependencies, and more.
 
-Remove any unnecessary code or functions.
+The vector database should be capable of storing and querying the metadata as well as the full code content.
 
-First, take a look at a journal of the steps taken to create the app, in the file C:\mygit\compuse\computer_use_demo\journal\journal.log
+You will be using pinecone to create the vector database and their is a .env file in the root of the project that contains your PINECONE_API_KEY.
+This also contains a HUGGINGFACE_API_KEY which is for the embedding model.
 
-The biggest issue us that I can no longer save any new entries.
+One of the use cases of this will be to provide code context to give an LLM more information about the code to assist it in completing code and fixing errors. 
+
+You will then use the vector database to answer questions about the code that is stored in the sample_data directory.
+
+At anytime you can review the journal of the steps taken to create the vector database by opening the file:
+C:\mygit\compuse\computer_use_demo\journal\journal.log
+
 
 
 If you have any questions, instead of asking the user,please get an expert opinion.
     When you are done, please test the app to make sure it works. If it or any feature of it is not working, please fix it.
 
 If you finish and it is all working, please ask for an expert opinion on additional features you could add.
-
-
-## Create a web app that stores, updates and tracks the following information in a visual appealing and easy to edit way
-
-It is used to track the status of Dish Machine Sales and Installations.
-The following info should be stored and displayed:
-    - Priority of Install (1-5)
-    - Salesperson Name
-    - Name of Customer
-    - Machine Model (Drop Down with the ability to add new models((A4, A5, D2, UC34, A6)))
-    - Have Verbal Commit (Date or None)
-    - Have Paperwork? (Date or None)
-    - Have Money?? (Date or None)
-    - Installed (Date or None)
-    - Status (Drop Down with options: Pending Salesperson, Pending Machine, Pending Customer, Complete)
-    - Notes
-
-The app should have the following features:
-    - Add new entries
-    - Edit existing entries
-    - Delete entries
-    - Sort by Priority, Salesperson, Customer, Model, Status
-    - Filter by Status, Salesperson
-    - Search by Customer, Salesperson, Model, Status
-    - Export to Excel
-Other features for ease of use or visual appeal are welcome.

@@ -163,3 +163,4 @@ cython_debug/
 playground/
 *debug_log*.*
 *debug_log*
+*.csv
