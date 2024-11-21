@@ -1,7 +1,11 @@
 ## collection.py
 """Collection classes for managing multiple tools."""
 
+<<<<<<< HEAD
 from typing import Any
+=======
+from typing import Union, List, Dict, Any, Optional
+>>>>>>> 762abff2d378c3944d7e1d8a7f2f24cc7c1b4e3d
 import json
 from anthropic.types.beta import BetaToolUnionParam
 from icecream import ic
@@ -11,7 +15,12 @@ from .base import (
     ToolFailure,
     ToolResult,
 )
+<<<<<<< HEAD
 ICECREAM_OUTPUT_FILE = "debug_log.json"
+=======
+from rich import print as rr
+ICECREAM_OUTPUT_FILE = "debug_log.txt"
+>>>>>>> 762abff2d378c3944d7e1d8a7f2f24cc7c1b4e3d
 
 def write_to_file(s, file_path=ICECREAM_OUTPUT_FILE):
     """
@@ -39,6 +48,17 @@ def write_to_file(s, file_path=ICECREAM_OUTPUT_FILE):
     with open(file_path, 'a', encoding="utf-8") as f:
         f.write('\n'.join(formatted_lines))
         f.write('\n' + '-' * 80 + '\n')  # Add separator between entries
+<<<<<<< HEAD
+=======
+
+# Configure icecream
+ic.configureOutput(includeContext=True, outputFunction=write_to_file)    # Write to file
+
+# Configure icecream
+ic.configureOutput(includeContext=True, outputFunction=rr)
+ic()
+ic.configureOutput(includeContext=True, outputFunction=write_to_file)
+>>>>>>> 762abff2d378c3944d7e1d8a7f2f24cc7c1b4e3d
 
 class ToolCollection:
     """A collection of anthropic-defined tools."""
@@ -51,10 +71,16 @@ class ToolCollection:
     def to_params(
         self,
     ) -> list[BetaToolUnionParam]:
+<<<<<<< HEAD
         ic()
         params = [tool.to_params() for tool in self.tools]
         if params:
             params[-1]["cache_control"] = {"type": "ephemeral"}
+=======
+
+        params = [tool.to_params() for tool in self.tools]
+        params[-1]["cache_control"] = {"type": "ephemeral"}
+>>>>>>> 762abff2d378c3944d7e1d8a7f2f24cc7c1b4e3d
         return params
 
     async def run(self, *, name: str, tool_input: dict[str, Any]) -> ToolResult:
@@ -68,5 +94,9 @@ class ToolCollection:
             ic(tool_input)
             return await tool(**tool_input)
         except ToolError as e:
+<<<<<<< HEAD
             return ToolFailure(error=e.message)
+=======
+            return "ToolFailure(error=e.message)"
+>>>>>>> 762abff2d378c3944d7e1d8a7f2f24cc7c1b4e3d
 #"C:/repo/code_test/code_context_manager.py"

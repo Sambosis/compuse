@@ -6,7 +6,14 @@ from typing import Literal, Optional, Dict, Any, List
 import requests
 from bs4 import BeautifulSoup, Comment  # Add Comment to the import
 import re
+<<<<<<< HEAD
 from .base import ToolResult
+=======
+from html import unescape
+from .base import CLIResult, ToolError, ToolResult, BaseAnthropicTool
+from rich import print as rr
+from icecream import ic
+>>>>>>> 762abff2d378c3944d7e1d8a7f2f24cc7c1b4e3d
 # Configure logging for user feedback and debugging
 logging.basicConfig(level=logging.CRITICAL, format='%(asctime)s - %(levelname)s - %(message)s')
 

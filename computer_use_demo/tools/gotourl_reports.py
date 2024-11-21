@@ -128,7 +128,11 @@ class GoToURLReportsTool(BaseAnthropicTool):
                 # press the PRINT button
                 page.click('input[type="submit"][value="PRINT"]')
 
+<<<<<<< HEAD
             return ToolResult(output="That report is available ")
+=======
+            return ToolResult(output=f"That report is available ")
+>>>>>>> 762abff2d378c3944d7e1d8a7f2f24cc7c1b4e3d
         except Exception as e:
             raise ToolError(f"Failed to run report '{report_name}': {str(e)}")
         
@@ -150,7 +154,13 @@ class GoToURLReportsTool(BaseAnthropicTool):
                 return Object.entries(localStorage);
             }""")
             
+<<<<<<< HEAD
  
+=======
+            print("Current cookies:", cookies)
+            print("Current local storage:", local_storage)
+
+>>>>>>> 762abff2d378c3944d7e1d8a7f2f24cc7c1b4e3d
             # Open a new page
             page = await browser.new_page()
 

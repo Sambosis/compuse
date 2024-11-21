@@ -360,13 +360,4 @@ dmypy.json
 
 # Cython debug symbols
 cython_debug/
-/logs
-/downloads
-icecream_out*.*
-# Jupyter Notebook
-.ipynb_checkpoints
-*.ipynb
-# pyenv
-.python-version
-*log*.txt
-*.debug_log*.*
+

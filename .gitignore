@@ -162,3 +162,4 @@ cython_debug/
 #.idea/
 playground/
 *debug_log*.*
+*debug_log*

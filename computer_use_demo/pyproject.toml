@@ -4,6 +4,7 @@ version = "0.1.0"
 description = "Add your description here"
 readme = "README.md"
 requires-python = ">=3.12"
+<<<<<<< HEAD
 dependencies = [
     "anthropic>=0.39.0",
     "anyio>=4.6.2.post1",
@@ -20,3 +21,6 @@ dependencies = [
     "types-pyautogui>=0.9.3.20240406",
     "unimport>=1.2.1",
 ]
+=======
+dependencies = []
+>>>>>>> 762abff2d378c3944d7e1d8a7f2f24cc7c1b4e3d

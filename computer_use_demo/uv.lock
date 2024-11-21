@@ -1,5 +1,6 @@
 version = 1
 requires-python = ">=3.12"
+<<<<<<< HEAD
 resolution-markers = [
     "python_full_version < '3.12.4'",
     "python_full_version >= '3.12.4' and python_full_version < '3.13'",
@@ -205,11 +206,14 @@ sdist = { url = "https://files.pythonhosted.org/packages/d8/53/6f443c9a4a8358a93
 wheels = [
     { url = "https://files.pythonhosted.org/packages/d1/d6/3965ed04c63042e047cb6a3e6ed1a63a35087b6a609aa3a15ed8ac56c221/colorama-0.4.6-py2.py3-none-any.whl", hash = "sha256:4f1d9991f5acc0ca119f9d443620b77f9d6b33703e51011c16baf57afb285fc6", size = 25335 },
 ]
+=======
+>>>>>>> 762abff2d378c3944d7e1d8a7f2f24cc7c1b4e3d
 
 [[package]]
 name = "computer-use-demo"
 version = "0.1.0"
 source = { virtual = "." }
+<<<<<<< HEAD
 dependencies = [
     { name = "anthropic" },
     { name = "anyio" },
@@ -1267,3 +1271,5 @@ wheels = [
     { url = "https://files.pythonhosted.org/packages/f3/27/f084d9a5668853c1f3b246620269b14ee871ef3c3cc4f3a1dd53645b68ec/yarl-1.17.1-cp313-cp313-win_amd64.whl", hash = "sha256:949681f68e0e3c25377462be4b658500e85ca24323d9619fdc41f68d46a1ffda", size = 314637 },
     { url = "https://files.pythonhosted.org/packages/52/ad/1fe7ff5f3e8869d4c5070f47b96bac2b4d15e67c100a8278d8e7876329fc/yarl-1.17.1-py3-none-any.whl", hash = "sha256:f1790a4b1e8e8e028c391175433b9c8122c39b46e1663228158e61e6f915bf06", size = 44352 },
 ]
+=======
+>>>>>>> 762abff2d378c3944d7e1d8a7f2f24cc7c1b4e3d
