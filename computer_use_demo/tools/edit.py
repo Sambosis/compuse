@@ -1,17 +1,15 @@
 ## edit.py
-import asyncio
 import os
-import base64
+import re
 from pathlib import Path
 from collections import defaultdict
 from typing import Literal, get_args
 from anthropic.types.beta import BetaToolTextEditor20241022Param
-from .base import BaseAnthropicTool, CLIResult, ToolError, ToolResult
+from .base import BaseAnthropicTool, ToolError, ToolResult
 from .run import maybe_truncate
-from typing import Union, List, Dict, Any, Optional
+from typing import List, Optional
 from icecream import ic
 import sys
-import logging
 from rich import print as rr
 # Reconfigure stdout to use UTF-8 encoding
 sys.stdout.reconfigure(encoding='utf-8')
@@ -29,7 +27,7 @@ Command = Literal[
 SNIPPET_LINES: int = 4
 
 class EditTool(BaseAnthropicTool):
-    """
+    description="""
     A cross-platform filesystem editor tool that allows the agent to view, create, and edit files.
     The tool parameters are defined by Anthropic and are not editable.
     """
@@ -61,8 +59,11 @@ class EditTool(BaseAnthropicTool):
         insert_line: int | None = None,
         **kwargs,
     ) -> ToolResult:
+
         _path = Path(path).resolve()  # resolve() handles both Windows and Unix paths
-        self.validate_path(command, _path)
+        ic(_path)
+
+        # _path = self.validate_path(command, _path)
         if command == "view":
             return await self.view(_path, view_range)
         elif command == "create":
@@ -86,11 +87,55 @@ class EditTool(BaseAnthropicTool):
         raise ToolError(
             f'Unrecognized command {command}. The allowed commands for the {self.name} tool are: {", ".join(get_args(Command))}'
         )
+    def normalize_path(self, path: Optional[str]) -> Path:
+        """
+        Normalize a file path to ensure it starts with 'C:/repo/'.
+        
+        Args:
+            path: Input path string that needs to be normalized
+            Note:
+            This method is used to normalize the path provided by the user.
+            The normalized path is used to ensure that the path starts with 'C:/repo/'
+            and is a valid path.
+        Returns:
+            Normalized path string starting with 'C:/repo/'
+            
+        Raises:
+            ValueError: If the path is None or empty
+        """
+        if not path:
+            raise ValueError('Path cannot be empty')
+        
+        # Convert to string in case we receive a Path object
+        normalized_path = str(path)
+        
+        # Convert all backslashes to forward slashes
+        normalized_path = normalized_path.replace('\\', '/')
+        
+        # Remove any leading/trailing whitespace
+        normalized_path = normalized_path.strip()
+        
+        # Remove multiple consecutive forward slashes
+        normalized_path = re.sub(r'/+', '/', normalized_path)
+        
+        # Remove 'C:' or 'c:' if it exists at the start
+        normalized_path = re.sub(r'^[cC]:', '', normalized_path)
+        
+        # Remove '/repo/' if it exists at the start
+        normalized_path = re.sub(r'^/repo/', '', normalized_path)
+        
+        # Remove leading slash if it exists
+        normalized_path = re.sub(r'^/', '', normalized_path)
+        
+        # Combine with base path
+        return Path(f'C:/repo/{normalized_path}')
 
     def validate_path(self, command: str, path: Path):
         """
         Check that the path/command combination is valid in a cross-platform manner.
+        param command: The command that the user is trying to run.
         """
+        path = self.normalize_path(path)
         try:
             # This handles both Windows and Unix paths correctly
             path = path.resolve()
@@ -123,6 +168,7 @@ class EditTool(BaseAnthropicTool):
     async def view(self, path: Path, view_range: Optional[List[int]] = None) -> ToolResult:
         """Implement the view command using cross-platform methods."""
         ic(path)
+        path = self.normalize_path(path)
         if path.is_dir():
             if view_range:
                 raise ToolError(
@@ -147,7 +193,6 @@ class EditTool(BaseAnthropicTool):
                 stdout = f"Here's the files and directories up to 2 levels deep in {path}, excluding hidden items:\n{stdout}\n"
                 return ToolResult(output=stdout, error=None, base64_image=None)
             except Exception as e:
-                logging.error(f"Error viewing directory {path}: {e}")
                 return ToolResult(output="", error=str(e), base64_image=None)
 
         # If it's a file, read its content
@@ -183,6 +228,7 @@ class EditTool(BaseAnthropicTool):
         try:
             # Read the file content
             ic(path)
+            path = self.normalize_path(path)
             file_content = self.read_file(path).expandtabs()
             old_str = old_str.expandtabs()
             new_str = new_str.expandtabs() if new_str is not None else ""
@@ -223,14 +269,12 @@ class EditTool(BaseAnthropicTool):
             success_msg += "Review the changes and make sure they are as expected. Edit the file again if necessary."
 
             return ToolResult(output=success_msg, error=None, base64_image=None)
-        except ToolError as te:
-            logging.error(f"ToolError in str_replace: {te}")
-            return ToolResult(output=None, error=str(te), base64_image=None)
+
         except Exception as e:
-            logging.error(f"Unexpected error in str_replace: {e}")
             return ToolResult(output=None, error=str(e), base64_image=None)
     def insert(self, path: Path, insert_line: int, new_str: str) -> ToolResult:
         """Implement the insert command, which inserts new_str at the specified line in the file content."""
+        path = self.normalize_path(path)
         file_text = self.read_file(path).expandtabs()
         new_str = new_str.expandtabs()
         file_text_lines = file_text.split("\n")
@@ -267,9 +311,23 @@ class EditTool(BaseAnthropicTool):
         )
         success_msg += "Review the changes and make sure they are as expected (correct indentation, no duplicate lines, etc). Edit the file again if necessary."
         return ToolResult(output=success_msg)
-
+    def ensure_valid_repo_path(filename: str) -> str:
+        ### Need to Try this out ###
+        base_path = "C:/repo/"
+        
+        # Normalize path separators for cross-platform compatibility
+        filename = filename.replace("\\", "/")
+        
+        # Check if the filename already starts with the base path
+        if not filename.startswith(base_path):
+            # Prepend the base path if it's not present
+            filename = os.path.join(base_path, filename.lstrip("/"))
+        filename = self.normalize_path(filename)
+        # Return the standardized path using Windows-style separator
+        return os.path.normpath(filename)
     def undo_edit(self, path: Path) -> ToolResult:
         """Implement the undo_edit command."""
+        path = self.normalize_path(path)
         if not self._file_history[path]:
             raise ToolError(f"No edit history found for {path}.")
 
@@ -281,12 +339,17 @@ class EditTool(BaseAnthropicTool):
         )
 
     def read_file(self, path: Path) -> str:
+        rr(path)
+
+        path = self.normalize_path(path)
+
         try:
             return path.read_text(encoding="utf-8").encode('ascii', errors='replace').decode('ascii')
         except Exception as e:
             ic(f"Error reading file {path}: {e}")
             raise ToolError(f"Ran into {e} while trying to read {path}") from None
     def write_file(self, path: Path, file: str):
+        path = self.normalize_path(path)
         """Write the content of a file to a given path; raise a ToolError if an error occurs."""
         try:
             path.write_text(file, encoding="utf-8")
@@ -311,7 +374,7 @@ class EditTool(BaseAnthropicTool):
             ]
         )
         return (
-            f"Here's the result of running `cat -n` on {file_descriptor}:\n"
+            f"Here's the result of running ` -n` on {file_descriptor}:\n"
             + file_content
             + "\n"
         )

@@ -1,16 +1,12 @@
+#expert.py
 from openai import OpenAI
 # load the API key from the environment
-import os
 from dotenv import load_dotenv
 from icecream import ic
-import difflib
-import pandas as pd
-from typing import Optional, Literal, TypedDict
-from enum import StrEnum
-from .base import CLIResult, ToolError, ToolResult, BaseAnthropicTool
+from typing import Optional, Literal
+from .base import ToolError, ToolResult, BaseAnthropicTool, ToolFailure
 load_dotenv()
 from rich import print as rr
-import os
 
 
 class GetExpertOpinionTool(BaseAnthropicTool):
@@ -168,9 +164,8 @@ Begin your detailed task breakdown below:
             return ToolResult(output=ex_opinion)
         except Exception as e:
             ic(e)
-            rr({str(e).encode('ascii', errors='replace').decode('ascii')})
-            # raise ToolError(f"Failed to generate opinion: {str(e).encode('ascii', errors='replace').decode('ascii')}")
-            return ToolResult(output="I'm sorry but I can't help right now,  you can just follow your best logic and I know you will solve it!")
+            rr(f"{str(e).encode('ascii', errors='replace').decode('ascii')}")
+            return ToolFailure(error="Failed to generate opinion.")
 
 
 

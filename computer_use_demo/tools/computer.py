@@ -1,41 +1,23 @@
-## computer.py
-
 import asyncio
 import base64
 import os
-import platform
+import shlex
+import shutil
 from enum import StrEnum
-from typing import List, Optional, Union, Tuple, Literal, TypedDict
+from typing import Optional, Union, Tuple, Literal, TypedDict
 from pathlib import Path
 from uuid import uuid4
 import pyautogui
 import logging
-import concurrent.futures
 import time
 import pygetwindow as gw
+from PIL import Image
 from anthropic.types.beta import BetaToolComputerUse20241022Param
 import pyperclip
-from .base import CLIResult, ToolError, ToolResult, BaseAnthropicTool
-from rich import print as rr
-# Configure logging with platform-appropriate paths
-if platform.system() == 'Windows':
-    LOG_FILE = Path(os.getenv('APPDATA')) / 'computer_tool' / 'logs.txt'
-    SCREENSHOT_DIR = Path(os.getenv('APPDATA')) / 'computer_tool' / 'screenshots'
-else:
-    LOG_FILE = Path.home() / '.computer_tool' / 'logs.txt'
-    SCREENSHOT_DIR = Path.home() / '.computer_tool' / 'screenshots'
+from .base import BaseAnthropicTool, CLIResult, ToolError, ToolResult
+from .run import run
 
-# Ensure directories exist
-LOG_FILE.parent.mkdir(parents=True, exist_ok=True)
-SCREENSHOT_DIR.mkdir(parents=True, exist_ok=True)
-
-# Configure logging
-logging.basicConfig(
-    level=logging.DEBUG,
-    filename=str(LOG_FILE),
-    format='%(asctime)s - %(levelname)s - %(message)s',
-    force=True
-)
+OUTPUT_DIR = os.path.join(os.getenv('APPDATA', ''), 'computer_tool', 'outputs')
 
 TYPING_DELAY_MS = 12
 TYPING_GROUP_SIZE = 50
@@ -61,149 +43,60 @@ class Resolution(TypedDict):
     height: int
 
 
+# sizes above XGA/WXGA are not recommended (see README.md)
+# scale down to one of these targets if ComputerTool._scaling_enabled is set
+MAX_SCALING_TARGETS: dict[str, Resolution] = {
+    "XGA": Resolution(width=1024, height=768),  # 4:3
+    "WXGA": Resolution(width=1280, height=800),  # 16:10
+    "FWXGA": Resolution(width=1366, height=768),  # ~16:9
+}
+
+
 class ScalingSource(StrEnum):
     COMPUTER = "computer"
     API = "api"
 
-class Options(TypedDict):
+class ComputerToolOptions(TypedDict):
     display_height_px: int
     display_width_px: int
     display_number: Optional[int]
 
-class GuiAutomation: # removed unecessary async functions and made synchronous
-    """Helper class for common GUI automation patterns"""
-
-    @staticmethod
-    def open_chrome(url: Optional[str] = None):
-        """Open Chrome and optionally navigate to a URL."""
-        pyautogui.press('start')
-        time.sleep(0.5)
-        pyautogui.write('chrome')
-        time.sleep(0.5)
-        pyautogui.press('enter')
-        time.sleep(2) # give chrome time to open
-
-        if url:
-                pyautogui.hotkey('ctrl', 'l')
-                time.sleep(0.2)
-                pyperclip.copy(url)
-                pyperclip.paste()
-                pyautogui.press('enter')
-
-
-    @staticmethod
-    def wait_for_window(title: str, timeout: int = 10) -> bool:
-        elapsed_time = 0
-        while elapsed_time < timeout:
-            if any(title in w.title for w in gw.getAllWindows()):
-                return True
-            time.sleep(0.2)
-            elapsed_time += 0.2
-        return False
-
-    @staticmethod
-    def switch_app(key_combo: Union[str, Tuple[str, ...]]):
-        """Switch between applications using keyboard shortcuts."""
-        if isinstance(key_combo, str):
-            pyautogui.press(key_combo)
-        else:
-            pyautogui.hotkey(*key_combo)
-        time.sleep(0.5)
-
-    @staticmethod
-    def copy_selection():
-        """Copy current selection to clipboard."""
-        pyautogui.hotkey('ctrl', 'c')
-        time.sleep(0.2)  # Wait for clipboard
-
-    @staticmethod
-    def paste_text():
-        """Paste clipboard content."""
-        pyautogui.hotkey('ctrl', 'v')
-        time.sleep(0.2)
-
-
-
-class WindowsUseTool(BaseAnthropicTool):
-    """
-    A Windows-specific tool that allows the agent to interact with the screen, keyboard, and mouse.
+class ComputerTool(BaseAnthropicTool):
+    description="""
+    A cross-platform tool that allows the agent to interact with the screen, keyboard, and mouse.
+    The tool parameters are defined by Anthropic and are not editable.
     """
 
-    name: Literal["windows"] = "windows"
-    api_type: Literal["custom"] = "custom"
+    name: Literal["computer"] = "computer"
+    api_type: Literal["computer_20241022"] = "computer_20241022"
     width: int
     height: int
-    display_num: Optional[int]
+    display_num: int | None
 
     _screenshot_delay = 1.0
     _scaling_enabled = True
 
     @property
-    def options(self) -> Options:
+    def options(self) -> ComputerToolOptions:
+        width, height = self.scale_coordinates(
+            ScalingSource.COMPUTER, self.width, self.height
+        )
         return {
             "display_width_px": self.width,
             "display_height_px": self.height,
             "display_number": self.display_num,
         }
 
-    def to_params(self) -> dict:
-        return {
-            "name": self.name,
-            "type": self.api_type,
-            "description": "A tool for controlling Windows GUI elements using mouse and keyboard",
-            "input_schema": {
-                "type": "object",
-                "properties": {
-                    "action": {
-                        "type": "string",
-                        "enum": [
-                            "key",
-                            "type",
-                            "mouse_move",
-                            "left_click",
-                            "left_click_drag",
-                            "right_click",
-                            "middle_click",
-                            "double_click",
-                            "screenshot",
-                            "cursor_position",
-                            "open_url",
-                            "get_window_title"
-                        ],
-                        "description": "The action to perform"
-                    },
-                    "text": {
-                        "type": "string",
-                        "description": "Text to type or key to press"
-                    },
-                    "coordinate": {
-                        "type": "array",
-                        "items": {"type": "integer"},
-                        "minItems": 2,
-                        "maxItems": 2,
-                        "description": "X,Y coordinates for mouse actions"
-                    },
-                    "url": {
-                        "type": "string",
-                        "description": "URL to open in browser"
-                    }
-                },
-                "required": ["action"]
-            }
-        }
+    def to_params(self) -> BetaToolComputerUse20241022Param:
+        return {"name": self.name, "type": self.api_type, **self.options}
 
     def __init__(self):
         super().__init__()
-
-        # Get screen size using pyautogui instead of fixed values
-        screen_width, screen_height = pyautogui.size()
-        self.width = screen_width
-        self.height = screen_height
-
-        # Handle display number (Not relevant for Windows, maintain None)
+        self.width = pyautogui.size().width
+        self.height = pyautogui.size().height
         self.display_num = None
-
-        logging.debug(f"Initialized  with resolution: {self.width}x{self.height}")
+        
+        os.makedirs(OUTPUT_DIR, exist_ok=True)
 
     async def __call__(
         self,
@@ -211,180 +104,149 @@ class WindowsUseTool(BaseAnthropicTool):
         action: Action,
         text: Optional[str] = None,
         coordinate: Optional[tuple[int, int]] = None,
-        url: Optional[str] = None,
         **kwargs,
     ) -> ToolResult:
-        logging.debug(f"Action: {action}, Text: {text}, Coordinate: {coordinate}")
-
         try:
-            # Fail-safe in case the mouse goes out of control
-            pyautogui.FAILSAFE = True
-            start_time = time.time()
+            if action in ("mouse_move", "left_click_drag"):
+                if coordinate is None:
+                    raise ToolError(f"coordinate is required for {action}")
+                if text is not None:
+                    raise ToolError(f"text is not accepted for {action}")
+                if not isinstance(coordinate, (list, tuple)) or len(coordinate) != 2:
+                    raise ToolError(f"{coordinate} must be a tuple of length 2")
+                if not all(isinstance(i, int) and i >= 0 for i in coordinate):
+                    raise ToolError(f"{coordinate} must be a tuple of non-negative ints")
 
-            if action == "key":
-                if not text:
-                    raise ToolError("No key specified for 'key' action.")
-                pyautogui.press(text)
-                return ToolResult(output=f"Pressed key: {text}", error=None)
-
-            elif action == "type":
-                if not text:
-                    raise ToolError("No text specified for 'type' action.")
-                # Handle platform-specific line endings (Not needed for ctrl+v)
-                
-                # Type using pyperclip for better handling of special characters and unicode
-                original_clipboard = pyperclip.paste()
-                try:
-                    pyperclip.copy(text)
-                    pyautogui.hotkey('ctrl', 'v')
-                    return ToolResult(output=f"Typed text: {text}", error=None)
-                finally:
-                    pyperclip.copy(original_clipboard)
-
-
-            elif action == "mouse_move":
-                if not coordinate or len(coordinate) != 2:
-                    raise ToolError("Invalid coordinates for 'mouse_move' action.")
-                x, y = coordinate
-                # Ensure coordinates are within screen bounds
-                if not (0 <= x <= self.width and 0 <= y <= self.height):
-                    raise ToolError(f"Coordinates {coordinate} are out of screen bounds ({self.width}x{self.height})")
-                pyautogui.moveTo(x, y)
-                return ToolResult(output=f"Moved mouse to {coordinate}", error=None)
-
-            elif action == "left_click":
-                pyautogui.click(button='left')
-                return ToolResult(output="Left clicked", error=None)
-
-            elif action == "right_click":
-                pyautogui.click(button='right')
-                return ToolResult(output="Right clicked", error=None)
-
-            elif action == "middle_click":
-                pyautogui.click(button='middle')
-                return ToolResult(output="Middle clicked", error=None)
-
-            elif action == "double_click":
-                pyautogui.doubleClick()
-                return ToolResult(output="Double clicked", error=None)
-
-            elif action == "screenshot":
-                return await self.screenshot()
-
-            elif action == "cursor_position":
-                position = pyautogui.position()
-                return ToolResult(output=str(position), error=None)
-
-            elif action == "speak": # new action
-                if not text:
-                    raise ToolError("No text specified for 'speak' action.")
-                # Requires a platform-specific implementation (Example uses Windows)
-                if platform.system() == 'Windows':
-                    # Escape double quotes in the text
-                    escaped_text = text.replace('"', '\\"')
-                    await self.shell(f'PowerShell -Command "Add-Type -AssemblyName System.Speech; (New-Object System.Speech.Synthesis.SpeechSynthesizer).Speak(\"{escaped_text}\")"') # uses powershell to speak on windows
-                else:
-                    # Replace with appropriate command for other platforms (e.g., say on macOS)
-                    await self.shell(f"say '{text}'")  # Example for macOS
-
-                return ToolResult(output=f"Spoke text: {text}", error=None)
-            
-            elif action == "open_url":
-                if not url:
-                    raise ToolError("No URL specified for 'open_url' action.")
-                GuiAutomation.open_chrome(url) # added this
-                return ToolResult(output=f"Opened URL: {url}", error=None)
-
-
-            elif action == "get_window_title": # new action
-                current_window = gw.getActiveWindow()
-                if current_window:
-                    return ToolResult(output=current_window.title, error=None)
-                else:
-                    return ToolResult(output="No active window found", error=None)
-
-
-            else:
-                raise ToolError(f"Unsupported action: {action}")
-
-        except pyautogui.FailSafeException:
-            error_msg = "PyAutoGUI fail-safe triggered. Mouse moved to a corner of the screen."
-            logging.error(error_msg)
-            return ToolResult(output=None, error=error_msg, base64_image=None)
-        except ToolError as te:
-            logging.error(f"Tool Error: {te}")
-            return ToolResult(output=None, error=str(te), base64_image=None)
-        except Exception as e:
-            logging.error(f"Unexpected error: {e}")
-            return ToolResult(output=None, error=str(e), base64_image=None)
-
-
-    async def shell(self, command: str, take_screenshot=True) -> ToolResult:
-        """Run a shell command and return the output, error, and optionally a screenshot."""
-        logging.debug(f"Executing command: {command}")
-        try:
-            # Use PowerShell for Windows and default shell otherwise
-            if platform.system() == 'Windows':
-                process = await asyncio.create_subprocess_shell(
-                    command,
-                    stdout=asyncio.subprocess.PIPE,
-                    stderr=asyncio.subprocess.PIPE,
-                    shell=True  # Use cmd.exe on Windows to call powershell
+                x, y = self.scale_coordinates(
+                    ScalingSource.API, coordinate[0], coordinate[1]
                 )
 
-            else:
-                process = await asyncio.create_subprocess_shell(
-                    command,
-                    stdout=asyncio.subprocess.PIPE,
-                    stderr=asyncio.subprocess.PIPE
-                )
+                if action == "mouse_move":
+                    pyautogui.moveTo(x, y)
+                    return ToolResult(output=f"Moved mouse to {x}, {y}")
+                else:  # left_click_drag
+                    pyautogui.dragTo(x, y, button='left')
+                    return ToolResult(output=f"Dragged mouse to {x}, {y}")
 
+            if action in ("key", "type"):
+                if text is None:
+                    raise ToolError(f"text is required for {action}")
+                if coordinate is not None:
+                    raise ToolError(f"coordinate is not accepted for {action}")
+                if not isinstance(text, str):
+                    raise ToolError(f"{text} must be a string")
 
-            stdout, stderr = await process.communicate()
+                if action == "key":
+                    pyautogui.press(text)
+                    return ToolResult(output=f"Pressed key: {text}")
+                else:  # type
+                    pyautogui.write(text, interval=TYPING_DELAY_MS/1000)
+                    screenshot = await self.screenshot()
+                    return ToolResult(
+                        output=f"Typed text: {text}",
+                        base64_image=screenshot.base64_image
+                    )
 
-            stdout = stdout.decode().strip() if stdout else ""
-            stderr = stderr.decode().strip() if stderr else None
+            if action in (
+                "left_click",
+                "right_click",
+                "double_click",
+                "middle_click",
+                "screenshot",
+                "cursor_position",
+            ):
+                if text is not None:
+                    raise ToolError(f"text is not accepted for {action}")
+                if coordinate is not None:
+                    raise ToolError(f"coordinate is not accepted for {action}")
 
-            logging.debug(f"Command output: {stdout}")
-            if stderr:
-                logging.debug(f"Command error: {stderr}")
+                if action == "screenshot":
+                    return await self.screenshot()
 
-            base64_image = None
+                elif action == "cursor_position":
+                    pos = pyautogui.position()
+                    x, y = self.scale_coordinates(
+                        ScalingSource.COMPUTER, pos.x, pos.y
+                    )
+                    return ToolResult(output=f"X={x},Y={y}")
+                else:
+                    click_map = {
+                        "left_click": lambda: pyautogui.click(button='left'),
+                        "right_click": lambda: pyautogui.click(button='right'),
+                        "middle_click": lambda: pyautogui.click(button='middle'),
+                        "double_click": lambda: pyautogui.doubleClick(),
+                    }
+                    click_map[action]()
+                    return ToolResult(output=f"Performed {action}")
 
-            if take_screenshot:
-                await asyncio.sleep(self._screenshot_delay)
-                base64_image = (await self.screenshot()).base64_image
+            raise ToolError(f"Invalid action: {action}")
 
-            return ToolResult(output=stdout, error=stderr, base64_image=base64_image)
         except Exception as e:
-            logging.error(f"Error executing command '{command}': {e}")
-            return ToolResult(output=None, error=str(e), base64_image=None)
-
+            return ToolResult(error=str(e))
 
     async def screenshot(self) -> ToolResult:
-        """Take a screenshot and return the base64-encoded image."""
+        """Take a screenshot of the current screen and return the base64 encoded image."""
         try:
-            screenshot_path = SCREENSHOT_DIR / f"screenshot_{uuid4().hex}.png"
-            pyautogui.screenshot(str(screenshot_path)) # removed unnecessary async call
-
-            with open(screenshot_path, "rb") as image_file:
-                base64_image = base64.b64encode(image_file.read()).decode("utf-8")
-
-            # Clean up old screenshots to prevent disk space issues
-            self._cleanup_old_screenshots()
-
-            return ToolResult(output="Screenshot taken", error=None, base64_image=base64_image)
+            path = Path(OUTPUT_DIR) / f"screenshot_{uuid4().hex}.png"
+            
+            # Take screenshot
+            screen = pyautogui.screenshot()
+            
+            # Scale if enabled
+            if self._scaling_enabled:
+                x, y = self.scale_coordinates(
+                    ScalingSource.COMPUTER, self.width, self.height
+                )
+                screen = screen.resize((x, y), Image.Resampling.LANCZOS)
+            
+            # Save and encode
+            screen.save(str(path))
+            base64_image = base64.b64encode(path.read_bytes()).decode()
+            
+            # Clean up old files
+            self._cleanup_screenshots()
+            
+            return ToolResult(
+                output="Screenshot taken",
+                base64_image=base64_image
+            )
         except Exception as e:
-            logging.error(f"Error taking screenshot: {e}")
-            return ToolResult(output=None, error=str(e), base64_image=None)
+            return ToolResult(error=f"Failed to take screenshot: {str(e)}")
 
-    def _cleanup_old_screenshots(self, max_files: int = 100):
-        """Clean up old screenshots to prevent disk space issues."""
+    def _cleanup_screenshots(self, max_files: int = 100):
+        """Clean up old screenshots, keeping only the most recent ones."""
         try:
-            screenshots = sorted(SCREENSHOT_DIR.glob("*.png"), key=lambda x: x.stat().st_mtime)
+            screenshots = sorted(
+                Path(OUTPUT_DIR).glob("*.png"),
+                key=lambda x: x.stat().st_mtime
+            )
             if len(screenshots) > max_files:
                 for screenshot in screenshots[:-max_files]:
                     screenshot.unlink()
         except Exception as e:
             logging.warning(f"Error cleaning up screenshots: {e}")
 
+    def scale_coordinates(self, source: ScalingSource, x: int, y: int):
+        """Scale coordinates to a target maximum resolution."""
+        if not self._scaling_enabled:
+            return x, y
+        ratio = self.width / self.height
+        target_dimension = None
+        for dimension in MAX_SCALING_TARGETS.values():
+            # allow some error in the aspect ratio - not ratios are exactly 16:9
+            if abs(dimension["width"] / dimension["height"] - ratio) < 0.02:
+                if dimension["width"] < self.width:
+                    target_dimension = dimension
+                break
+        if target_dimension is None:
+            return x, y
+        # should be less than 1
+        x_scaling_factor = target_dimension["width"] / self.width
+        y_scaling_factor = target_dimension["height"] / self.height
+        if source == ScalingSource.API:
+            if x > self.width or y > self.height:
+                raise ToolError(f"Coordinates {x}, {y} are out of bounds")
+            # scale up
+            return round(x / x_scaling_factor), round(y / y_scaling_factor)
+        # scale down
+        return round(x * x_scaling_factor), round(y * y_scaling_factor)

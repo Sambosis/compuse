@@ -1,0 +1,200 @@
+filepath,name,docstring,args,return_annotation,decorators
+c:\mygit\compuse\computer_use_demo\code_context_manager.py,to_message,Convert CodeFile to a structured message for an LLM or any other consumer.,"[{'name': 'self', 'type_annotation': None, 'default_value': None}]","Dict[str, any]",[]
+c:\mygit\compuse\computer_use_demo\code_context_manager.py,extract_code_blocks,"Extracts code blocks from the response text.
+
+Returns a list of tuples containing the language and code.
+For example: [(""python"", ""def foo(): pass""), ...]","[{'name': 'response_text', 'type_annotation': 'str', 'default_value': None}]","List[Tuple[str, str]]",[]
+c:\mygit\compuse\computer_use_demo\code_context_manager.py,is_code_valid,Checks if the provided Python code is syntactically correct.,"[{'name': 'code', 'type_annotation': 'str', 'default_value': None}]",bool,[]
+c:\mygit\compuse\computer_use_demo\code_context_manager.py,replace_file,Replaces the entire content of the specified file with new_content.,"[{'name': 'file_path', 'type_annotation': 'str', 'default_value': None}, {'name': 'new_content', 'type_annotation': 'str', 'default_value': None}]",None,[]
+c:\mygit\compuse\computer_use_demo\code_context_manager.py,insert_code_after_function,Inserts code after the specified function in a Python file.,"[{'name': 'original_content', 'type_annotation': 'str', 'default_value': None}, {'name': 'function_name', 'type_annotation': 'str', 'default_value': None}, {'name': 'code_to_add', 'type_annotation': 'str', 'default_value': None}]",str,[]
+c:\mygit\compuse\computer_use_demo\code_context_manager.py,extract_single_code_block,Extracts a single code block's language and code.,"[{'name': 'code_block', 'type_annotation': 'str', 'default_value': None}]","Tuple[Optional[str], Optional[str]]",[]
+c:\mygit\compuse\computer_use_demo\code_context_manager.py,commit_changes,Commits changes to the git repository with the provided message.,"[{'name': 'message', 'type_annotation': 'str', 'default_value': None}]",None,[]
+c:\mygit\compuse\computer_use_demo\code_context_manager.py,run_tests,Runs the test suite and returns True if all tests pass.,[],bool,[]
+c:\mygit\compuse\computer_use_demo\code_context_manager.py,revert_last_commit,Reverts the last git commit.,[],None,[]
+c:\mygit\compuse\computer_use_demo\code_context_manager.py,__init__,,"[{'name': 'self', 'type_annotation': None, 'default_value': 'None'}, {'name': 'persistence_file', 'type_annotation': 'Optional[str]', 'default_value': None}]",,[]
+c:\mygit\compuse\computer_use_demo\code_context_manager.py,update_file,Add or update a file in the context.,"[{'name': 'self', 'type_annotation': None, 'default_value': 'None'}, {'name': 'name', 'type_annotation': 'str', 'default_value': 'None'}, {'name': 'content', 'type_annotation': 'str', 'default_value': None}, {'name': 'dependencies', 'type_annotation': 'Optional[Set[str]]', 'default_value': None}, {'name': 'description', 'type_annotation': 'Optional[str]', 'default_value': None}]",None,[]
+c:\mygit\compuse\computer_use_demo\code_context_manager.py,get_context_messages,Get all file contexts as messages.,"[{'name': 'self', 'type_annotation': None, 'default_value': None}]","List[Dict[str, any]]",[]
+c:\mygit\compuse\computer_use_demo\code_context_manager.py,save_to_disk,Persist the current code context to disk.,"[{'name': 'self', 'type_annotation': None, 'default_value': None}]",None,[]
+c:\mygit\compuse\computer_use_demo\code_context_manager.py,load_from_disk,Load the code context from disk.,"[{'name': 'self', 'type_annotation': None, 'default_value': None}]",None,[]
+c:\mygit\compuse\computer_use_demo\code_context_manager.py,remove_file,Remove a file from the context.,"[{'name': 'self', 'type_annotation': None, 'default_value': None}, {'name': 'name', 'type_annotation': 'str', 'default_value': None}]",None,[]
+c:\mygit\compuse\computer_use_demo\code_context_manager.py,apply_llm_response,"Parses the LLM response, extracts code blocks, and updates the relevant files.
+Assumes the LLM follows a specific format to indicate target files and update types.
+
+Example LLM response format:
+
+### Update file1.py
+```python
+def greet(name, greeting=""Hello""):
+    return f""{greeting}, {name}!""
+```
+
+### Add to file2.py
+```python
+def new_function():
+    pass
+```","[{'name': 'self', 'type_annotation': None, 'default_value': None}, {'name': 'response_text', 'type_annotation': 'str', 'default_value': None}]",None,[]
+c:\mygit\compuse\computer_use_demo\code_context_manager.py,replace_file_content,Replaces the entire content of the specified file.,"[{'name': 'self', 'type_annotation': None, 'default_value': None}, {'name': 'filename', 'type_annotation': 'str', 'default_value': None}, {'name': 'new_content', 'type_annotation': 'str', 'default_value': None}]",None,[]
+c:\mygit\compuse\computer_use_demo\code_context_manager.py,add_code_to_file,"Adds new code to an existing file. Optionally, specify the function name for better placement.","[{'name': 'self', 'type_annotation': None, 'default_value': 'None'}, {'name': 'filename', 'type_annotation': 'str', 'default_value': None}, {'name': 'code_to_add', 'type_annotation': 'str', 'default_value': None}, {'name': 'function_name', 'type_annotation': 'Optional[str]', 'default_value': None}]",None,[]
+c:\mygit\compuse\computer_use_demo\code_context_manager.py,extract_dependencies,Extracts dependencies from the given Python file content.,"[{'name': 'self', 'type_annotation': None, 'default_value': None}, {'name': 'content', 'type_annotation': 'str', 'default_value': None}]",Set[str],[]
+c:\mygit\compuse\computer_use_demo\computer.py,chunks,,"[{'name': 's', 'type_annotation': 'str', 'default_value': None}, {'name': 'chunk_size', 'type_annotation': 'int', 'default_value': None}]",list[str],[]
+c:\mygit\compuse\computer_use_demo\computer.py,options,,"[{'name': 'self', 'type_annotation': None, 'default_value': None}]",ComputerToolOptions,['property']
+c:\mygit\compuse\computer_use_demo\computer.py,to_params,,"[{'name': 'self', 'type_annotation': None, 'default_value': None}]",BetaToolComputerUse20241022Param,[]
+c:\mygit\compuse\computer_use_demo\computer.py,__init__,,"[{'name': 'self', 'type_annotation': None, 'default_value': None}]",,[]
+c:\mygit\compuse\computer_use_demo\computer.py,scale_coordinates,Scale coordinates to a target maximum resolution.,"[{'name': 'self', 'type_annotation': None, 'default_value': None}, {'name': 'source', 'type_annotation': 'ScalingSource', 'default_value': None}, {'name': 'x', 'type_annotation': 'int', 'default_value': None}, {'name': 'y', 'type_annotation': 'int', 'default_value': None}]",,[]
+c:\mygit\compuse\computer_use_demo\cputest.py,get_platform_specific_system_prompt,Generate a platform-specific system prompt.,[],str,[]
+c:\mygit\compuse\computer_use_demo\cputest.py,chunks,Split a string into chunks of specified size.,"[{'name': 's', 'type_annotation': 'str', 'default_value': None}, {'name': 'chunk_size', 'type_annotation': 'int', 'default_value': None}]",List[str],[]
+c:\mygit\compuse\computer_use_demo\cputest.py,_maybe_filter_to_n_most_recent_images,Filters out older images from the messages to keep memory usage in check.,"[{'name': 'messages', 'type_annotation': 'List[BetaMessageParam]', 'default_value': '10'}, {'name': 'images_to_keep', 'type_annotation': 'int', 'default_value': None}, {'name': 'min_removal_threshold', 'type_annotation': 'int', 'default_value': None}]",,[]
+c:\mygit\compuse\computer_use_demo\cputest.py,_make_api_tool_result,Convert an agent ToolResult to an API ToolResultBlockParam.,"[{'name': 'result', 'type_annotation': 'ToolResult', 'default_value': None}, {'name': 'tool_use_id', 'type_annotation': 'str', 'default_value': None}]",BetaToolResultBlockParam,[]
+c:\mygit\compuse\computer_use_demo\cputest.py,_maybe_prepend_system_tool_result,Prepend system information to tool result if available.,"[{'name': 'result', 'type_annotation': 'ToolResult', 'default_value': None}, {'name': 'result_text', 'type_annotation': 'str', 'default_value': None}]",str,[]
+c:\mygit\compuse\computer_use_demo\cputest.py,main,Entry point for the application.,[],,[]
+c:\mygit\compuse\computer_use_demo\edit_tool.py,__init__,,"[{'name': 'self', 'type_annotation': None, 'default_value': None}]",,[]
+c:\mygit\compuse\computer_use_demo\edit_tool.py,to_params,,"[{'name': 'self', 'type_annotation': None, 'default_value': None}]","Dict[str, Any]",[]
+c:\mygit\compuse\computer_use_demo\edit_tool.py,normalize_path,Normalize a file path to ensure it starts with 'C:/repo/'.,"[{'name': 'self', 'type_annotation': None, 'default_value': None}, {'name': 'path', 'type_annotation': 'Optional[str]', 'default_value': None}]",Path,[]
+c:\mygit\compuse\computer_use_demo\edit_tool.py,validate_path,Check that the path/command combination is valid in a cross-platform manner.,"[{'name': 'self', 'type_annotation': None, 'default_value': None}, {'name': 'command', 'type_annotation': 'str', 'default_value': None}, {'name': 'path', 'type_annotation': 'Path', 'default_value': None}]",,[]
+c:\mygit\compuse\computer_use_demo\edit_tool.py,str_replace,"Implement the str_replace command, which replaces old_str with new_str in the file content.","[{'name': 'self', 'type_annotation': None, 'default_value': None}, {'name': 'path', 'type_annotation': 'Path', 'default_value': None}, {'name': 'old_str', 'type_annotation': 'str', 'default_value': None}, {'name': 'new_str', 'type_annotation': 'Optional[str]', 'default_value': None}]",ToolResult,[]
+c:\mygit\compuse\computer_use_demo\edit_tool.py,insert,"Implement the insert command, which inserts new_str at the specified line in the file content.","[{'name': 'self', 'type_annotation': None, 'default_value': None}, {'name': 'path', 'type_annotation': 'Path', 'default_value': None}, {'name': 'insert_line', 'type_annotation': 'int', 'default_value': None}, {'name': 'new_str', 'type_annotation': 'str', 'default_value': None}]",ToolResult,[]
+c:\mygit\compuse\computer_use_demo\edit_tool.py,undo_edit,Implement the undo_edit command.,"[{'name': 'self', 'type_annotation': None, 'default_value': None}, {'name': 'path', 'type_annotation': 'Path', 'default_value': None}]",ToolResult,[]
+c:\mygit\compuse\computer_use_demo\edit_tool.py,read_file,Read the content of a file.,"[{'name': 'self', 'type_annotation': None, 'default_value': None}, {'name': 'path', 'type_annotation': 'Path', 'default_value': None}]",str,[]
+c:\mygit\compuse\computer_use_demo\edit_tool.py,write_file,Write the content of a file to a given path; raise a ToolError if an error occurs.,"[{'name': 'self', 'type_annotation': None, 'default_value': None}, {'name': 'path', 'type_annotation': 'Path', 'default_value': None}, {'name': 'file', 'type_annotation': 'str', 'default_value': None}]",,[]
+c:\mygit\compuse\computer_use_demo\edit_tool.py,_make_output,Generate output for the CLI based on the content of a file.,"[{'name': 'self', 'type_annotation': None, 'default_value': '1'}, {'name': 'file_content', 'type_annotation': 'str', 'default_value': 'True'}, {'name': 'file_descriptor', 'type_annotation': 'str', 'default_value': None}, {'name': 'init_line', 'type_annotation': 'int', 'default_value': None}, {'name': 'expand_tabs', 'type_annotation': 'bool', 'default_value': None}]",str,[]
+c:\mygit\compuse\computer_use_demo\loop.py,write_to_file,"Write debug output to a file, formatting JSON content in a pretty way.","[{'name': 's', 'type_annotation': None, 'default_value': 'ICECREAM_OUTPUT_FILE'}, {'name': 'file_path', 'type_annotation': None, 'default_value': None}]",,[]
+c:\mygit\compuse\computer_use_demo\loop.py,__init__,,"[{'name': 'self', 'type_annotation': None, 'default_value': 'None'}, {'name': 'image_dir', 'type_annotation': 'Optional[Path]', 'default_value': None}]",,[]
+c:\mygit\compuse\computer_use_demo\loop.py,save_image,Save base64 image data to file and return path.,"[{'name': 'self', 'type_annotation': None, 'default_value': None}, {'name': 'base64_data', 'type_annotation': 'str', 'default_value': None}]",Optional[Path],[]
+c:\mygit\compuse\computer_use_demo\loop.py,format_tool_output,Format and print tool output without base64 data.,"[{'name': 'self', 'type_annotation': None, 'default_value': None}, {'name': 'result', 'type_annotation': 'ToolResult', 'default_value': None}, {'name': 'tool_name', 'type_annotation': 'str', 'default_value': None}]",None,[]
+c:\mygit\compuse\computer_use_demo\loop.py,format_api_response,Format and print API response.,"[{'name': 'self', 'type_annotation': None, 'default_value': None}, {'name': 'response', 'type_annotation': 'APIResponse', 'default_value': None}]",None,[]
+c:\mygit\compuse\computer_use_demo\loop.py,format_content_block,Format and print content block.,"[{'name': 'self', 'type_annotation': None, 'default_value': None}, {'name': 'block', 'type_annotation': 'BetaContentBlock', 'default_value': None}]",None,[]
+c:\mygit\compuse\computer_use_demo\loop.py,format_recent_conversation,Format and print the most recent conversation exchanges.,"[{'name': 'self', 'type_annotation': None, 'default_value': '2'}, {'name': 'messages', 'type_annotation': 'List[BetaMessageParam]', 'default_value': None}, {'name': 'num_recent', 'type_annotation': 'int', 'default_value': None}]",None,[]
+c:\mygit\compuse\computer_use_demo\loop.py,_make_api_tool_result,Convert tool result to API format.,"[{'name': 'result', 'type_annotation': 'ToolResult', 'default_value': None}, {'name': 'tool_use_id', 'type_annotation': 'str', 'default_value': None}]",dict,[]
+c:\mygit\compuse\computer_use_demo\loop.py,__init__,,"[{'name': 'self', 'type_annotation': None, 'default_value': None}]",,[]
+c:\mygit\compuse\computer_use_demo\loop.py,update,Update totals with new response usage.,"[{'name': 'self', 'type_annotation': None, 'default_value': None}, {'name': 'response', 'type_annotation': None, 'default_value': None}]",,[]
+c:\mygit\compuse\computer_use_demo\loop.py,display,Display total token usage.,"[{'name': 'self', 'type_annotation': None, 'default_value': None}]",,[]
+c:\mygit\compuse\computer_use_demo\loop.py,_inject_prompt_caching,"Set cache breakpoints for the 3 most recent turns
+one cache breakpoint is left for tools/system prompt, to be shared across sessions","[{'name': 'messages', 'type_annotation': 'list[BetaMessageParam]', 'default_value': None}]",,[]
+c:\mygit\compuse\computer_use_demo\loop.py,_maybe_filter_to_n_most_recent_images,"With the assumption that images are screenshots that are of diminishing value as
+the conversation progresses, remove all but the final `images_to_keep` tool_result
+images in place, with a chunk of min_removal_threshold to reduce the amount we
+break the implicit prompt cache.","[{'name': 'messages', 'type_annotation': 'list[BetaMessageParam]', 'default_value': None}, {'name': 'images_to_keep', 'type_annotation': 'int', 'default_value': None}, {'name': 'min_removal_threshold', 'type_annotation': 'int', 'default_value': None}]",,[]
+c:\mygit\compuse\computer_use_demo\loop.py,main,Main entry point with proper async handling.,[],,[]
+c:\mygit\compuse\computer_use_demo\tools\base.py,__init__,,"[{'name': 'self', 'type_annotation': None, 'default_value': 'None'}, {'name': 'input_schema', 'type_annotation': 'Optional[Dict[str, Any]]', 'default_value': None}]",,[]
+c:\mygit\compuse\computer_use_demo\tools\base.py,name,The name of the tool.,"[{'name': 'self', 'type_annotation': None, 'default_value': None}]",str,"['property', 'abstractmethod']"
+c:\mygit\compuse\computer_use_demo\tools\base.py,description,A description of what the tool does.,"[{'name': 'self', 'type_annotation': None, 'default_value': None}]",str,"['property', 'abstractmethod']"
+c:\mygit\compuse\computer_use_demo\tools\base.py,__call__,Execute the tool with the given arguments.,"[{'name': 'self', 'type_annotation': None, 'default_value': None}]",Any,['abstractmethod']
+c:\mygit\compuse\computer_use_demo\tools\base.py,to_params,Convert the tool to xAI API parameters.,"[{'name': 'self', 'type_annotation': None, 'default_value': None}]","Dict[str, Any]",[]
+c:\mygit\compuse\computer_use_demo\tools\base.py,__bool__,,"[{'name': 'self', 'type_annotation': None, 'default_value': None}]",,[]
+c:\mygit\compuse\computer_use_demo\tools\base.py,__add__,,"[{'name': 'self', 'type_annotation': None, 'default_value': None}, {'name': 'other', 'type_annotation': ""'ToolResult'"", 'default_value': None}]",,[]
+c:\mygit\compuse\computer_use_demo\tools\base.py,replace,Returns a new ToolResult with the given fields replaced.,"[{'name': 'self', 'type_annotation': None, 'default_value': None}]",,[]
+c:\mygit\compuse\computer_use_demo\tools\base.py,__init__,,"[{'name': 'self', 'type_annotation': None, 'default_value': None}, {'name': 'message', 'type_annotation': 'str', 'default_value': None}]",,[]
+c:\mygit\compuse\computer_use_demo\tools\base.py,__str__,,"[{'name': 'self', 'type_annotation': None, 'default_value': None}]",,[]
+c:\mygit\compuse\computer_use_demo\tools\bash.py,to_params,,"[{'name': 'self', 'type_annotation': None, 'default_value': None}]",BetaToolBash20241022Param,[]
+c:\mygit\compuse\computer_use_demo\tools\bash_original.py,__init__,,"[{'name': 'self', 'type_annotation': None, 'default_value': None}]",,[]
+c:\mygit\compuse\computer_use_demo\tools\bash_original.py,stop,Terminate the bash shell.,"[{'name': 'self', 'type_annotation': None, 'default_value': None}]",,[]
+c:\mygit\compuse\computer_use_demo\tools\bash_original.py,__init__,,"[{'name': 'self', 'type_annotation': None, 'default_value': None}]",,[]
+c:\mygit\compuse\computer_use_demo\tools\bash_original.py,to_params,,"[{'name': 'self', 'type_annotation': None, 'default_value': None}]",BetaToolBash20241022Param,[]
+c:\mygit\compuse\computer_use_demo\tools\code_context_manager.py,to_message,Convert CodeFile to a structured message for an LLM or any other consumer.,"[{'name': 'self', 'type_annotation': None, 'default_value': None}]","Dict[str, any]",[]
+c:\mygit\compuse\computer_use_demo\tools\code_context_manager.py,extract_code_blocks,"Extracts code blocks from the response text.
+
+Returns a list of tuples containing the language and code.
+For example: [(""python"", ""def foo(): pass""), ...]","[{'name': 'response_text', 'type_annotation': 'str', 'default_value': None}]","List[Tuple[str, str]]",[]
+c:\mygit\compuse\computer_use_demo\tools\code_context_manager.py,is_code_valid,Checks if the provided Python code is syntactically correct.,"[{'name': 'code', 'type_annotation': 'str', 'default_value': None}]",bool,[]
+c:\mygit\compuse\computer_use_demo\tools\code_context_manager.py,replace_file,Replaces the entire content of the specified file with new_content.,"[{'name': 'file_path', 'type_annotation': 'str', 'default_value': None}, {'name': 'new_content', 'type_annotation': 'str', 'default_value': None}]",None,[]
+c:\mygit\compuse\computer_use_demo\tools\code_context_manager.py,insert_code_after_function,Inserts code after the specified function in a Python file.,"[{'name': 'original_content', 'type_annotation': 'str', 'default_value': None}, {'name': 'function_name', 'type_annotation': 'str', 'default_value': None}, {'name': 'code_to_add', 'type_annotation': 'str', 'default_value': None}]",str,[]
+c:\mygit\compuse\computer_use_demo\tools\code_context_manager.py,extract_single_code_block,Extracts a single code block's language and code.,"[{'name': 'code_block', 'type_annotation': 'str', 'default_value': None}]","Tuple[Optional[str], Optional[str]]",[]
+c:\mygit\compuse\computer_use_demo\tools\code_context_manager.py,commit_changes,Commits changes to the git repository with the provided message.,"[{'name': 'message', 'type_annotation': 'str', 'default_value': None}]",None,[]
+c:\mygit\compuse\computer_use_demo\tools\code_context_manager.py,run_tests,Runs the test suite and returns True if all tests pass.,[],bool,[]
+c:\mygit\compuse\computer_use_demo\tools\code_context_manager.py,revert_last_commit,Reverts the last git commit.,[],None,[]
+c:\mygit\compuse\computer_use_demo\tools\code_context_manager.py,__init__,,"[{'name': 'self', 'type_annotation': None, 'default_value': 'None'}, {'name': 'persistence_file', 'type_annotation': 'Optional[str]', 'default_value': None}]",,[]
+c:\mygit\compuse\computer_use_demo\tools\code_context_manager.py,update_file,Add or update a file in the context.,"[{'name': 'self', 'type_annotation': None, 'default_value': 'None'}, {'name': 'name', 'type_annotation': 'str', 'default_value': 'None'}, {'name': 'content', 'type_annotation': 'str', 'default_value': None}, {'name': 'dependencies', 'type_annotation': 'Optional[Set[str]]', 'default_value': None}, {'name': 'description', 'type_annotation': 'Optional[str]', 'default_value': None}]",None,[]
+c:\mygit\compuse\computer_use_demo\tools\code_context_manager.py,get_context_messages,Get all file contexts as messages.,"[{'name': 'self', 'type_annotation': None, 'default_value': None}]","List[Dict[str, any]]",[]
+c:\mygit\compuse\computer_use_demo\tools\code_context_manager.py,save_to_disk,Persist the current code context to disk.,"[{'name': 'self', 'type_annotation': None, 'default_value': None}]",None,[]
+c:\mygit\compuse\computer_use_demo\tools\code_context_manager.py,load_from_disk,Load the code context from disk.,"[{'name': 'self', 'type_annotation': None, 'default_value': None}]",None,[]
+c:\mygit\compuse\computer_use_demo\tools\code_context_manager.py,remove_file,Remove a file from the context.,"[{'name': 'self', 'type_annotation': None, 'default_value': None}, {'name': 'name', 'type_annotation': 'str', 'default_value': None}]",None,[]
+c:\mygit\compuse\computer_use_demo\tools\code_context_manager.py,apply_llm_response,"Parses the LLM response, extracts code blocks, and updates the relevant files.
+Assumes the LLM follows a specific format to indicate target files and update types.
+
+Example LLM response format:
+
+### Update file1.py
+```python
+def greet(name, greeting=""Hello""):
+    return f""{greeting}, {name}!""
+```
+
+### Add to file2.py
+```python
+def new_function():
+    pass
+```","[{'name': 'self', 'type_annotation': None, 'default_value': None}, {'name': 'response_text', 'type_annotation': 'str', 'default_value': None}]",None,[]
+c:\mygit\compuse\computer_use_demo\tools\code_context_manager.py,replace_file_content,Replaces the entire content of the specified file.,"[{'name': 'self', 'type_annotation': None, 'default_value': None}, {'name': 'filename', 'type_annotation': 'str', 'default_value': None}, {'name': 'new_content', 'type_annotation': 'str', 'default_value': None}]",None,[]
+c:\mygit\compuse\computer_use_demo\tools\code_context_manager.py,add_code_to_file,"Adds new code to an existing file. Optionally, specify the function name for better placement.","[{'name': 'self', 'type_annotation': None, 'default_value': 'None'}, {'name': 'filename', 'type_annotation': 'str', 'default_value': None}, {'name': 'code_to_add', 'type_annotation': 'str', 'default_value': None}, {'name': 'function_name', 'type_annotation': 'Optional[str]', 'default_value': None}]",None,[]
+c:\mygit\compuse\computer_use_demo\tools\code_context_manager.py,extract_dependencies,Extracts dependencies from the given Python file content.,"[{'name': 'self', 'type_annotation': None, 'default_value': None}, {'name': 'content', 'type_annotation': 'str', 'default_value': None}]",Set[str],[]
+c:\mygit\compuse\computer_use_demo\tools\code_tools.py,get_stdlib_modules,Get a set of standard library module names,[],Set[str],[]
+c:\mygit\compuse\computer_use_demo\tools\code_tools.py,from_import,Create DependencyInfo from a module name,"[{'name': 'cls', 'type_annotation': None, 'default_value': None}, {'name': 'module_name', 'type_annotation': 'str', 'default_value': None}, {'name': 'code_root', 'type_annotation': 'Path', 'default_value': None}]",'DependencyInfo',['classmethod']
+c:\mygit\compuse\computer_use_demo\tools\code_tools.py,_is_special_method,Determine if method has special decorators,"[{'name': 'self', 'type_annotation': None, 'default_value': None}, {'name': 'decorator_list', 'type_annotation': 'List[str]', 'default_value': None}]",tuple,[]
+c:\mygit\compuse\computer_use_demo\tools\code_tools.py,_extract_class_info,Extract information about a class,"[{'name': 'self', 'type_annotation': None, 'default_value': None}, {'name': 'node', 'type_annotation': 'ast.ClassDef', 'default_value': None}, {'name': 'content', 'type_annotation': 'str', 'default_value': None}, {'name': 'filepath', 'type_annotation': 'str', 'default_value': None}]",'ClassInfo',[]
+c:\mygit\compuse\computer_use_demo\tools\code_tools.py,create,Factory method to create a CodeAnalyzer instance,"[{'name': 'cls', 'type_annotation': None, 'default_value': None}, {'name': 'code_root', 'type_annotation': 'Path', 'default_value': None}]",'CodeAnalyzer',['classmethod']
+c:\mygit\compuse\computer_use_demo\tools\code_tools.py,initialize_graph,Initialize the dependency graph after model creation,"[{'name': 'self', 'type_annotation': None, 'default_value': None}]",'CodeAnalyzer',"[""model_validator(mode='after')""]"
+c:\mygit\compuse\computer_use_demo\tools\code_tools.py,_parse_argument,Parse function/method argument information,"[{'name': 'self', 'type_annotation': None, 'default_value': 'None'}, {'name': 'arg', 'type_annotation': 'ast.arg', 'default_value': None}, {'name': 'default', 'type_annotation': None, 'default_value': None}]",ArgumentInfo,[]
+c:\mygit\compuse\computer_use_demo\tools\code_tools.py,_extract_decorators,Extract decorator information from a function/method node,"[{'name': 'self', 'type_annotation': None, 'default_value': None}, {'name': 'node', 'type_annotation': 'ast.FunctionDef', 'default_value': None}]",List[str],[]
+c:\mygit\compuse\computer_use_demo\tools\code_tools.py,_is_special_method,Determine if method has special decorators,"[{'name': 'self', 'type_annotation': None, 'default_value': None}, {'name': 'decorator_list', 'type_annotation': 'List[str]', 'default_value': None}]",tuple,[]
+c:\mygit\compuse\computer_use_demo\tools\code_tools.py,_extract_imports,Extract import information from a module,"[{'name': 'self', 'type_annotation': None, 'default_value': None}, {'name': 'node', 'type_annotation': 'ast.Module', 'default_value': None}]",List[ImportInfo],[]
+c:\mygit\compuse\computer_use_demo\tools\code_tools.py,_analyze_dependencies,Analyze dependencies from imports,"[{'name': 'self', 'type_annotation': None, 'default_value': None}, {'name': 'imports', 'type_annotation': 'List[ImportInfo]', 'default_value': None}]",List[DependencyInfo],[]
+c:\mygit\compuse\computer_use_demo\tools\code_tools.py,analyze_file,Analyze a single Python file,"[{'name': 'self', 'type_annotation': None, 'default_value': None}, {'name': 'filepath', 'type_annotation': 'str', 'default_value': None}]",FileInfo,[]
+c:\mygit\compuse\computer_use_demo\tools\code_tools.py,build_dependency_graph,Build a dependency graph of the project,"[{'name': 'self', 'type_annotation': None, 'default_value': None}]",,[]
+c:\mygit\compuse\computer_use_demo\tools\code_tools.py,get_class_hierarchy,Build and return the class hierarchy graph,"[{'name': 'self', 'type_annotation': None, 'default_value': None}]",nx.DiGraph,[]
+c:\mygit\compuse\computer_use_demo\tools\code_tools.py,get_dependency_cycles,Find circular dependencies in the project,"[{'name': 'self', 'type_annotation': None, 'default_value': None}]",List[List[str]],[]
+c:\mygit\compuse\computer_use_demo\tools\code_tools.py,to_dataframe,Convert the analyzed data to multiple DataFrames,"[{'name': 'self', 'type_annotation': None, 'default_value': None}]","Dict[str, pd.DataFrame]",[]
+c:\mygit\compuse\computer_use_demo\tools\code_tools.py,_extract_function_info,Extract information about a function,"[{'name': 'self', 'type_annotation': None, 'default_value': None}, {'name': 'node', 'type_annotation': 'ast.FunctionDef', 'default_value': None}, {'name': 'filepath', 'type_annotation': 'str', 'default_value': None}]",FunctionInfo,[]
+c:\mygit\compuse\computer_use_demo\tools\code_tools.py,analyze_repo,"Analyze all Python files in the repository.
+Returns a list of FileInfo objects containing analysis results.","[{'name': 'self', 'type_annotation': None, 'default_value': None}]",List[FileInfo],[]
+c:\mygit\compuse\computer_use_demo\tools\code_tools.py,_extract_function_info,Extract information about a function,"[{'name': 'self', 'type_annotation': None, 'default_value': None}, {'name': 'node', 'type_annotation': 'ast.FunctionDef', 'default_value': None}, {'name': 'filepath', 'type_annotation': 'str', 'default_value': None}]",FunctionInfo,[]
+c:\mygit\compuse\computer_use_demo\tools\code_tools.py,_extract_class_info,Extract information about a class,"[{'name': 'self', 'type_annotation': None, 'default_value': None}, {'name': 'node', 'type_annotation': 'ast.ClassDef', 'default_value': None}, {'name': 'content', 'type_annotation': 'str', 'default_value': None}, {'name': 'filepath', 'type_annotation': 'str', 'default_value': None}]",ClassInfo,[]
+c:\mygit\compuse\computer_use_demo\tools\code_tools.py,main,,[],,[]
+c:\mygit\compuse\computer_use_demo\tools\collection.py,write_to_file,"Write debug output to a file, formatting JSON content in a pretty way.","[{'name': 's', 'type_annotation': None, 'default_value': 'ICECREAM_OUTPUT_FILE'}, {'name': 'file_path', 'type_annotation': None, 'default_value': None}]",,[]
+c:\mygit\compuse\computer_use_demo\tools\collection.py,__init__,,"[{'name': 'self', 'type_annotation': None, 'default_value': None}]",,[]
+c:\mygit\compuse\computer_use_demo\tools\collection.py,to_params,,"[{'name': 'self', 'type_annotation': None, 'default_value': None}]",list[BetaToolUnionParam],[]
+c:\mygit\compuse\computer_use_demo\tools\computer.py,options,,"[{'name': 'self', 'type_annotation': None, 'default_value': None}]",ComputerToolOptions,['property']
+c:\mygit\compuse\computer_use_demo\tools\computer.py,to_params,,"[{'name': 'self', 'type_annotation': None, 'default_value': None}]",BetaToolComputerUse20241022Param,[]
+c:\mygit\compuse\computer_use_demo\tools\computer.py,__init__,,"[{'name': 'self', 'type_annotation': None, 'default_value': None}]",,[]
+c:\mygit\compuse\computer_use_demo\tools\computer.py,_cleanup_screenshots,"Clean up old screenshots, keeping only the most recent ones.","[{'name': 'self', 'type_annotation': None, 'default_value': '100'}, {'name': 'max_files', 'type_annotation': 'int', 'default_value': None}]",,[]
+c:\mygit\compuse\computer_use_demo\tools\computer.py,scale_coordinates,Scale coordinates to a target maximum resolution.,"[{'name': 'self', 'type_annotation': None, 'default_value': None}, {'name': 'source', 'type_annotation': 'ScalingSource', 'default_value': None}, {'name': 'x', 'type_annotation': 'int', 'default_value': None}, {'name': 'y', 'type_annotation': 'int', 'default_value': None}]",,[]
+c:\mygit\compuse\computer_use_demo\tools\edit.py,__init__,,"[{'name': 'self', 'type_annotation': None, 'default_value': None}]",,[]
+c:\mygit\compuse\computer_use_demo\tools\edit.py,to_params,,"[{'name': 'self', 'type_annotation': None, 'default_value': None}]",BetaToolTextEditor20241022Param,[]
+c:\mygit\compuse\computer_use_demo\tools\edit.py,normalize_path,"Normalize a file path to ensure it starts with 'C:/repo/'.
+
+Args:
+    path: Input path string that needs to be normalized
+    Note:
+    This method is used to normalize the path provided by the user.
+    The normalized path is used to ensure that the path starts with 'C:/repo/'
+    and is a valid path.
+Returns:
+    Normalized path string starting with 'C:/repo/'
+    
+Raises:
+    ValueError: If the path is None or empty","[{'name': 'self', 'type_annotation': None, 'default_value': None}, {'name': 'path', 'type_annotation': 'Optional[str]', 'default_value': None}]",Path,[]
+c:\mygit\compuse\computer_use_demo\tools\edit.py,validate_path,"Check that the path/command combination is valid in a cross-platform manner.
+param command: The command that the user is trying to run.","[{'name': 'self', 'type_annotation': None, 'default_value': None}, {'name': 'command', 'type_annotation': 'str', 'default_value': None}, {'name': 'path', 'type_annotation': 'Path', 'default_value': None}]",,[]
+c:\mygit\compuse\computer_use_demo\tools\edit.py,str_replace,"Implement the str_replace command, which replaces old_str with new_str in the file content.","[{'name': 'self', 'type_annotation': None, 'default_value': None}, {'name': 'path', 'type_annotation': 'Path', 'default_value': None}, {'name': 'old_str', 'type_annotation': 'str', 'default_value': None}, {'name': 'new_str', 'type_annotation': 'Optional[str]', 'default_value': None}]",ToolResult,[]
+c:\mygit\compuse\computer_use_demo\tools\edit.py,insert,"Implement the insert command, which inserts new_str at the specified line in the file content.","[{'name': 'self', 'type_annotation': None, 'default_value': None}, {'name': 'path', 'type_annotation': 'Path', 'default_value': None}, {'name': 'insert_line', 'type_annotation': 'int', 'default_value': None}, {'name': 'new_str', 'type_annotation': 'str', 'default_value': None}]",ToolResult,[]
+c:\mygit\compuse\computer_use_demo\tools\edit.py,ensure_valid_repo_path,,"[{'name': 'filename', 'type_annotation': 'str', 'default_value': None}]",str,[]
+c:\mygit\compuse\computer_use_demo\tools\edit.py,undo_edit,Implement the undo_edit command.,"[{'name': 'self', 'type_annotation': None, 'default_value': None}, {'name': 'path', 'type_annotation': 'Path', 'default_value': None}]",ToolResult,[]
+c:\mygit\compuse\computer_use_demo\tools\edit.py,read_file,,"[{'name': 'self', 'type_annotation': None, 'default_value': None}, {'name': 'path', 'type_annotation': 'Path', 'default_value': None}]",str,[]
+c:\mygit\compuse\computer_use_demo\tools\edit.py,write_file,,"[{'name': 'self', 'type_annotation': None, 'default_value': None}, {'name': 'path', 'type_annotation': 'Path', 'default_value': None}, {'name': 'file', 'type_annotation': 'str', 'default_value': None}]",,[]
+c:\mygit\compuse\computer_use_demo\tools\edit.py,_make_output,Generate output for the CLI based on the content of a file.,"[{'name': 'self', 'type_annotation': None, 'default_value': '1'}, {'name': 'file_content', 'type_annotation': 'str', 'default_value': 'True'}, {'name': 'file_descriptor', 'type_annotation': 'str', 'default_value': None}, {'name': 'init_line', 'type_annotation': 'int', 'default_value': None}, {'name': 'expand_tabs', 'type_annotation': 'bool', 'default_value': None}]",str,[]
+c:\mygit\compuse\computer_use_demo\tools\example_tool.py,name,,"[{'name': 'self', 'type_annotation': None, 'default_value': None}]",str,['property']
+c:\mygit\compuse\computer_use_demo\tools\example_tool.py,description,,"[{'name': 'self', 'type_annotation': None, 'default_value': None}]",str,['property']
+c:\mygit\compuse\computer_use_demo\tools\example_tool.py,__init__,,"[{'name': 'self', 'type_annotation': None, 'default_value': None}]",,[]
+c:\mygit\compuse\computer_use_demo\tools\example_tool.py,__call__,,"[{'name': 'self', 'type_annotation': None, 'default_value': None}]",str,[]
+c:\mygit\compuse\computer_use_demo\tools\expert.py,to_params,,"[{'name': 'self', 'type_annotation': None, 'default_value': None}]",dict,[]
+c:\mygit\compuse\computer_use_demo\tools\gotourl_reports.py,options,,"[{'name': 'self', 'type_annotation': None, 'default_value': None}]",Options,['property']
+c:\mygit\compuse\computer_use_demo\tools\gotourl_reports.py,to_params,,"[{'name': 'self', 'type_annotation': None, 'default_value': None}]",dict,[]
+c:\mygit\compuse\computer_use_demo\tools\playwright.py,__init__,Initializes the WebNavigatorTool with optional download directory and API credentials.,"[{'name': 'self', 'type_annotation': None, 'default_value': 'None'}, {'name': 'download_dir', 'type_annotation': 'Optional[str]', 'default_value': 'None'}, {'name': 'api_credentials', 'type_annotation': 'Optional[Dict[str, Any]]', 'default_value': None}]",,[]
+c:\mygit\compuse\computer_use_demo\tools\playwright.py,to_params,"Defines the parameters for the tool, specifying the input schema.","[{'name': 'self', 'type_annotation': None, 'default_value': None}]",dict,[]
+c:\mygit\compuse\computer_use_demo\tools\playwright.py,_create_structured_content,Creates a structured representation of the content.,"[{'name': 'self', 'type_annotation': None, 'default_value': None}, {'name': 'soup', 'type_annotation': 'BeautifulSoup', 'default_value': None}]",str,[]
+c:\mygit\compuse\computer_use_demo\tools\playwright.py,integrate_external_api,Integrates with an external API and returns the response.,"[{'name': 'self', 'type_annotation': None, 'default_value': 'None'}, {'name': 'api_url', 'type_annotation': 'str', 'default_value': None}, {'name': 'params', 'type_annotation': 'Optional[Dict[str, Any]]', 'default_value': None}]",Any,[]
+c:\mygit\compuse\computer_use_demo\tools\playwright.py,get_session_history,Returns the session history for contextual awareness.,"[{'name': 'self', 'type_annotation': None, 'default_value': None}]",str,[]
+c:\mygit\compuse\computer_use_demo\tools\run.py,maybe_truncate,Truncate content and append a notice if content exceeds the specified length.,"[{'name': 'content', 'type_annotation': 'str', 'default_value': 'MAX_RESPONSE_LEN'}, {'name': 'truncate_after', 'type_annotation': 'int | None', 'default_value': None}]",,[]
+c:\mygit\compuse\computer_use_demo\tools\windows_navigation.py,__init__,Initialize the WindowsNavigationTool with shortcuts configuration.,"[{'name': 'self', 'type_annotation': None, 'default_value': None}]",,[]
+c:\mygit\compuse\computer_use_demo\tools\windows_navigation.py,_load_shortcuts,Load keyboard shortcuts from JSON file.,"[{'name': 'self', 'type_annotation': None, 'default_value': None}]","Dict[str, Any]",[]
+c:\mygit\compuse\computer_use_demo\tools\windows_navigation.py,to_params,Define the parameters for the tool.,"[{'name': 'self', 'type_annotation': None, 'default_value': None}]",dict,[]
+c:\mygit\compuse\computer_use_demo\tools\windows_navigation.py,get_session_history,Returns the session history of navigation actions.,"[{'name': 'self', 'type_annotation': None, 'default_value': None}]",str,[]

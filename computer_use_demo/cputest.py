@@ -3,17 +3,13 @@ Cross-platform agentic sampling loop that calls the Anthropic API and local impl
 """
 
 import asyncio
-import base64
 import os
 import platform
-from collections.abc import Callable
 from datetime import datetime
 from enum import StrEnum
 from pathlib import Path
-from typing import Any, Callable, Literal, List, Optional, TypedDict, cast
-from uuid import uuid4
+from typing import Any, Callable, List, Optional, TypedDict, cast
 
-import pyautogui
 from anthropic import Anthropic, AnthropicBedrock, AnthropicVertex, APIResponse
 from anthropic.types import ToolResultBlockParam
 from anthropic.types.beta import (

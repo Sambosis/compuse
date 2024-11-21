@@ -1,0 +1,50 @@
+filepath,name,docstring,methods_count,base_classes,variables_count,methods,has_docstring
+c:\mygit\compuse\computer_use_demo\code_context_manager.py,CodeFile,,1,[],6,['to_message'],False
+c:\mygit\compuse\computer_use_demo\code_context_manager.py,CodeContextManager,,10,[],0,"['__init__', 'update_file', 'get_context_messages', 'save_to_disk', 'load_from_disk', 'remove_file', 'apply_llm_response', 'replace_file_content', 'add_code_to_file', 'extract_dependencies']",False
+c:\mygit\compuse\computer_use_demo\computer.py,Resolution,,0,['TypedDict'],2,[],False
+c:\mygit\compuse\computer_use_demo\computer.py,ScalingSource,,0,['StrEnum'],2,[],False
+c:\mygit\compuse\computer_use_demo\computer.py,ComputerToolOptions,,0,['TypedDict'],3,[],False
+c:\mygit\compuse\computer_use_demo\computer.py,ComputerTool,"A tool that allows the agent to interact with the screen, keyboard, and mouse of the current computer.
+The tool parameters are defined by Anthropic and are not editable.",4,['BaseAnthropicTool'],7,"['options', 'to_params', '__init__', 'scale_coordinates']",True
+c:\mygit\compuse\computer_use_demo\cputest.py,Resolution,,0,['TypedDict'],2,[],False
+c:\mygit\compuse\computer_use_demo\cputest.py,APIProvider,,0,['StrEnum'],3,[],False
+c:\mygit\compuse\computer_use_demo\edit_tool.py,EditTool,"A cross-platform filesystem editor tool that allows the agent to view, create, and edit files.",10,['BaseAnthropicTool'],4,"['__init__', 'to_params', 'normalize_path', 'validate_path', 'str_replace', 'insert', 'undo_edit', 'read_file', 'write_file', '_make_output']",True
+c:\mygit\compuse\computer_use_demo\loop.py,OutputManager,Manages and formats tool outputs and responses.,6,[],0,"['__init__', 'save_image', 'format_tool_output', 'format_api_response', 'format_content_block', 'format_recent_conversation']",True
+c:\mygit\compuse\computer_use_demo\loop.py,TokenTracker,Tracks total token usage across all iterations.,3,[],0,"['__init__', 'update', 'display']",True
+c:\mygit\compuse\computer_use_demo\tools\base.py,BaseAnthropicTool,Base class for all tools.,5,[],0,"['__init__', 'name', 'description', '__call__', 'to_params']",True
+c:\mygit\compuse\computer_use_demo\tools\base.py,ToolResult,Represents the result of a tool execution.,3,[],4,"['__bool__', '__add__', 'replace']",True
+c:\mygit\compuse\computer_use_demo\tools\base.py,CLIResult,A ToolResult that can be rendered as a CLI output.,0,['ToolResult'],0,[],True
+c:\mygit\compuse\computer_use_demo\tools\base.py,ToolFailure,A ToolResult that represents a failure.,0,['ToolResult'],0,[],True
+c:\mygit\compuse\computer_use_demo\tools\base.py,ToolError,Raised when a tool encounters an error.,2,['Exception'],1,"['__init__', '__str__']",True
+c:\mygit\compuse\computer_use_demo\tools\bash.py,BashTool,,1,['BaseAnthropicTool'],3,['to_params'],False
+c:\mygit\compuse\computer_use_demo\tools\bash_original.py,_BashSession,A session of a bash shell.,2,[],6,"['__init__', 'stop']",True
+c:\mygit\compuse\computer_use_demo\tools\bash_original.py,BashTool,"A tool that allows the agent to run bash commands.
+The tool parameters are defined by Anthropic and are not editable.",2,['BaseAnthropicTool'],3,"['__init__', 'to_params']",True
+c:\mygit\compuse\computer_use_demo\tools\code_context_manager.py,CodeFile,,1,[],6,['to_message'],False
+c:\mygit\compuse\computer_use_demo\tools\code_context_manager.py,CodeContextManager,,10,[],0,"['__init__', 'update_file', 'get_context_messages', 'save_to_disk', 'load_from_disk', 'remove_file', 'apply_llm_response', 'replace_file_content', 'add_code_to_file', 'extract_dependencies']",False
+c:\mygit\compuse\computer_use_demo\tools\code_tools.py,DependencyInfo,,1,['BaseModel'],4,['from_import'],False
+c:\mygit\compuse\computer_use_demo\tools\code_tools.py,ArgumentInfo,,0,['BaseModel'],3,[],False
+c:\mygit\compuse\computer_use_demo\tools\code_tools.py,MethodInfo,,0,['BaseModel'],9,[],False
+c:\mygit\compuse\computer_use_demo\tools\code_tools.py,ClassInfo,,2,['BaseModel'],7,"['_is_special_method', '_extract_class_info']",False
+c:\mygit\compuse\computer_use_demo\tools\code_tools.py,ImportInfo,,0,['BaseModel'],4,[],False
+c:\mygit\compuse\computer_use_demo\tools\code_tools.py,FunctionInfo,,0,['BaseModel'],7,[],False
+c:\mygit\compuse\computer_use_demo\tools\code_tools.py,FileInfo,,0,['BaseModel'],6,[],False
+c:\mygit\compuse\computer_use_demo\tools\code_tools.py,CodeAnalyzer,,16,['BaseModel'],5,"['create', 'initialize_graph', '_parse_argument', '_extract_decorators', '_is_special_method', '_extract_imports', '_analyze_dependencies', 'analyze_file', 'build_dependency_graph', 'get_class_hierarchy', 'get_dependency_cycles', 'to_dataframe', '_extract_function_info', 'analyze_repo', '_extract_function_info', '_extract_class_info']",False
+c:\mygit\compuse\computer_use_demo\tools\code_tools.py,Config,,0,[],1,[],False
+c:\mygit\compuse\computer_use_demo\tools\collection.py,ToolCollection,A collection of anthropic-defined tools.,2,[],0,"['__init__', 'to_params']",True
+c:\mygit\compuse\computer_use_demo\tools\computer.py,Resolution,,0,['TypedDict'],2,[],False
+c:\mygit\compuse\computer_use_demo\tools\computer.py,ScalingSource,,0,['StrEnum'],2,[],False
+c:\mygit\compuse\computer_use_demo\tools\computer.py,ComputerToolOptions,,0,['TypedDict'],3,[],False
+c:\mygit\compuse\computer_use_demo\tools\computer.py,ComputerTool,,5,['BaseAnthropicTool'],8,"['options', 'to_params', '__init__', '_cleanup_screenshots', 'scale_coordinates']",False
+c:\mygit\compuse\computer_use_demo\tools\edit.py,EditTool,,11,['BaseAnthropicTool'],4,"['__init__', 'to_params', 'normalize_path', 'validate_path', 'str_replace', 'insert', 'ensure_valid_repo_path', 'undo_edit', 'read_file', 'write_file', '_make_output']",False
+c:\mygit\compuse\computer_use_demo\tools\example_tool.py,ExampleTool,,4,['BaseAnthropicTool'],0,"['name', 'description', '__init__', '__call__']",False
+c:\mygit\compuse\computer_use_demo\tools\expert.py,GetExpertOpinionTool,"A tool takes a detailed description of the problem and everything that has been tried so far, and returns an expert opinion on the problem.",1,['BaseAnthropicTool'],3,['to_params'],True
+c:\mygit\compuse\computer_use_demo\tools\gotourl_reports.py,Resolution,,0,['TypedDict'],2,[],False
+c:\mygit\compuse\computer_use_demo\tools\gotourl_reports.py,ScalingSource,,0,['StrEnum'],2,[],False
+c:\mygit\compuse\computer_use_demo\tools\gotourl_reports.py,Options,,0,['TypedDict'],3,[],False
+c:\mygit\compuse\computer_use_demo\tools\gotourl_reports.py,GoToURLReportsTool,"A tool that allows the agent to list available reports and run a selected report
+from the Auto Chlor System Web Portal.",2,['BaseAnthropicTool'],7,"['options', 'to_params']",True
+c:\mygit\compuse\computer_use_demo\tools\playwright.py,WebNavigatorTool,"A versatile tool that uses Playwright to interact with the web, including reading information,
+navigating websites, filling forms, extracting data, interacting with dynamic elements, and downloading files.
+It also integrates with external APIs and includes enhanced error handling and #logging.",5,[],3,"['__init__', 'to_params', '_create_structured_content', 'integrate_external_api', 'get_session_history']",True
+c:\mygit\compuse\computer_use_demo\tools\windows_navigation.py,WindowsNavigationTool,A tool specializing in navigating Windows and Windows applications using keyboard shortcuts.,4,[],3,"['__init__', '_load_shortcuts', 'to_params', 'get_session_history']",True

@@ -1,18 +1,14 @@
 ## bash.py
 import asyncio
-from calendar import c
-import os
 from typing import ClassVar, Literal
 from anthropic.types.beta import BetaToolBash20241022Param
 # from torch import error
 from .base import BaseAnthropicTool, CLIResult, ToolError, ToolResult
-import subprocess
 import platform
 # Using subprocess directly for shell commands
 from rich import print as rr
-from icecream import ic
 class BashTool(BaseAnthropicTool):
-    """
+    description="""
     A tool that allows the agent to run bash commands. On Windows it uses PowerShell
     The tool parameters are defined by Anthropic and are not editable.
     """
@@ -26,7 +22,7 @@ class BashTool(BaseAnthropicTool):
         if command is not None:
              if platform.system() == 'Windows':
                  
-                 command = f"powershell.exe -command {command}" # Run PowerShell commands on Windows
+                 command = f"powershell.exe -command cd c:/repo && {command}" # Run PowerShell commands on Windows
              return await self._run_command(command)
 
         raise ToolError("no command provided.")

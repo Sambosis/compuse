@@ -1,4 +1,4 @@
-import asyncio
+#playwright.py
 import os
 import logging
 from playwright.async_api import async_playwright, TimeoutError as PlaywrightTimeoutError
@@ -6,17 +6,15 @@ from typing import Literal, Optional, Dict, Any, List
 import requests
 from bs4 import BeautifulSoup, Comment  # Add Comment to the import
 import re
-from html import unescape
-from .base import CLIResult, ToolError, ToolResult, BaseAnthropicTool
-from rich import print as rr
+from .base import ToolResult
 # Configure logging for user feedback and debugging
-logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
+logging.basicConfig(level=logging.CRITICAL, format='%(asctime)s - %(levelname)s - %(message)s')
 
 class WebNavigatorTool:
     """
     A versatile tool that uses Playwright to interact with the web, including reading information,
     navigating websites, filling forms, extracting data, interacting with dynamic elements, and downloading files.
-    It also integrates with external APIs and includes enhanced error handling and logging.
+    It also integrates with external APIs and includes enhanced error handling and #logging.
     """
 
     name: Literal["web_navigator"] = "web_navigator"
@@ -117,8 +115,8 @@ class WebNavigatorTool:
         """
         params = params or {}
         async with async_playwright() as p:
-            browser = await p.chromium.launch(headless=True)
-            context = await browser.new_context()
+            browser = await p.chromium.launch(headless=False)
+            context = await browser.new_context(storage_state=r"C:\mygit\compuse\computer_use_demo\state.json")
             page = await context.new_page()
 
             try:
@@ -153,16 +151,16 @@ class WebNavigatorTool:
                 
                 return ToolResult(output=result)  # Return successful result
 
-            except PlaywrightTimeoutError as e:
+            except PlaywrightTimeoutError:
                 error_msg = f"Timeout occurred while performing action '{action}' on {url}."
                 logging.error(error_msg)
                 return ToolResult(error=error_msg)  # Return timeout error
             except Exception as e:
                 error_msg = f"An error occurred while performing action '{action}' on {url}: {str(e)}"
-                logging.error(error_msg)
+                #logging.error(error_msg)
                 return ToolResult(error=error_msg)  # Return general error
-            finally:
-                await browser.close()
+            # finally:
+            #     await browser.close()
 
     async def read_info(
             self, 
@@ -393,14 +391,3 @@ class WebNavigatorTool:
         history = "\n".join(self.session_history)
         logging.info("Session history retrieved.")
         return history
-
-# Example usage
-# async def main():
-#     tool = WebNavigatorTool(api_credentials={"api_key": "YOUR_API_KEY"})
-#     result = await tool(
-#         url="https://example.com",
-#         action="read"
-#     )
-#     rr(result)
-
-# asyncio.run(main())

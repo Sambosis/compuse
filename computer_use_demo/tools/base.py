@@ -1,34 +1,57 @@
 ## base.py
 from abc import ABCMeta, abstractmethod
 from dataclasses import dataclass, fields, replace
-from typing import Any
+from typing import Any, Optional, Dict
 
-from anthropic.types.beta import BetaToolUnionParam
 
 
 class BaseAnthropicTool(metaclass=ABCMeta):
-    """Abstract base class for Anthropic-defined tools."""
+    """Base class for all tools."""
+
+    def __init__(self, input_schema: Optional[Dict[str, Any]] = None):
+        self.input_schema = input_schema or {
+            "type": "object",
+            "properties": {},
+            "required": []
+        }
+
+    @property
+    @abstractmethod
+    def name(self) -> str:
+        """The name of the tool."""
+        pass
+
+    @property
+    @abstractmethod
+    def description(self) -> str:
+        """A description of what the tool does."""
+        pass
 
     @abstractmethod
     def __call__(self, **kwargs) -> Any:
-        """Executes the tool with the given arguments."""
-        ...
+        """Execute the tool with the given arguments."""
+        pass
 
-    @abstractmethod
-    def to_params(
-        self,
-    ) -> BetaToolUnionParam:
-        raise NotImplementedError
+    def to_params(self) -> Dict[str, Any]:
+        """Convert the tool to xAI API parameters."""
+        return {
+            "type": "function",
+            "function": {
+                "name": self.name,
+                "description": self.description,
+                "parameters": self.input_schema
+            }
+        }
 
 
 @dataclass(kw_only=True, frozen=True)
 class ToolResult:
     """Represents the result of a tool execution."""
 
-    output: str | None = None
-    error: str | None = None
-    base64_image: str | None = None
-    system: str | None = None
+    output: Optional[str] = None
+    error: Optional[str] = None
+    base64_image: Optional[str] = None
+    system: Optional[str] = None
 
     def __bool__(self):
         return any(getattr(self, field.name) for field in fields(self))
@@ -57,14 +80,22 @@ class ToolResult:
 
 class CLIResult(ToolResult):
     """A ToolResult that can be rendered as a CLI output."""
+    pass
 
 
 class ToolFailure(ToolResult):
     """A ToolResult that represents a failure."""
+    pass
+
 
 @dataclass(kw_only=True, frozen=True)
 class ToolError(Exception):
     """Raised when a tool encounters an error."""
+    message: str
 
-    def __init__(self, message):
-        self.message = message
+    def __init__(self, message: str):
+        object.__setattr__(self, 'message', message)
+        super().__init__(message)
+
+    def __str__(self):
+        return self.message
