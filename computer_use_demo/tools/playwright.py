@@ -6,14 +6,7 @@ from typing import Literal, Optional, Dict, Any, List
 import requests
 from bs4 import BeautifulSoup, Comment  # Add Comment to the import
 import re
-<<<<<<< HEAD
 from .base import ToolResult
-=======
-from html import unescape
-from .base import CLIResult, ToolError, ToolResult, BaseAnthropicTool
-from rich import print as rr
-from icecream import ic
->>>>>>> 762abff2d378c3944d7e1d8a7f2f24cc7c1b4e3d
 # Configure logging for user feedback and debugging
 logging.basicConfig(level=logging.CRITICAL, format='%(asctime)s - %(levelname)s - %(message)s')
 
@@ -27,9 +20,9 @@ class WebNavigatorTool:
     name: Literal["web_navigator"] = "web_navigator"
     api_type: Literal["custom"] = "custom"
     description: str = (
-        "A comprehensive tool that uses Playwright to perform various web interactions such as reading information, "
-        "navigating websites, filling out forms, extracting data, interacting with dynamic elements, and downloading files. "
-        "It also integrates with external APIs and includes enhanced error handling and logging for improved user experience."
+        """A comprehensive tool that uses Playwright to perform various web interactions such as reading information, 
+        navigating websites, filling out forms, extracting data, interacting with dynamic elements, and downloading files. 
+        It also integrates with external APIs and includes enhanced error handling and logging for improved user experience."""
     )
 
     def __init__(self, download_dir: Optional[str] = None, api_credentials: Optional[Dict[str, Any]] = None):

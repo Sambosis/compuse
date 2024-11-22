@@ -1,24 +1,44 @@
-# Your will be developing a vector database specialized for code.  There is a python file in the directory  c:/repo/code_tools/code_tools.py that contains a Library that can be used to scan and analyze code. 
+Please develop the following application:
 
-You will be using the library to scan a code repository and extract information about the code.  You will then use that information to create a vector database.
+# Dish Tracker
 
-The code stores a lot of metadata about the code, including function and method definitions, class definitions, dependencies, and more.
+A web application for tracking dish machine sales and installations.
 
-The vector database should be capable of storing and querying the metadata as well as the full code content.
+## Core Components
 
-You will be using pinecone to create the vector database and their is a .env file in the root of the project that contains your PINECONE_API_KEY.
-This also contains a HUGGINGFACE_API_KEY which is for the embedding model.
+### Backend
+- Flask web application
+- SQLite database
+- Data models for:
+  - Dish Sales tracking
+  - Custom Fields management
 
-One of the use cases of this will be to provide code context to give an LLM more information about the code to assist it in completing code and fixing errors. 
+### Frontend
+- Interactive data table with sorting and filtering
+- Export capabilities (Excel, Print)
+- Column visibility controls
+- Priority-based color coding
+- Machine model badges
 
-You will then use the vector database to answer questions about the code that is stored in the sample_data directory.
+### Key Features
+- Sales tracking with priority levels
+- Customer and salesperson management
+- Installation date tracking
+- Financial information tracking (lease price and terms)
+- Custom field support
+- Data visualization capabilities
 
-At anytime you can review the journal of the steps taken to create the vector database by opening the file:
-C:\mygit\compuse\computer_use_demo\journal\journal.log
-
-
-
-If you have any questions, instead of asking the user,please get an expert opinion.
-    When you are done, please test the app to make sure it works. If it or any feature of it is not working, please fix it.
-
-If you finish and it is all working, please ask for an expert opinion on additional features you could add.
+### Data Points Tracked
+- Priority
+- Salesperson
+- Customer
+- Machine Model
+- Address
+- Owner
+- Phone Number
+- Important Dates:
+  - Verbal Commitment
+  - Paperwork
+  - Payment
+  - Installation
+- Lease Information

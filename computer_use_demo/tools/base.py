@@ -85,25 +85,16 @@ class CLIResult(ToolResult):
 
 class ToolFailure(ToolResult):
     """A ToolResult that represents a failure."""
-<<<<<<< HEAD
     pass
 
 
-=======
->>>>>>> 762abff2d378c3944d7e1d8a7f2f24cc7c1b4e3d
 @dataclass(kw_only=True, frozen=True)
 class ToolError(Exception):
     """Raised when a tool encounters an error."""
     message: str
 
     def __init__(self, message: str):
-<<<<<<< HEAD
         object.__setattr__(self, 'message', message)
-=======
-        # Use object.__setattr__ to set attributes on frozen dataclass
-        object.__setattr__(self, 'message', message)
-        # Initialize the parent Exception class
->>>>>>> 762abff2d378c3944d7e1d8a7f2f24cc7c1b4e3d
         super().__init__(message)
 
     def __str__(self):

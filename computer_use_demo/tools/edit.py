@@ -1,20 +1,11 @@
 ## edit.py
 import os
 import re
-<<<<<<< HEAD
-=======
-import base64
->>>>>>> 762abff2d378c3944d7e1d8a7f2f24cc7c1b4e3d
 from pathlib import Path
 from collections import defaultdict
 from typing import Literal, get_args
 from anthropic.types.beta import BetaToolTextEditor20241022Param
-<<<<<<< HEAD
 from .base import BaseAnthropicTool, ToolError, ToolResult
-=======
-from regex import P
-from .base import BaseAnthropicTool, CLIResult, ToolError, ToolResult
->>>>>>> 762abff2d378c3944d7e1d8a7f2f24cc7c1b4e3d
 from .run import maybe_truncate
 from typing import List, Optional
 from icecream import ic
@@ -68,17 +59,9 @@ class EditTool(BaseAnthropicTool):
         insert_line: int | None = None,
         **kwargs,
     ) -> ToolResult:
-<<<<<<< HEAD
 
         _path = Path(path).resolve()  # resolve() handles both Windows and Unix paths
         ic(_path)
-=======
-        ic()
-        print("Line 67 in edit.py")
-        rr(ic(path))
-        _path = Path(path).resolve()  # resolve() handles both Windows and Unix paths
-        rr(ic(_path))
->>>>>>> 762abff2d378c3944d7e1d8a7f2f24cc7c1b4e3d
 
         # _path = self.validate_path(command, _path)
         if command == "view":
@@ -188,14 +171,7 @@ class EditTool(BaseAnthropicTool):
     async def view(self, path: Path, view_range: Optional[List[int]] = None) -> ToolResult:
         """Implement the view command using cross-platform methods."""
         ic(path)
-<<<<<<< HEAD
         path = self.normalize_path(path)
-=======
-        rr(path)
-        path = self.normalize_path(path)
-        rr(path)
-        # rr(path)
->>>>>>> 762abff2d378c3944d7e1d8a7f2f24cc7c1b4e3d
         if path.is_dir():
             if view_range:
                 raise ToolError(
@@ -255,13 +231,7 @@ class EditTool(BaseAnthropicTool):
         try:
             # Read the file content
             ic(path)
-<<<<<<< HEAD
             path = self.normalize_path(path)
-=======
-            rr(path)
-            path = self.normalize_path(path)
-            rr(path)
->>>>>>> 762abff2d378c3944d7e1d8a7f2f24cc7c1b4e3d
             file_content = self.read_file(path).expandtabs()
             old_str = old_str.expandtabs()
             new_str = new_str.expandtabs() if new_str is not None else ""

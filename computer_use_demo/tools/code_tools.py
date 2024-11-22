@@ -162,7 +162,7 @@ class ImportInfo(BaseModel):
 
 
 class FunctionInfo(BaseModel):
-    code: str
+    code: strr
     function_name: str
     filepath: str
     docstring: Optional[str] = None
@@ -481,10 +481,10 @@ class CodeAnalyzer(BaseModel):
         ]
 
         num_files = len(code_files)
-        print(f"Total number of .py files: {num_files}")
+        rr(f"[blue]Total number of .py files: {num_files}[/blue]")
 
         if num_files == 0:
-            print("Verify the repository exists and code_root is set correctly.")
+            rr("[red]Verify the repository exists and code_root is set correctly.[/red]")
             return []
 
         self.files = []
@@ -518,13 +518,13 @@ class CodeAnalyzer(BaseModel):
         successful = len([f for f in self.files if f.functions or f.classes])
         failed = num_files - successful
         
-        print(f"\nAnalysis complete:")
-        print(f"Files processed successfully: {successful}")
-        print(f"Files failed: {failed}")
-        print(f"Total classes found: {total_classes}")
-        print(f"Total standalone functions found: {total_functions}")
-        print(f"Total methods found: {total_methods}")
-        print(f"Total functions + methods: {total_functions + total_methods}")
+        rr("\n[blue]Analysis complete:[/blue]")
+        rr(f"[green]Files processed successfully: {successful}[/green]")
+        rr(f"[yellow]Files failed: {failed}[/yellow]")
+        rr(f"[cyan]Total classes found: {total_classes}[/cyan]")
+        rr(f"[cyan]Total standalone functions found: {total_functions}[/cyan]")
+        rr(f"[cyan]Total methods found: {total_methods}[/cyan]")
+        rr(f"[cyan]Total functions + methods: {total_functions + total_methods}[/cyan]")
 
         return self.files
     def _extract_function_info(self, node: ast.FunctionDef, filepath: str) -> FunctionInfo:
