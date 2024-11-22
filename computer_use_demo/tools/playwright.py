@@ -115,7 +115,7 @@ class WebNavigatorTool:
         """
         params = params or {}
         async with async_playwright() as p:
-            browser = await p.chromium.launch(headless=False)
+            browser = await p.chromium.launch(headless=False,handle_sigint=False,handle_sigterm=False,handle_sighup=False)
             context = await browser.new_context(storage_state=r"C:\mygit\compuse\computer_use_demo\state.json")
             page = await context.new_page()
 

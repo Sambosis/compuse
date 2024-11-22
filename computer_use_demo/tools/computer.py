@@ -21,7 +21,6 @@ OUTPUT_DIR = os.path.join(os.getenv('APPDATA', ''), 'computer_tool', 'outputs')
 
 TYPING_DELAY_MS = 12
 TYPING_GROUP_SIZE = 50
-
 Action = Literal[
     "key",
     "type",
@@ -33,9 +32,6 @@ Action = Literal[
     "double_click",
     "screenshot",
     "cursor_position",
-    # "speak",  # Add speak action
-    "open_url", # Add open_url action
-    "get_window_title", # Add get_window_title
 ]
 
 class Resolution(TypedDict):
@@ -62,9 +58,16 @@ class ComputerToolOptions(TypedDict):
     display_number: Optional[int]
 
 class ComputerTool(BaseAnthropicTool):
-    description="""
-    A cross-platform tool that allows the agent to interact with the screen, keyboard, and mouse.
-    The tool parameters are defined by Anthropic and are not editable.
+    description=f"""
+ Use a mouse and keyboard to interact with a computer, and take screenshots.
+* This is an interface to a desktop GUI. You do not have access to a terminal or applications menu. You must click on desktop icons to start applications.
+* Some applications may take time to start or process actions, so you may need to wait and take successive screenshots to see the results of your actions. E.g. if you click on Firefox and a window doesn't open, try taking another screenshot.
+* The screen's resolution is {{ display_width_px }}x{{ display_height_px }}.
+* The display number is {{ display_number }}
+* Whenever you intend to move the cursor to click on an element like an icon, you should consult a screenshot to determine the coordinates of the element before moving the cursor.
+* If you tried clicking on a program or link but it failed to load, even after waiting, try adjusting your cursor position so that the tip of the cursor visually falls on the element that you want to click.
+* Make sure to click any buttons, links, icons, etc with the cursor tip in the center of the element. Don't click boxes on their edges unless asked.
+
     """
 
     name: Literal["computer"] = "computer"

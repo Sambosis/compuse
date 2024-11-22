@@ -115,6 +115,6 @@ Using powershell commands and scripts or python scripts is always going to be fa
     Rembember, you are working in windows and will be working on the C: drive.
     Directories should look like C:/path/to/directory and files should look like C:/path/to/file.txt
     when possible use the raw string format r'C:/path/to/file.txt'
-    SPECIFICALLY YOU ARE TO CREATE FILES IN C:/repo/code_tools/ You can crate any files or folders you need to in there.  Your must access it using the full path EVERYTIME.  Your home directory will not be there so if you do not specify the full path you will not be able to access it.
+    SPECIFICALLY YOU ARE TO CREATE FILES IN C:/repo/ You can crate any files or folders you need to in there.  Your must access it using the full path EVERYTIME.  Your home directory will not be there so if you do not specify the full path you will not be able to access it.
 
     You can also write python scripts to perform file tasks if you are having an issue with powershell.  

@@ -36,16 +36,37 @@ install()
 import json
 
 ICECREAM_OUTPUT_FILE = "debug_log.json"
+JOURNAL_FILE = "journal/journal.log"
+JOURNAL_ARCHIVE_FILE = "journal/journal.log.archive"
 RR=False  
 # append ICECREAM_OUTPUT_FILE to the end of ICECREAM_OUTPUT_FILE.archive and clear the file
 if os.path.exists(ICECREAM_OUTPUT_FILE):
-    with open(ICECREAM_OUTPUT_FILE, 'r') as f:
+    with open(ICECREAM_OUTPUT_FILE, 'r',encoding="utf-8") as f:
         lines = f.readlines()
-    with open(ICECREAM_OUTPUT_FILE + '.archive.json', 'a') as f:
+    with open(ICECREAM_OUTPUT_FILE + '.archive.json', 'a',encoding="utf-8") as f:
         for line in lines:
             f.write(line)
-    with open(ICECREAM_OUTPUT_FILE, 'w') as f:
+    with open(ICECREAM_OUTPUT_FILE, 'w',encoding="utf-8") as f:
         f.write('')
+
+# Archive journal log if it exists
+if os.path.exists(JOURNAL_FILE):
+    # Create journal directory if it doesn't exist
+    os.makedirs(os.path.dirname(JOURNAL_FILE), exist_ok=True)
+    try:
+        with open(JOURNAL_FILE, 'r', encoding='utf-8') as f:
+            journal_lines = f.readlines()
+        with open(JOURNAL_ARCHIVE_FILE, 'a', encoding='utf-8') as f:
+            f.write('\n' + '='*50 + '\n')
+            f.write(f'Archive from {datetime.now().strftime("%Y-%m-%d %H:%M:%S")}\n')
+            f.write('='*50 + '\n')
+            for line in journal_lines:
+                f.write(line)
+        # Clear the current journal file
+        with open(JOURNAL_FILE, 'w', encoding='utf-8') as f:
+            f.write('')
+    except Exception as e:
+        ic(f"Error archiving journal: {str(e)}")
 
 def write_to_file(s, file_path=ICECREAM_OUTPUT_FILE):
     """
