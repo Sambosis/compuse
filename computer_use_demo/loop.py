@@ -34,11 +34,16 @@ from tools import BashTool, ComputerTool, EditTool, ToolCollection, ToolResult, 
 load_dotenv()
 install()
 import json
-
+MAX_SUMMARY_MESSAGES = 15
+MAX_SUMMARY_TOKENS = 8000
 ICECREAM_OUTPUT_FILE = "debug_log.json"
 JOURNAL_FILE = "journal/journal.log"
 JOURNAL_ARCHIVE_FILE = "journal/journal.log.archive"
 RR=False  
+
+
+
+
 # append ICECREAM_OUTPUT_FILE to the end of ICECREAM_OUTPUT_FILE.archive and clear the file
 if os.path.exists(ICECREAM_OUTPUT_FILE):
     with open(ICECREAM_OUTPUT_FILE, 'r',encoding="utf-8") as f:
@@ -308,6 +313,7 @@ class TokenTracker:
 # Add near the top of the file
 JOURNAL_FILE = "journal/journal.log"
 JOURNAL_MODEL = "claude-3-5-haiku-latest"
+SUMMARY_MODEL = "claude-3-5-sonnet-latest"
 JOURNAL_MAX_TOKENS = 1500
 JOURNAL_SYSTEM_PROMPT_FILE  = "journal/journal_system_prompt.md"
 with open(JOURNAL_SYSTEM_PROMPT_FILE, 'r', encoding="utf-8") as f:
@@ -493,18 +499,18 @@ async def sampling_loop(*, model: str, messages: List[BetaMessageParam], api_key
 
                     } 
                     for msg in messages                ]
-                
+
                 response = client.beta.messages.create(
-                    max_tokens=max_tokens,
+                    max_tokens=MAX_SUMMARY_TOKENS,
                     messages=truncated_messages,  # Use truncated messages
-                    model=model,
+                    model=SUMMARY_MODEL,
                     system=system,
                     tools=tool_collection.to_params(),
                     betas=betas,
                     )
                 # Update token tracker
                 token_tracker.update(response)
-                
+                token_tracker.display() 
                 # Display current iteration tokens
                 rr(f"Cache Creation Tokens: {response.usage.cache_creation_input_tokens}")
                 rr(f"Cache Retrieval Tokens: {response.usage.cache_read_input_tokens}")
@@ -569,7 +575,13 @@ async def sampling_loop(*, model: str, messages: List[BetaMessageParam], api_key
                     })
                 rr(f"Creating journal entry #{journal_entry_count}")
                 # After processing the response and before the next iteration, add journal entry
-                
+                rr(f"There are {len(messages)} messages")
+                # Check if messages need summarization
+                if len(messages) > MAX_SUMMARY_MESSAGES:
+                    rr(f"\n[yellow]Messages exceed {MAX_SUMMARY_MESSAGES} - generating summary...[/yellow]")
+                    messages = await summarize_messages(messages)
+                    rr("[green]Summary generated - conversation compressed[/green]")
+            
                 try:
                     await create_journal_entry(
                         entry_number=journal_entry_count,
@@ -677,6 +689,76 @@ def _maybe_filter_to_n_most_recent_images(
                 new_content.append(content)
             tool_result["content"] = new_content
 
+async def summarize_messages(messages: List[BetaMessageParam]) -> List[BetaMessageParam]:
+    """Summarize messages using Claude Haiku when they exceed 10 messages."""
+    if len(messages) <= MAX_SUMMARY_MESSAGES:
+        return messages
+    original_prompt = messages[0]["content"]
+    client = Anthropic(api_key=os.getenv("ANTHROPIC_API_KEY"))
+    
+    summary_prompt = """Please provide a detailed technical summary of this conversation. Include:
+1. All file names and paths mentioned
+2. Directory structures created or modified
+3. Specific actions taken and their outcomes
+4. Any technical decisions or solutions implemented
+5. Current status of the task
+6. Any pending or incomplete items
+7. Code that was written or modified
+
+Original task prompt for context:
+{original_prompt}
+
+Conversation to summarize:
+{conversation}"""
+
+    # Convert messages to a readable format for summarization
+    conversation_text = ""
+    for msg in messages[1:]:  # Skip first message (original prompt)
+        role = msg['role'].upper()
+        if isinstance(msg['content'], list):
+            # Handle complex content (tool results etc)
+            for block in msg['content']:
+                if isinstance(block, dict):
+                    if block.get('type') == 'text':
+                        conversation_text += f"\n{role}: {block.get('text', '')}"
+                    elif block.get('type') == 'tool_result':
+                        for item in block.get('content', []):
+                            if item.get('type') == 'text':
+                                conversation_text += f"\n{role} (Tool Result): {item.get('text', '')}"
+        else:
+            conversation_text += f"\n{role}: {msg['content']}"
+
+    # Get summary from Haiku
+    response = client.messages.create(
+        model=SUMMARY_MODEL,
+        max_tokens=MAX_SUMMARY_TOKENS,
+        messages=[{
+            "role": "user",
+            "content": summary_prompt.format(
+                original_prompt=original_prompt,
+                conversation=conversation_text
+            )
+        }]
+    )
+    
+    summary = response.content[0].text
+    ic(summary)
+    # Create new messages list with original prompt and summary only
+    new_messages = [
+        messages[0],  # Original prompt
+        {
+            "role": "assistant",
+            "content": [
+                {
+                    "type": "text",
+                    "text": f"[CONVERSATION SUMMARY]\n\n{summary}"
+                }
+            ]
+        }
+    ]
+    
+    return new_messages
+
 async def run_sampling_loop(task: str) -> List[BetaMessageParam]:
     """Run the sampling loop with clean output handling."""
     api_key = os.getenv("ANTHROPIC_API_KEY")
@@ -686,22 +768,48 @@ async def run_sampling_loop(task: str) -> List[BetaMessageParam]:
     if not api_key:
         raise ValueError("API key not found. Please set the ANTHROPIC_API_KEY environment variable.")
     ic(messages.append({"role": "user","content": task}))
-    messages =  await sampling_loop(
-                                model="claude-3-5-sonnet-latest",
-                                messages=messages,
-                                api_key=api_key,
-                            )
+    messages = await sampling_loop(
+        model="claude-3-5-sonnet-latest",
+        messages=messages,
+        api_key=api_key,
+    )
+
     return messages
 
 async def main_async():
     """Async main function with proper error handling."""
-    # read the task from prompt.md
-    with open(r"C:\mygit\compuse\computer_use_demo\prompt.md", 'r',encoding="utf-8") as f:
-        task = f.read() 
-    # task = input("Enter the task you want to perform: ")
-    # use rich.prompt to get the task
-    # task = Prompt.ask("Enter the task you want to perform:")
-    # task = '''I need you to get an expert opinion on how to test, run,implement use cases and test the functionality for the code in the file C:/repo/code_test/code_context_manager.py . The commands you run will be from a different directory so please use absolute paths for EVERYTHING!'''
+    # Get list of available prompts
+    prompts_dir = Path(r"C:\mygit\compuse\computer_use_demo\prompts")
+    prompt_files = list(prompts_dir.glob("*.md"))
+    
+    # Display options
+    rr("\n[bold yellow]Available Prompts:[/bold yellow]")
+    for i, file in enumerate(prompt_files, 1):
+        rr(f"{i}. {file.name}")
+    rr(f"{len(prompt_files) + 1}. Create new prompt")
+    
+    # Get user choice
+    choice = Prompt.ask(
+        "Select prompt number",
+        choices=[str(i) for i in range(1, len(prompt_files) + 2)]
+    )
+    
+    if int(choice) == len(prompt_files) + 1:
+        # Create new prompt
+        filename = Prompt.ask("Enter new prompt filename (without .md)")
+        prompt_text = Prompt.ask("Enter your prompt")
+        
+        # Save new prompt
+        new_prompt_path = prompts_dir / f"{filename}.md"
+        with open(new_prompt_path, 'w', encoding='utf-8') as f:
+            f.write(prompt_text)
+        task = prompt_text
+    else:
+        # Read existing prompt
+        prompt_path = prompt_files[int(choice) - 1]
+        with open(prompt_path, 'r', encoding='utf-8') as f:
+            task = f.read()
+
     try:
         messages = await run_sampling_loop(task)
         rr("\nTask Completed Successfully")
