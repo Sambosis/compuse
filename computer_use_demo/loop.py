@@ -15,7 +15,6 @@ import asyncio
 import pyautogui
 from rich import print as rr
 from icecream import install
-import pysnooper
 from rich.prompt import Prompt
 # load the API key from the environment
 from dotenv import load_dotenv
