@@ -131,7 +131,7 @@ class EditTool(BaseAnthropicTool):
         normalized_path = re.sub(r'^/', '', normalized_path)
         
         # Combine with base path
-        return Path(f'C:/repo/{normalized_path}')
+        return Path(f'C:/{normalized_path}')
 
     def validate_path(self, command: str, path: Path):
         """
@@ -316,7 +316,7 @@ class EditTool(BaseAnthropicTool):
         return ToolResult(output=success_msg)
     def ensure_valid_repo_path(filename: str) -> str:
         ### Need to Try this out ###
-        base_path = "C:/repo/"
+        base_path = ""
         
         # Normalize path separators for cross-platform compatibility
         filename = filename.replace("\\", "/")

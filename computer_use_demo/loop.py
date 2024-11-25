@@ -33,7 +33,7 @@ from tools import BashTool, ComputerTool, EditTool, ToolCollection, ToolResult, 
 load_dotenv()
 install()
 import json
-MAX_SUMMARY_MESSAGES = 15
+MAX_SUMMARY_MESSAGES = 40
 MAX_SUMMARY_TOKENS = 8000
 ICECREAM_OUTPUT_FILE = "debug_log.json"
 JOURNAL_FILE = "journal/journal.log"
@@ -103,7 +103,7 @@ def write_to_file(s, file_path=ICECREAM_OUTPUT_FILE):
 ic.configureOutput(includeContext=True, outputFunction=write_to_file)
 # Define the system prompt
 # read the system prompt from a file named system_prompt.md
-with open(r"C:\mygit\compuse\computer_use_demo\system_prompt.md", 'r',encoding="utf-8") as f:
+with open(Path(r"C:\Users\Administrator\workspace\compuse\computer_use_demo\system_prompt.md"), 'r',encoding="utf-8") as f:
     SYSTEM_PROMPT = f.read()
 
 
@@ -726,7 +726,10 @@ Conversation to summarize:
                                 conversation_text += f"\n{role} (Tool Result): {item.get('text', '')}"
         else:
             conversation_text += f"\n{role}: {msg['content']}"
-
+    ic(summary_prompt.format(
+                original_prompt=original_prompt,
+                conversation=conversation_text
+            ))
     # Get summary from Haiku
     response = client.messages.create(
         model=SUMMARY_MODEL,
@@ -746,7 +749,7 @@ Conversation to summarize:
     new_messages = [
         messages[0],  # Original prompt
         {
-            "role": "assistant",
+            "role": "user",
             "content": [
                 {
                     "type": "text",
@@ -778,7 +781,7 @@ async def run_sampling_loop(task: str) -> List[BetaMessageParam]:
 async def main_async():
     """Async main function with proper error handling."""
     # Get list of available prompts
-    prompts_dir = Path(r"C:\mygit\compuse\computer_use_demo\prompts")
+    prompts_dir = Path(r"C:\Users\Administrator\workspace\compuse\computer_use_demo\prompts")
     prompt_files = list(prompts_dir.glob("*.md"))
     
     # Display options
