@@ -281,17 +281,32 @@ class TokenTracker:
         self.total_cache_retrieval = 0
         self.total_input = 0
         self.total_output = 0
+        self.recent_cache_creation = 0
+        self.recent_cache_retrieval = 0
+        self.recent_input = 0
+        self.recent_output = 0
     
     def update(self, response):
         """Update totals with new response usage."""
-        self.total_cache_creation += response.usage.cache_creation_input_tokens
-        self.total_cache_retrieval += response.usage.cache_read_input_tokens
-        self.total_input += response.usage.input_tokens
-        self.total_output += response.usage.output_tokens
+        self.recent_cache_creation = response.usage.cache_creation_input_tokens
+        self.recent_cache_retrieval = response.usage.cache_read_input_tokens
+        self.recent_input = response.usage.input_tokens
+        self.recent_output = response.usage.output_tokens
+        
+        self.total_cache_creation += self.recent_cache_creation
+        self.total_cache_retrieval += self.recent_cache_retrieval
+        self.total_input += self.recent_input
+        self.total_output += self.recent_output
     
     def display(self):
         """Display total token usage."""
-        rr("\n[bold yellow]Total Token Usage Summary[/bold yellow] 📊")
+        rr("\n[bold yellow]Recent Token Usage[/bold yellow] 📊")
+        rr(f"[yellow]Recent Cache Creation Tokens:[/yellow] {self.recent_cache_creation:,}")
+        rr(f"[yellow]Recent Cache Retrieval Tokens:[/yellow] {self.recent_cache_retrieval:,}")
+        rr(f"[yellow]Recent Input Tokens:[/yellow] {self.recent_input:,}")
+        rr(f"[yellow]Recent Output Tokens:[/yellow] {self.recent_output:,}")
+        rr(f"[bold yellow]Recent Tokens Used:[/bold yellow] {self.recent_cache_creation + self.recent_cache_retrieval + self.recent_input + self.recent_output:,}")
+        rr("\n[bold yellow]Total Token Usage[/bold yellow] 📈")
         rr(f"[yellow]Total Cache Creation Tokens:[/yellow] {self.total_cache_creation:,}")
         rr(f"[yellow]Total Cache Retrieval Tokens:[/yellow] {self.total_cache_retrieval:,}")
         rr(f"[yellow]Total Input Tokens:[/yellow] {self.total_input:,}")
@@ -299,11 +314,9 @@ class TokenTracker:
         rr(f"[bold yellow]Total Tokens Used:[/bold yellow] {self.total_cache_creation + self.total_cache_retrieval + self.total_input + self.total_output:,}")
 
 async def create_journal_entry(entry_number: int, messages: List[BetaMessageParam], response: APIResponse, client: Anthropic):
-    """Creates a cumulative journal entry using Claude Haiku."""
     try:
         # Get current journal contents
         current_journal = get_journal_contents()
-        
         # Extract recent messages
         recent_messages = []
         for msg in messages[-8:]:
@@ -384,7 +397,7 @@ def get_journal_contents() -> str:
         return "No journal entries yet."
 
 # Add after imports
-def truncate_message_content(content: Any, max_length: int = 250000) -> Any:
+def truncate_message_content(content: Any, max_length: int = 450000) -> Any:
     """Truncate message content while preserving structure."""
     if isinstance(content, str):
         return content[:max_length]
@@ -493,15 +506,7 @@ async def sampling_loop(*, model: str, messages: List[BetaMessageParam], api_key
                 # Update token tracker
                 token_tracker.update(response)
                 token_tracker.display() 
-                # Display current iteration tokens
-                rr(f"Cache Creation Tokens: {response.usage.cache_creation_input_tokens}")
-                rr(f"Cache Retrieval Tokens: {response.usage.cache_read_input_tokens}")
-                rr(f"Output Tokens: {response.usage.output_tokens}")
-                rr(f"Input Tokens: {response.usage.input_tokens}")
-                
-                ic(f"Response: {response}")
-                # output_manager.format_api_response(response)
-                
+
                 # Convert response content to params format
                 response_params = []
                 for block in response.content:
