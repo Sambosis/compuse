@@ -22,6 +22,7 @@ dependencies = [
     "pysnooper>=1.2.1",
     "python-dotenv>=1.0.1",
     "ruff>=0.7.4",
+    "tenacity>=9.0.0",
     "types-beautifulsoup4>=4.12.0.20241020",
     "types-pyautogui>=0.9.3.20240406",
     "unimport>=1.2.1",

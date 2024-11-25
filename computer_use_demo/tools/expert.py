@@ -54,13 +54,13 @@ class GetExpertOpinionTool(BaseAnthropicTool):
         """
        
         if command == "get_opinion":
-            ic()
+            
             return await self.get_opinion(problem_description=problem_description)
         if command == "get_plan":
-            ic()
+            
             return await self.get_plan(problem_description=problem_description)
         else:
-            ic()
+            
             raise ToolError(
                 f"Unrecognized command '{command}'. Allowed commands: 'list_reports', 'run_report'."
             )
@@ -137,7 +137,7 @@ Begin your detailed task breakdown below:
         Lists all available reports.
         """
         try:
-            ic()
+            
             client = OpenAI()
             ic(client)
             prompt = f"""

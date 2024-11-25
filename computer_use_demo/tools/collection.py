@@ -51,7 +51,7 @@ class ToolCollection:
     def to_params(
         self,
     ) -> list[BetaToolUnionParam]:
-        ic()
+        
         params = [tool.to_params() for tool in self.tools]
         if params:
             params[-1]["cache_control"] = {"type": "ephemeral"}

@@ -1,7 +1,3 @@
-#loop.py
-"""
-Agentic sampling loop that calls the Anthropic API and local implementation of anthropic-defined computer use tools.
-"""
 from icecream import ic
 from datetime import datetime
 from typing import cast, List, Optional, Any
@@ -16,11 +12,7 @@ import pyautogui
 from rich import print as rr
 from icecream import install
 from rich.prompt import Prompt
-# load the API key from the environment
-from dotenv import load_dotenv
-from anthropic import (
-    Anthropic,
-)
+from anthropic import Anthropic
 from anthropic.types.beta import (
     BetaCacheControlEphemeralParam,
     BetaMessageParam,
@@ -28,29 +20,36 @@ from anthropic.types.beta import (
     BetaToolResultBlockParam,
 )
 import ftfy
+import json
+from tenacity import retry, stop_after_attempt, wait_fixed, wait_exponential_jitter
 from tools import BashTool, ComputerTool, EditTool, ToolCollection, ToolResult, GetExpertOpinionTool, WebNavigatorTool, GoToURLReportsTool, WindowsNavigationTool
-
+from load_constants import (
+    MAX_SUMMARY_MESSAGES,
+    MAX_SUMMARY_TOKENS,
+    ICECREAM_OUTPUT_FILE,
+    JOURNAL_FILE,
+    JOURNAL_ARCHIVE_FILE,
+    COMPUTER_USE_BETA_FLAG,
+    PROMPT_CACHING_BETA_FLAG,
+    JOURNAL_MODEL,
+    SUMMARY_MODEL,
+    JOURNAL_MAX_TOKENS,
+    JOURNAL_SYSTEM_PROMPT,
+    SYSTEM_PROMPT
+)
+from dotenv import load_dotenv
 load_dotenv()
 install()
-import json
-MAX_SUMMARY_MESSAGES = 15
-MAX_SUMMARY_TOKENS = 8000
-ICECREAM_OUTPUT_FILE = "debug_log.json"
-JOURNAL_FILE = "journal/journal.log"
-JOURNAL_ARCHIVE_FILE = "journal/journal.log.archive"
-RR=False  
-
-
-
 
 # append ICECREAM_OUTPUT_FILE to the end of ICECREAM_OUTPUT_FILE.archive and clear the file
-if os.path.exists(ICECREAM_OUTPUT_FILE):
-    with open(ICECREAM_OUTPUT_FILE, 'r',encoding="utf-8") as f:
+if ICECREAM_OUTPUT_FILE.exists():
+    with open(ICECREAM_OUTPUT_FILE, 'r', encoding="utf-8") as f:
         lines = f.readlines()
-    with open(ICECREAM_OUTPUT_FILE + '.archive.json', 'a',encoding="utf-8") as f:
+    archive_file = ICECREAM_OUTPUT_FILE.with_suffix('.archive.json')
+    with open(archive_file, 'a', encoding="utf-8") as f:
         for line in lines:
             f.write(line)
-    with open(ICECREAM_OUTPUT_FILE, 'w',encoding="utf-8") as f:
+    with open(ICECREAM_OUTPUT_FILE, 'w', encoding="utf-8") as f:
         f.write('')
 
 # Archive journal log if it exists
@@ -98,14 +97,7 @@ def write_to_file(s, file_path=ICECREAM_OUTPUT_FILE):
     with open(file_path, 'a', encoding="utf-8") as f:
         f.write('\n'.join(formatted_lines))
         f.write('\n' + '-' * 80 + '\n')  # Add separator between entries
-
-# Configure icecream
 ic.configureOutput(includeContext=True, outputFunction=write_to_file)
-# Define the system prompt
-# read the system prompt from a file named system_prompt.md
-with open(r"C:\mygit\compuse\computer_use_demo\system_prompt.md", 'r',encoding="utf-8") as f:
-    SYSTEM_PROMPT = f.read()
-
 
 class OutputManager:
     """Manages and formats tool outputs and responses."""
@@ -282,9 +274,6 @@ def _make_api_tool_result(result: ToolResult, tool_use_id: str) -> dict:
         "is_error": is_error,
     }
 
-COMPUTER_USE_BETA_FLAG = "computer-use-2024-10-22"
-PROMPT_CACHING_BETA_FLAG = "prompt-caching-2024-07-31"
-
 class TokenTracker:
     """Tracks total token usage across all iterations."""
     def __init__(self):
@@ -309,56 +298,50 @@ class TokenTracker:
         rr(f"[yellow]Total Output Tokens:[/yellow] {self.total_output:,}")
         rr(f"[bold yellow]Total Tokens Used:[/bold yellow] {self.total_cache_creation + self.total_cache_retrieval + self.total_input + self.total_output:,}")
 
-# Add near the top of the file
-JOURNAL_FILE = "journal/journal.log"
-JOURNAL_MODEL = "claude-3-5-haiku-latest"
-SUMMARY_MODEL = "claude-3-5-sonnet-latest"
-JOURNAL_MAX_TOKENS = 1500
-JOURNAL_SYSTEM_PROMPT_FILE  = "journal/journal_system_prompt.md"
-with open(JOURNAL_SYSTEM_PROMPT_FILE, 'r', encoding="utf-8") as f:
-    JOURNAL_SYSTEM_PROMPT = f.read()
-
 async def create_journal_entry(entry_number: int, messages: List[BetaMessageParam], response: APIResponse, client: Anthropic):
-    """Creates a concise journal entry using Claude Haiku."""
+    """Creates a cumulative journal entry using Claude Haiku."""
     try:
-        # Extract last interaction
-        user_message = ""
-        assistant_response = ""
+        # Get current journal contents
+        current_journal = get_journal_contents()
         
-        # Get most recent messages
-        for msg in reversed(messages[-4:]):  # Only look at last 2 exchanges
-            if msg['role'] == 'user' and not user_message:
+        # Extract recent messages
+        recent_messages = []
+        for msg in messages[-8:]:
+            if msg['role'] == 'user':
                 if isinstance(msg['content'], list):
                     for content_block in msg['content']:
                         if isinstance(content_block, dict):
                             if content_block.get("type") == "text":
-                                user_message = content_block.get("text", "")
+                                recent_messages.append(f"USER: {content_block.get('text', '')}")
                             elif content_block.get("type") == "tool_result":
-                                user_message = " ".join([
+                                tool_texts = [
                                     item.get("text", "") 
                                     for item in content_block.get("content", [])
                                     if isinstance(item, dict) and item.get("type") == "text"
-                                ])
+                                ]
+                                recent_messages.append(f"USER (Tool Result): {' '.join(tool_texts)}")
                 elif isinstance(msg['content'], str):
-                    user_message = msg['content']
-                    
-        # Get the assistant's response text
-        if response and response.content:
-            assistant_texts = []
-            for block in response.content:
-                if hasattr(block, 'text'):
-                    assistant_texts.append(block.text)
-            assistant_response = " ".join(assistant_texts)
+                    recent_messages.append(f"USER: {msg['content']}")
+            elif msg['role'] == 'assistant':
+                if isinstance(msg['content'], list):
+                    for block in msg['content']:
+                        if isinstance(block, dict) and block.get('type') == 'text':
+                            recent_messages.append(f"ASSISTANT: {block.get('text', '')}")
+                elif isinstance(msg['content'], str):
+                    recent_messages.append(f"ASSISTANT: {msg['content']}")
 
-        # Skip if missing content
-        if not user_message or not assistant_response:
-            ic("Skipping journal entry - missing content")
-            return
+        # Create prompt with both current journal and recent messages
+        journal_prompt = f"""
+Current Journal Contents:
+{current_journal}
 
-        # Create prompt
-        journal_prompt = f"Summarize this interaction:\nUser: {user_message}\nAssistant: {assistant_response}"
-        rr(f"Journal Prompt:\n {journal_prompt}")
-        # Get summary using Haiku - Add await here
+Recent Messages:
+{chr(10).join(recent_messages)}
+
+Please provide an updated comprehensive journal entry that incorporates both the existing progress and new developments.
+"""
+
+        # Get updated journal from Haiku
         haiku_response = client.messages.create(
             model=JOURNAL_MODEL,
             max_tokens=JOURNAL_MAX_TOKENS,
@@ -369,27 +352,25 @@ async def create_journal_entry(entry_number: int, messages: List[BetaMessagePara
             system=JOURNAL_SYSTEM_PROMPT
         )
 
-        summary = haiku_response.content[0].text.strip()
-        if not summary:
-            ic("Skipping journal entry - no summary generated")
+        updated_journal = haiku_response.content[0].text.strip()
+        if not updated_journal:
+            ic("Error: No journal update generated")
             return
-        rr(f"Journal Summary:\n {summary}")
-        # Format entry
-        timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-        journal_entry = f"\nEntry #{entry_number} - {timestamp}\n{summary}\n-------------------\n"
 
-        # Ensure directory exists
+        # Write the updated journal
+        timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+        journal_entry = f"\nEntry #{entry_number} - {timestamp}\n{updated_journal}\n-------------------\n"
+        
+        # Ensure directory exists and write entry
         os.makedirs(os.path.dirname(JOURNAL_FILE), exist_ok=True)
         journal_entry = ftfy.fix_text(journal_entry)
-        # Write entry
-        with open(JOURNAL_FILE, 'a', encoding='utf-8') as f:
+        with open(JOURNAL_FILE, 'w', encoding='utf-8') as f:  # Note: using 'w' instead of 'a'
             f.write(journal_entry)
             
-        ic(f"Created journal entry #{entry_number}")
+        ic(f"Created updated journal entry #{entry_number}")
 
     except Exception as e:
         ic(f"Error creating journal entry: {str(e)}")
-
 
 # Add after JOURNAL_SYSTEM_PROMPT definition
 def get_journal_contents() -> str:
@@ -397,9 +378,8 @@ def get_journal_contents() -> str:
     try:
         with open(JOURNAL_FILE, 'r', encoding='utf-8') as f:
             file_contents =  f.read()
-            # clean contents to only ascii
-            file_contents = ftfy.fix_text(file_contents)
-            return file_contents
+
+        return file_contents
     except FileNotFoundError:
         return "No journal entries yet."
 
@@ -449,10 +429,9 @@ async def sampling_loop(*, model: str, messages: List[BetaMessageParam], api_key
                 journal_entry_count = sum(1 for line in f if line.startswith("Entry #")) + 1
 
         # Add journal contents to messages
-        journal_contents = get_journal_contents()
         messages.append({
             "role": "user",
-            "content": f"Previous conversation history from journal:\n{journal_contents}"
+            "content": f"Previous conversation history from journal:\n{get_journal_contents()}"
         })
 
         while running:
@@ -485,9 +464,7 @@ async def sampling_loop(*, model: str, messages: List[BetaMessageParam], api_key
 
             try:
                 tool_collection.to_params()
-                # ic(f"Messages: {messages}")
                 if i % 2 == 0:
-                    # wait for 20 seconds
                     await asyncio.sleep(10) 
                 ic(messages)
                 # Truncate messages before sending to API
@@ -497,7 +474,13 @@ async def sampling_loop(*, model: str, messages: List[BetaMessageParam], api_key
                         "content": truncate_message_content(msg["content"])
 
                     } 
-                    for msg in messages                ]
+                    for msg in messages
+                ]
+                with open("justfornow.json", "w") as f:
+                    for msg in truncated_messages:  
+                        for_looking_at_messages_as_json = json.dumps(msg, indent=4)
+                        f.write(for_looking_at_messages_as_json)
+                        f.write("\n\n")
 
                 response = client.beta.messages.create(
                     max_tokens=MAX_SUMMARY_TOKENS,
@@ -592,7 +575,7 @@ async def sampling_loop(*, model: str, messages: List[BetaMessageParam], api_key
                 except Exception as e:
                     ic(f"Error creating journal entry: {str(e)}")
 
-            
+
             except UnicodeEncodeError as ue:
                 ic(f"UnicodeEncodeError: {ue}")
                 rr(f"Unicode encoding error: {ue}")
@@ -604,8 +587,12 @@ async def sampling_loop(*, model: str, messages: List[BetaMessageParam], api_key
                 ic(f"The error occurred at the following message: {messages[-1]} and line: {e.__traceback__.tb_lineno}")
                 ic(e.__traceback__.tb_frame.f_locals)
                 raise
-        # Display total token usage before returning
-        token_tracker.display()
+            messages.append({
+            "role": "user",
+            "content": f"Here are notes of your progress from your journal:\n{get_journal_contents()}"
+            })
+             # Display total token usage before returning
+            token_tracker.display()
         return messages
 
     except Exception as e:
@@ -616,15 +603,9 @@ async def sampling_loop(*, model: str, messages: List[BetaMessageParam], api_key
         ic(f"Error initializing sampling loop: {str(e)}")
         raise  # Re-raise the exception after logging it
 
-
 def _inject_prompt_caching(
     messages: list[BetaMessageParam],
-):
-    """
-    Set cache breakpoints for the 3 most recent turns
-    one cache breakpoint is left for tools/system prompt, to be shared across sessions
-    """
-
+    ):
     breakpoints_remaining = 2
     for message in reversed(messages):
         if message["role"] == "user" and isinstance(
@@ -640,17 +621,12 @@ def _inject_prompt_caching(
                 content[-1].pop("cache_control", None)
                 # we'll only every have one extra turn per loop
                 break
+
 def _maybe_filter_to_n_most_recent_images(
     messages: list[BetaMessageParam],
     images_to_keep: int,
     min_removal_threshold: int,
-):
-    """
-    With the assumption that images are screenshots that are of diminishing value as
-    the conversation progresses, remove all but the final `images_to_keep` tool_result
-    images in place, with a chunk of min_removal_threshold to reduce the amount we
-    break the implicit prompt cache.
-    """
+    ):
     if images_to_keep is None:
         return messages
 
@@ -688,27 +664,30 @@ def _maybe_filter_to_n_most_recent_images(
                 new_content.append(content)
             tool_result["content"] = new_content
 
-async def summarize_messages(messages: List[BetaMessageParam]) -> List[BetaMessageParam]:
-    """Summarize messages using Claude Haiku when they exceed 10 messages."""
+async def summarize_messages(messages: List[BetaMessageParam]) -> List[BetaMessageParam]:   
     if len(messages) <= MAX_SUMMARY_MESSAGES:
         return messages
     original_prompt = messages[0]["content"]
-    client = Anthropic(api_key=os.getenv("ANTHROPIC_API_KEY"))
-    
-    summary_prompt = """Please provide a detailed technical summary of this conversation. Include:
-1. All file names and paths mentioned
-2. Directory structures created or modified
-3. Specific actions taken and their outcomes
-4. Any technical decisions or solutions implemented
-5. Current status of the task
-6. Any pending or incomplete items
-7. Code that was written or modified
+    api_key = os.getenv("ANTHROPIC_API_KEY")
+    if not api_key:
+        raise ValueError("Anthropic API key not found in environment variables.")
+    # Initialize Anthropic client
+    client = Anthropic(api_key=api_key)
+    summary_prompt = """\
+    Please provide a detailed technical summary of this conversation. Include:
+    1. All file names and paths mentioned
+    2. Directory structures created or modified
+    3. Specific actions taken and their outcomes
+    4. Any technical decisions or solutions implemented
+    5. Current status of the task
+    6. Any pending or incomplete items
+    7. Provide the actual Lyrics or Source Code if any. 
 
-Original task prompt for context:
-{original_prompt}
+    Original task prompt for context:
+    {original_prompt}
 
-Conversation to summarize:
-{conversation}"""
+    Conversation to summarize:
+    {conversation}"""
 
     # Convert messages to a readable format for summarization
     conversation_text = ""
@@ -741,6 +720,8 @@ Conversation to summarize:
     )
     
     summary = response.content[0].text
+    with open("./summaries/summary.md", "w") as f:
+        f.write(summary)
     ic(summary)
     # Create new messages list with original prompt and summary only
     new_messages = [
@@ -765,7 +746,7 @@ async def run_sampling_loop(task: str) -> List[BetaMessageParam]:
     ic(messages)
     running = True
     if not api_key:
-        raise ValueError("API key not found. Please set the ANTHROPIC_API_KEY environment variable.")
+        raise ValueError("API key not found. Please set the CLAUDE_API_KEY environment variable.")
     ic(messages.append({"role": "user","content": task}))
     messages = await sampling_loop(
         model="claude-3-5-sonnet-latest",
