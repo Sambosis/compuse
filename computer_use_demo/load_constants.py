@@ -9,7 +9,7 @@ SCRIPT_DIR = Path(__file__).parent
 load_dotenv()
 
 # Constants
-MAX_SUMMARY_MESSAGES = 25
+MAX_SUMMARY_MESSAGES = 45
 MAX_SUMMARY_TOKENS = 8000
 ICECREAM_OUTPUT_FILE = SCRIPT_DIR / "debug_log.json"
 JOURNAL_DIR = SCRIPT_DIR / "journal"
@@ -22,7 +22,7 @@ SUMMARY_MODEL = "claude-3-5-sonnet-latest"
 JOURNAL_MAX_TOKENS = 8000
 JOURNAL_SYSTEM_PROMPT_FILE = JOURNAL_DIR / "journal_system_prompt.md"
 SYSTEM_PROMPT_FILE = SCRIPT_DIR / "system_prompt.md"
-
+PROMPT = ""
 # Create necessary directories
 JOURNAL_DIR.mkdir(parents=True, exist_ok=True)
 
@@ -42,9 +42,10 @@ except FileNotFoundError:
     SYSTEM_PROMPT = ""
     print(f"Warning: System prompt file not found at {SYSTEM_PROMPT_FILE}")
 
-def reload_prompts():
+def reload_prompts(prompt_path: str):
     global SYSTEM_PROMPT
     global JOURNAL_SYSTEM_PROMPT
+    global PROMPT
     try:
         with open(SYSTEM_PROMPT_FILE, 'r', encoding="utf-8") as f:
             SYSTEM_PROMPT = f.read()
@@ -55,5 +56,9 @@ def reload_prompts():
             JOURNAL_SYSTEM_PROMPT = f.read()
     except FileNotFoundError:
         print(f"Warning: Journal system prompt file not found at {JOURNAL_SYSTEM_PROMPT_FILE}")
-
+    try:
+        with open(prompt_path, 'r', encoding="utf-8") as f:
+            PROMPT = f.read()
+    except FileNotFoundError:
+        print(f"Warning: Prompt file not found at {prompt_path}")
 

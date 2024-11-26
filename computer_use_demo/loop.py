@@ -1,3 +1,4 @@
+from altair import Orient
 from icecream import ic
 from datetime import datetime
 from typing import cast, List, Optional, Any
@@ -19,6 +20,7 @@ from anthropic.types.beta import (
     BetaTextBlockParam,
     BetaToolResultBlockParam,
 )
+
 import ftfy
 import json
 from tenacity import retry, stop_after_attempt, wait_fixed, wait_exponential_jitter
@@ -36,6 +38,7 @@ from load_constants import (
     JOURNAL_MAX_TOKENS,
     JOURNAL_SYSTEM_PROMPT,
     SYSTEM_PROMPT,
+    PROMPT,
     reload_prompts
 )
 from dotenv import load_dotenv
@@ -419,7 +422,7 @@ def truncate_message_content(content: Any, max_length: int = 450000) -> Any:
     return content
 
 # In the sampling_loop function, before calling client.beta.messages.create:
-@retry(stop=stop_after_attempt(3), wait=wait_fixed(2))
+@retry(stop=stop_after_attempt(6), wait=wait_fixed(10))
 async def call_llm_with_retry(client, messages, max_tokens, model, system, tools, betas):
     return client.beta.messages.create(
         max_tokens=max_tokens,
@@ -430,7 +433,7 @@ async def call_llm_with_retry(client, messages, max_tokens, model, system, tools
         betas=betas,
     )
 
-async def sampling_loop(*, model: str, messages: List[BetaMessageParam], api_key: str, max_tokens: int = 8000,) -> List[BetaMessageParam]:
+async def sampling_loop(*, model: str, messages: List[BetaMessageParam], api_key: str, max_tokens: int = 8000, prompt_path=r"prompts\prompt.md") -> List[BetaMessageParam]:
     ic(messages)
     try:
         # Initialize tools with proper error handling
@@ -469,14 +472,13 @@ async def sampling_loop(*, model: str, messages: List[BetaMessageParam], api_key
         })
 
         while running:
-            reload_prompts()
             rr(f"\n[bold yellow]Iteration {i}[/bold yellow] 🔄")
             enable_prompt_caching = True
             betas = [COMPUTER_USE_BETA_FLAG, PROMPT_CACHING_BETA_FLAG]
             image_truncation_threshold = 1
             only_n_most_recent_images = 2
             if i % 2 == 0:
-                await asyncio.sleep(10) 
+                await asyncio.sleep(1) 
             i+=1
             if enable_prompt_caching:
                 _inject_prompt_caching(messages)
@@ -619,6 +621,8 @@ async def sampling_loop(*, model: str, messages: List[BetaMessageParam], api_key
             "role": "user",
             "content": f"Here are notes of your progress from your journal:\n{get_journal_contents()}"
             })
+            reload_prompts(prompt_path=prompt_path)
+
              # Display total token usage before returning
             token_tracker.display()
         return messages
@@ -696,7 +700,7 @@ async def summarize_messages(messages: List[BetaMessageParam]) -> List[BetaMessa
     if len(messages) <= MAX_SUMMARY_MESSAGES:
         return messages
         
-    original_prompt = messages[0]["content"]
+    original_prompt = PROMPT
     api_key = os.getenv("ANTHROPIC_API_KEY")
     if not api_key:
         raise ValueError("Anthropic API key not found in environment variables.")
@@ -721,7 +725,7 @@ async def summarize_messages(messages: List[BetaMessageParam]) -> List[BetaMessa
 
     Conversation to summarize:
     {conversation}"""
-    
+    original_prompt
     # Convert messages to a readable format for summarization
     conversation_text = ""
     for msg in messages[1:]:  # Skip first message (original prompt)
@@ -787,7 +791,7 @@ async def summarize_messages(messages: List[BetaMessageParam]) -> List[BetaMessa
     
     return new_messages
 
-async def run_sampling_loop(task: str) -> List[BetaMessageParam]:
+async def run_sampling_loop(task: str, prompt_path) -> List[BetaMessageParam]:
     """Run the sampling loop with clean output handling."""
     api_key = os.getenv("ANTHROPIC_API_KEY")
     messages = []
@@ -800,6 +804,7 @@ async def run_sampling_loop(task: str) -> List[BetaMessageParam]:
         model="claude-3-5-sonnet-latest",
         messages=messages,
         api_key=api_key,
+        prompt_path=prompt_path
     )
 
     return messages
@@ -834,14 +839,17 @@ async def main_async():
         with open(new_prompt_path, 'w', encoding='utf-8') as f:
             f.write(prompt_text)
         task = prompt_text
+        reload_prompts(prompt_path=new_prompt_path)
+        prompt_path = new_prompt_path
     else:
         # Read existing prompt
         prompt_path = prompt_files[int(choice) - 1]
         with open(prompt_path, 'r', encoding='utf-8') as f:
             task = f.read()
+        reload_prompts(prompt_path=prompt_path)
 
     try:
-        messages = await run_sampling_loop(task)
+        messages = await run_sampling_loop(task, prompt_path)
         rr("\nTask Completed Successfully")
         
         # The token summary will be displayed here from sampling_loop
