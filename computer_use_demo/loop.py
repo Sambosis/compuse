@@ -35,7 +35,8 @@ from load_constants import (
     SUMMARY_MODEL,
     JOURNAL_MAX_TOKENS,
     JOURNAL_SYSTEM_PROMPT,
-    SYSTEM_PROMPT
+    SYSTEM_PROMPT,
+    reload_prompts
 )
 from dotenv import load_dotenv
 load_dotenv()
@@ -75,28 +76,37 @@ def write_to_file(s, file_path=ICECREAM_OUTPUT_FILE):
     """
     Write debug output to a file, formatting JSON content in a pretty way.
     """
-    lines = s.split('\n')
-    formatted_lines = []
-    
-    for line in lines:
-        if "tool_input:" in line:
-            try:
-                # Extract JSON part from the line
-                json_part = line.split("tool_input: ")[1]
-                # Parse and pretty-print the JSON
-                json_obj = json.loads(json_part)
-                pretty_json = json.dumps(json_obj, indent=4)
-                formatted_lines.append("tool_input: " + pretty_json)
-            except (IndexError, json.JSONDecodeError):
-                # If parsing fails, just append the original line
+    try:
+        lines = s.split('\n')
+        formatted_lines = []
+        
+        for line in lines:
+            if "tool_input:" in line:
+                try:
+                    # Extract JSON part from the line
+                    json_part = line.split("tool_input: ")[1]
+                    # Parse and pretty-print the JSON
+                    json_obj = json.loads(json_part)
+                    pretty_json = json.dumps(json_obj, indent=4)
+                    formatted_lines.append("tool_input: " + pretty_json)
+                except (IndexError, json.JSONDecodeError):
+                    # If parsing fails, just append the original line
+                    formatted_lines.append(line)
+            else:
                 formatted_lines.append(line)
-        else:
-            formatted_lines.append(line)
-    
-    # Write to file
-    with open(file_path, 'a', encoding="utf-8") as f:
-        f.write('\n'.join(formatted_lines))
-        f.write('\n' + '-' * 80 + '\n')  # Add separator between entries
+        
+        # Write to file with explicit UTF-8 encoding and error handling
+        with open(file_path, 'a', encoding="utf-8", errors='replace') as f:
+            f.write('\n'.join(formatted_lines))
+            f.write('\n' + '-' * 80 + '\n')  # Add separator between entries
+    except UnicodeEncodeError as ue:
+        # Fallback handling for Unicode encode errors
+        with open(file_path, 'a', encoding="utf-8", errors='replace') as f:
+            f.write(f"Warning: Some characters could not be encoded: {str(ue)}\n")
+            f.write('\n'.join(line.encode('ascii', errors='replace').decode('ascii') for line in formatted_lines))
+            f.write('\n' + '-' * 80 + '\n')
+    except Exception as e:
+        ic(f"Error writing to file: {str(e)}")
 ic.configureOutput(includeContext=True, outputFunction=write_to_file)
 
 class OutputManager:
@@ -448,6 +458,7 @@ async def sampling_loop(*, model: str, messages: List[BetaMessageParam], api_key
         })
 
         while running:
+            reload_prompts()
             rr(f"\n[bold yellow]Iteration {i}[/bold yellow] 🔄")
             enable_prompt_caching = True
             betas = [COMPUTER_USE_BETA_FLAG, PROMPT_CACHING_BETA_FLAG]
@@ -489,7 +500,7 @@ async def sampling_loop(*, model: str, messages: List[BetaMessageParam], api_key
                     } 
                     for msg in messages
                 ]
-                with open("justfornow.json", "w") as f:
+                with open("messages.json", "w") as f:
                     for msg in truncated_messages:  
                         for_looking_at_messages_as_json = json.dumps(msg, indent=4)
                         f.write(for_looking_at_messages_as_json)
@@ -672,12 +683,16 @@ def _maybe_filter_to_n_most_recent_images(
 async def summarize_messages(messages: List[BetaMessageParam]) -> List[BetaMessageParam]:   
     if len(messages) <= MAX_SUMMARY_MESSAGES:
         return messages
+        
     original_prompt = messages[0]["content"]
     api_key = os.getenv("ANTHROPIC_API_KEY")
     if not api_key:
         raise ValueError("Anthropic API key not found in environment variables.")
+        
     # Initialize Anthropic client
     client = Anthropic(api_key=api_key)
+    
+    # Define the summary prompt template
     summary_prompt = """\
     Please provide a detailed technical summary of this conversation. Include:
     1. All file names and paths mentioned
@@ -687,13 +702,14 @@ async def summarize_messages(messages: List[BetaMessageParam]) -> List[BetaMessa
     5. Current status of the task
     6. Any pending or incomplete items
     7. Provide the actual Lyrics or Source Code if any. 
+    8. Someone Reading the summary should have a detailed understanding of everything in the original, only omitting repetative text while organizing the information to be more easily understandable.
 
     Original task prompt for context:
     {original_prompt}
 
     Conversation to summarize:
     {conversation}"""
-
+    
     # Convert messages to a readable format for summarization
     conversation_text = ""
     for msg in messages[1:]:  # Skip first message (original prompt)
@@ -708,27 +724,42 @@ async def summarize_messages(messages: List[BetaMessageParam]) -> List[BetaMessa
                         for item in block.get('content', []):
                             if item.get('type') == 'text':
                                 conversation_text += f"\n{role} (Tool Result): {item.get('text', '')}"
+                    elif block.get('type') == 'tool_use':
+                        conversation_text += f"\n{role} (Tool Use): {block.get('name', '')} - {json.dumps(block.get('input', ''))}"
         else:
             conversation_text += f"\n{role}: {msg['content']}"
 
-    # Get summary from Haiku
+    # Format the prompt with conversation content
+    formatted_prompt = summary_prompt.format(
+        original_prompt=original_prompt,
+        conversation=conversation_text
+    )
+    
+    # Save the formatted prompt for reference
+    os.makedirs("./summaries", exist_ok=True)
+    with open("./summaries/summary_prompt_text.md", "w", encoding="utf-8") as f:
+        f.write(formatted_prompt)
+
+    # Get summary from Claude with explicit instructions for detail
     response = client.messages.create(
         model=SUMMARY_MODEL,
         max_tokens=MAX_SUMMARY_TOKENS,
         messages=[{
             "role": "user",
-            "content": summary_prompt.format(
-                original_prompt=original_prompt,
-                conversation=conversation_text
-            )
-        }]
+            "content": f"Please provide a detailed technical summary following these requirements exactly:\n\n{formatted_prompt}\n\nIMPORTANT: Your summary must be comprehensive and detailed, covering all aspects mentioned in the requirements. Do not provide a brief or partial summary."
+        }],
+        temperature=0.7  # Add some temperature for more detailed generation
     )
     
     summary = response.content[0].text
-    with open("./summaries/summary.md", "w") as f:
+    
+    # Write the summary
+    with open("./summaries/summary.md", "w", encoding="utf-8") as f:
         f.write(summary)
+    
     ic(summary)
-    # Create new messages list with original prompt and summary only
+    
+    # Create new messages list with original prompt and summary
     new_messages = [
         messages[0],  # Original prompt
         {

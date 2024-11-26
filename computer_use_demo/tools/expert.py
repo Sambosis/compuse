@@ -164,7 +164,7 @@ Begin your detailed task breakdown below:
             """
             rr(problem_description)
             response = client.chat.completions.create(
-                model="o1-preview",
+                model="o1-mini",
                 messages=[
                     {
                         "role": "user",

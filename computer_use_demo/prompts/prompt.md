@@ -26,14 +26,20 @@
         * then the first verse can tame down a bit, at least with the insults, It should stay smart and clever and do interesting things with the sounds an rhythm of the words throughout. 
         * The insults should build in intensity and complexity with the end of the song being the strongest and most shocking and insulting. 
     - Search for the lyrics of the best diss tracks of all time. Compile the information and save it to a file.
-    -You need heavily Use Consonance, Assonance and Homophones. 
+    -You need heavily Use Alliteration, Consonance, Assonance and Homophones. 
+        * Alliteration is the repetition of initial sounds in nearby words. 
         * Consonance is the repetition of consonant sounds in the middle or at the end of words. 
         * Assonance is the repetition of vowel sounds in nearby words. 
         * Homophones are words that sound the same but have different meanings.
+    - The flow and sound of the words is an extremely important part of the song. 
+        * You should consider the flow of the words and the rhythm of the words throughout. 
+        * Ask the expert to help you with Alliteration, Consonance, Assonance and Homophones that can be in the context of the song.  
+        * He works best with a lot of context, suggestions and examples.  
  ## You need to have the expert grade all submissions and give you feedback.
     - You should use your tool to get an expert opinion and ask the opinion to score each submission on a scale of 1-10. 1 being the worst and 10 being the best.
     - You should let him know that the expectation is that he grade you very harshly because your goal is to get the best result possible.
     - You should store the filename in the json with the score and feedback but each submission's lyrics should be in it's own markdown file
+
 ## Example of how each json of a submission should look - Please pass this info on the the expert when asking for  it's opinion or what the score for the song is. 
 {
     "version": "1.0",
@@ -80,19 +86,6 @@
         "Incorporate more shocking revelations"
     ]
 } 
-
-## Additional Information
-    - No body becomes the best after just writing a few times. You will need to do MANY version.  
-    - You should be just writing, getting a score and feedback from the expert, then just keep working on it and learning what works and what doesn't. 
-    - Research your weakness or get some raps from the expert impersonator in the style of someone who raps in a way that will help improve your weakness.  
-    - Continue to create, mix and match and tweak lines, until you and your expert agree that you have the best possible version of the song. 
-    - Submission should NOT be over 3000 characters long.  However, the need to be at least 2400 characters long.
-
-    - your working directory has a folder called diss that is where you should save all of your files.  
-
-    - You will be working in Microsoft Windows so make sure you use powershell commands to navigate the file system and create and save your files. 
-
-    - If you have a hard time with file operations, You should create and save python scripts that can help you create search and sort through your files.    
 
 There has already been work done on this project. Here are some of the best lines we have on the topic so far. You can use some of the directly or use them as inspiration.
 
@@ -234,8 +227,6 @@ Titration nation, watch that PPM rise!
 Your empire's oxidized!
 While you're out here pushing watered-down lies,
 We're that pure concentrate that sanitizzzze!
-You strut around claiming you're top of the trade,
-But your chems are so weak, Wagner'd be an upgrade!
 Your service department's a technical wreck,
 Three days of downtime for a five-minute check.
 You're the virus, we're the vaccination,
@@ -274,9 +265,6 @@ We solve equations while your systems fall and stall
 Temperature gradients match your market decline
 Perfect storm brewing—your control lines malign
 Basic problems plague your dated operations
-While we architect complete transformations
-Rising to the peak
-Watch your empire leak
 Your solutions dilute, while ours concentrate
 Clean sweep coming—can't procrastinate
 Your market position's unstable as your pH
@@ -397,8 +385,6 @@ Contracts filled with more traps than a SAW movie
 Hidden fees popping up like acne on a newbie
 While Auto-Chlor keeps it clean and crystal clear
 You're that sketchy salesman everyone loves to fear
-Market leader? More like market bleeder
-Losing customers faster than a Twitter feeder
 While we're concentrated like your worst nightmare
 Leaving you diluted, weak, and gasping for air
 Polluting kitchens with your toxic lies
@@ -414,25 +400,17 @@ Your market share's falling, no one's sympathizing.
 Your sanitation regulations lack innovative adaptations,
 While we optimize operations with flawless implementations.
 Like a dishwasher with a clogged drain, your progress is stuck,
-We flow like pure concentrate, you're diluted—out of luck.
-Your detergents lack the proper phosphates, can't clean the slate,
-Our solutions recalibrate, leaving dishes in a pristine state.
 You're washed up, can't handle the rinse cycle anymore,
 While we're cycling wins, making success essential to our core.
 We clean up where you mess up, that's the Auto-Chlor way,
 While you fade into the background, we're defining the new day.
-Your empire's corroding, bound to end!
-The future that you can't comprehend!
-Your service cycles lag like a dated HACCP plan,
-While we set new standards, revolutionizing how we scan.
+
 Three days of downtime for a five-minute fix?
 That's why your customers are caught in a desperate mix.
 From the kitchen to the table, we're enabling success,
 While you're unable to progress, time to confess:
 Your billing schemes are dirtier than the plates you claim to clean,
 Hidden charges in fine print—your contracts are obscene.
-You're the Titanic of dishwashers—grand but doomed to sink,
-We're the Phoenix rising, the missing link.
 Stuck in the past like old assembly lines,
 While we advance ahead, rewriting guidelines.
 Your QA fails the QA, it's crystal clear,
@@ -441,8 +419,6 @@ We automate aptitude, annihilate your attitude,
 Your antics antiquated, our advances show amplitude.
 Your formulas are diluted, results convoluted,
 We concentrate excellence, solutions undisputed.
-Impressive sales talk—shame the service doesn't match,
-We underpromise, overdeliver, concepts you can't catch.
 While you downsize and compromise, we capitalize and rise,
 Your demise isn't a surprise—it's the outcome of your lies.
 In the cycle of success, we're the rinse that shines,
@@ -519,23 +495,6 @@ Auto-Chlor's ascending as you meet your end.
 Remember when standards meant something real?
 Before profits corrupted every deal?
 
-Your techs are jumping ship—they've read the logs,
-System failures hidden in error catalogs.
-The data doesn't lie, analytics show
-Your downtime's rising as our numbers grow.
-Health inspections fail like deprecated code,
-Your chemistry's weaker than your customer load.
-We're quantum computing while you count on hands,
-Your manual processes can't meet demands.
-Backend's corrupted, frontend's looking weak,
-Your whole operation's sprung a memory leak.
-We're processing success at gigahertz speeds,
-While you're still stuck with basic CRUD proceeds.
-Execute shutdown.exe—your runtime's done,
-The battle for quality's already won.
-Auto-Chlor's compiled the perfect clean routine,
-While you're just malware in our washing machine.
-
 System status: Terminated.
 Cause of failure: Auto-Chlor dominated.
 Yo, EcoLab, time to face elimination,
@@ -593,7 +552,7 @@ Time for market share correction!
 Titration nation, watch that PPM soar!
 Can't ignore us anymore!
 Seven days waiting on a simple fix,
-While your dispatchers playing politics.
+
 
 Corporate office sends another price hike note,
 While your service boat can barely stay afloat.
@@ -613,12 +572,6 @@ EcoLab, it's time to face the facts,
 Your business model's breaking like your racks.
 Auto-Chlor's the future, crystal clear and clean,
 While you're just residue on yesterday's machine!
-
-EcoLab... When you're ready for real clean, you know where to find us.
-Auto-Chlor - Because your kitchen deserves better!
-
-Hello, kitchen emergency! Our dishwasher's down...
-Your call is important to us...
 
 EcoLab! Your empire's facade is breaking down,
 Late-night kitchen chaos, no tech around.
@@ -652,8 +605,7 @@ Auto-Chlor's precision makes your systems look stone age,
 While your customers are burning with rage!
 Your reputation's melting like your service promise,
 Customer satisfaction? Pure chemical mess!
-Check those Yelp reviews – they tell no lies,
-While Auto-Chlor's ratings continue to rise!
+
 
 Invoice after invoice, hidden fees galore,
 Nickel and diming restaurants to the core.
@@ -697,10 +649,6 @@ Now let's talk business, bottom line facts
 Your quarterly earnings looking flat as your racks
 While Auto-Chlor's growth curve's heading sky-high
 Your stock chart's looking like a goodbye dive
-You're playing checkers in a chess master's game
-Your strategy's weak, your moves are lame
-We're shark tank material, you're more like bait
-Your business model? Already checkmate!
 
 Auto-Chlor speaking, emergency service?
 We'll be there in thirty, count on it!
@@ -722,13 +670,9 @@ Let's talk numbers - cold facts, no fiction
 Your response time's causing kitchen friction
 Average wait time: seventy-two hours plus
 While we're there in sixty minutes - that's the Auto-Chlor thrust
-Three-point-eight gallons per rack? That's waste
-Our one-point-two efficiency - can't be replaced
 
-Eco ain't ecological when you're burning through water
+Eco ain't ecological when you're burning through water!
 Like a desert drinking oceans, but getting none smarter
-Our carbon footprint's measured in gentle steps
-While yours leaves craters - dinosaur deaths
 Your green initiative's turning brown
 Like them promises you're breaking down
 Q4 earnings looking like a flatline EKG
@@ -743,12 +687,7 @@ When Gordon Ramsay's screaming shut it down!
 Guess whose system's causing that frown?
 Not Auto-Chlor - we keep it running clean
 While EcoLab's creating Kitchen Nightmares scenes
-Ninety-eight percent would recommend
-While your customers' patience meets its end
-Time to face facts - you're yesterday's news
-Auto-Chlor's the future these kitchens choose
-Not just clean dishes - we clean house
-While your empire's quiet as a mouse
+
 
 Manager: Auto-Chlor? Yeah, best decision we ever made.
 Chef: Haven't had a down day since the switch.
@@ -759,10 +698,8 @@ This ain't just business, it's personal too
 Auto-Chlor's done what you couldn't do
 Clean kitchens, clean conscience, clean sweep
 While your legacy's something nobody'll keep
-Game over, checkmate, that's all she wrote
-Auto-Chlor's the king - and that's all she wrote!
 
-In this pHase of business, watch your balance fade
+Watch your balance fade
 Your basic service? More like customer trade-
 offs, while your solutions lack real concentration
 Auto-Chlor's here to clean up your contamination
@@ -856,18 +793,12 @@ From base to acid, you're losing ground
 Your concentrations weak, you're breaking down
 That Auto-Chlor's the only,. final, solution!
 
-Warning: Critical system failure detected...
-
 EcoLab system contamination in progress...
 In this lab of industry, let's test a theory out:
 What happens when your business model's filled with doubt?
-Like Le Chatelier predicted—systems under stress
-Break down completely when they can't progress
 Your pH's so basic, both in thought and deed
 While Auto-Chlor's balanced—that's our guaranteed
 
-Three-point-eight gallons per rack? That's water waste
-Our one-point-two efficiency can't be replaced
 Response time measured in geological ages?
 We solve crises faster than you turn pages
 Your carbon footprint's bigger than your market share
@@ -903,7 +834,6 @@ Your reputation's precipitating, leaving sediment.
 While Auto-Chlor's solutions stay crystal clear and evident,
 Your business model's showing signs of toxic impediment!
 
-[Verse ]
 My thermal surge diverges, fluctuates in wild designs—
 Temperature's slippin' and slidin' like your stock's decline.
 Your tech team's twisted digits fumble through the day,
@@ -920,7 +850,6 @@ While your PPM readings bounce off basement walls!
 (Your fame?) Just illusion!
 Time for market redistribution!
 
-[Verse ]
 We're enzymatic catalysts igniting industry's core,
 Sparking revolutions while your circuits short and war!
 Your empire's oxidized, corroding to the core,
@@ -932,13 +861,11 @@ Breaking bad at equations while we shatter slabs!
 Your sanitizer's weaker than your quarterly reports,
 While health inspectors line up at your customers' courts!
 
-[Bridge s]
 You claim the apex while your profits hemorrhage—
 Market leader? Nah, you're the market's hemorrhaging edge!
 Contracts need a lawyer and a chemist to decode,
 While your hidden charges leave your clients' budgets blown!
 
-[Verse]
 Your operation's messier than Ramsay's kitchen nightmares,
 More inconsistent than your titration nightmare shares.
 Auto-Chlor's rising through the ranks with precisions,
@@ -949,18 +876,11 @@ Microswitches glitching got your techs in pure despair!
 We're revolutionizing while you're fossilizing,
 Innovation flows through our veins while your business dies in!
 
-[Hook y]
 Your invoices balloon like your over-sudsed tanks,
 Customer satisfaction's lower than your bank's.
 You're the scale buildup we're designed to eliminate,
 Auto-Chlor's solution makes your problems dissipate!
 
-
-Warning: Critical system failure detected...
-EcoLab status: Terminal decline...
-Recommended action: Switch to Auto-Chlor...
-
-[Outro -]
 From your diluted chems to your diluted dreams,
 Your empire's crumbling faster than it seems.
 Auto-Chlor's the future, crystal clear and bright,
@@ -969,3 +889,27 @@ EcoLab... When you're ready to admit defeat,
 Auto-Chlor's here to show you how clean should be.
 Because your kitchen deserves better than second best.
 Auto-Chlor - The standard you can't contest!
+
+
+## Additional Information
+    - No body becomes the best after just writing a few times. You will need to do MANY version.  
+    - You should be just writing, getting a score and feedback from the expert, then just keep working on it and learning what works and what doesn't. 
+    - Research your weakness or get some raps from the expert impersonator in the style of someone who raps in a way that will help improve your weakness.  
+    - Continue to create, mix and match and tweak lines, until you and your expert agree that you have the best possible version of the song. 
+    - Submission should NOT be over 3000 characters long.  However, the need to be at least 2400 characters long.
+    - your working directory has a folder called C:\repo\diss that is where you should save all of your files.  
+    - it already has some files and and folders in it that you can help to get yourself organized and also to get some inspiration for your own work which should be creative and unique and not just copies of other people's work.
+    Here are the folder is your working directory.  Please save all lyrics in the lyrics folder. 
+
+├───analysis
+├───best_lines
+├───feedback
+├───lyrics
+├───personas
+├───planning
+├───research
+├───structure
+├───submissions    
+
+
+- DO NOT USE SPECIFIC NAMES OF RESTAURANTS.

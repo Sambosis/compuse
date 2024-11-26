@@ -41,3 +41,19 @@ try:
 except FileNotFoundError:
     SYSTEM_PROMPT = ""
     print(f"Warning: System prompt file not found at {SYSTEM_PROMPT_FILE}")
+
+def reload_prompts():
+    global SYSTEM_PROMPT
+    global JOURNAL_SYSTEM_PROMPT
+    try:
+        with open(SYSTEM_PROMPT_FILE, 'r', encoding="utf-8") as f:
+            SYSTEM_PROMPT = f.read()
+    except FileNotFoundError:
+        print(f"Warning: System prompt file not found at {SYSTEM_PROMPT_FILE}")
+    try:
+        with open(JOURNAL_SYSTEM_PROMPT_FILE, 'r', encoding="utf-8") as f:
+            JOURNAL_SYSTEM_PROMPT = f.read()
+    except FileNotFoundError:
+        print(f"Warning: Journal system prompt file not found at {JOURNAL_SYSTEM_PROMPT_FILE}")
+
+
