@@ -419,6 +419,17 @@ def truncate_message_content(content: Any, max_length: int = 450000) -> Any:
     return content
 
 # In the sampling_loop function, before calling client.beta.messages.create:
+@retry(stop=stop_after_attempt(3), wait=wait_fixed(2))
+async def call_llm_with_retry(client, messages, max_tokens, model, system, tools, betas):
+    return client.beta.messages.create(
+        max_tokens=max_tokens,
+        messages=messages,
+        model=model,
+        system=system,
+        tools=tools,
+        betas=betas,
+    )
+
 async def sampling_loop(*, model: str, messages: List[BetaMessageParam], api_key: str, max_tokens: int = 8000,) -> List[BetaMessageParam]:
     ic(messages)
     try:
@@ -489,7 +500,7 @@ async def sampling_loop(*, model: str, messages: List[BetaMessageParam], api_key
             try:
                 tool_collection.to_params()
                 if i % 2 == 0:
-                    await asyncio.sleep(10) 
+                    await asyncio.sleep(1) 
                 ic(messages)
                 # Truncate messages before sending to API
                 truncated_messages = [
@@ -506,14 +517,15 @@ async def sampling_loop(*, model: str, messages: List[BetaMessageParam], api_key
                         f.write(for_looking_at_messages_as_json)
                         f.write("\n\n")
 
-                response = client.beta.messages.create(
-                    max_tokens=MAX_SUMMARY_TOKENS,
+                response = await call_llm_with_retry(
+                    client=client,
                     messages=truncated_messages,  # Use truncated messages
+                    max_tokens=MAX_SUMMARY_TOKENS,
                     model=SUMMARY_MODEL,
                     system=system,
                     tools=tool_collection.to_params(),
                     betas=betas,
-                    )
+                )
                 # Update token tracker
                 token_tracker.update(response)
                 token_tracker.display() 

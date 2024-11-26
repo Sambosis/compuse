@@ -1,4 +1,4 @@
-there is code in your working directory I want you to examine
+clone the repo at https:github.com/sambosis/compuse
 The main running file is loop.py
 now create a modified version of the file to use the library pywebview to have the output display in a gui window
 use uv to set things up
