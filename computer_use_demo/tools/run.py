@@ -1,11 +1,9 @@
 ## run.py
 """Utility to run shell commands asynchronously with a timeout."""
-
 import asyncio
 
 TRUNCATED_MESSAGE: str = "<response clipped><NOTE>To save on context only part of this file has been shown to you. You should retry this tool after you have searched inside the file the line numbers of what you are looking for. Remember to use you are working in Windows.</NOTE>"
 MAX_RESPONSE_LEN: int = 16000
-
 
 def maybe_truncate(content: str, truncate_after: int | None = MAX_RESPONSE_LEN):
     """Truncate content and append a notice if content exceeds the specified length."""
@@ -14,7 +12,6 @@ def maybe_truncate(content: str, truncate_after: int | None = MAX_RESPONSE_LEN):
         if not truncate_after or len(content) <= truncate_after
         else content[:truncate_after] + TRUNCATED_MESSAGE
     )
-
 
 async def run(
     cmd: str,
