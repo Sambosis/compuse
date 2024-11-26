@@ -795,7 +795,9 @@ async def run_sampling_loop(task: str) -> List[BetaMessageParam]:
 async def main_async():
     """Async main function with proper error handling."""
     # Get list of available prompts
-    prompts_dir = Path(r"C:\mygit\compuse\computer_use_demo\prompts")
+    current_working_dir = Path(os.getcwd())
+    prompts_dir = current_working_dir / Path(r"prompts")
+    rr(prompts_dir)
     prompt_files = list(prompts_dir.glob("*.md"))
     
     # Display options

@@ -89,8 +89,7 @@
 
 There has already been work done on this project. Here are some of the best lines we have on the topic so far. You can use some of the directly or use them as inspiration.
 
-Scale build-up got them stuck, they can't deliver,
-Heat exchangers breaking down, watch their profits wither.
+
 Detergent dispensers flawed, overusing chemicals,
 We measure precise, our efficiency's empirical.
 Temperature swings wilder than your stock decline,
@@ -141,8 +140,7 @@ I run these kitchen streets while you're just a drain clog
 Your reputation's going down faster than your stock blog
 I'm the alkaline answer to your acidic existence
 Breaking down your whole operation with persistent persistence
-Auto-Chlor's the solution, both chemical and literal
-While EcoLab's out here acting all bitter and clinical
+
 Your rinse arms spray like a leaky garden hose
 While temp readings swing from highs to desperate lows
 Titration results looking like a horror story
@@ -159,12 +157,10 @@ While wash arms clog faster than your customer stats fell
 Pressure gauge reading like a broken compass
 While your company's direction's lost in the process
 Temperature swings wilder than your stock decline
-Your techs can't tell a valve from a vacuum breaker
 Your pH is balanced like your books - pure fiction
 Our titration's tight while your business dilutes
 Three days of downtime for a five-minute check
 You're ghosting so hard, you disappear in thin air
-Response times longer than your list of excuses
 Your chemical game's weaker than your customer care
 Your solutions leave kitchens in disarray
 Market leader? More like market bleeder
@@ -204,9 +200,10 @@ We're the catalyst sparking industry change
 We're the catalyst igniting sparks you can't contain
 Choosing you is a biohazard, they buy a hazard instead
 Choosing you's a biohazard—they're paying to get poisoned faster
-WcoLab's lagging, lacking, slacking
-EcoLab's lagging, lacking, slacking—while we're attacking, cracking codes, unpacking facts and stacking
-You're diluted, like your solutions—can't handle the concentration we're producin'
+EcoLab's lagging, lacking, slacking—
+while we're attacking, cracking codes, unpacking facts and stacking
+You're diluted, like your solutions
+—can't handle the concentration we're producin'
 Chemical reactions leave you in fractions—you're a base formula, we're advanced interactions
 Your outdated methods precipitate failure—our innovations make competitors unfamiliar
 Flow so corrosive, got you eroding—Auto-Chlor explodes while EcoLab's imploding
@@ -216,13 +213,8 @@ We're the solution in this saturated market—you're the byproduct nobody's targ
 Yo, Auto-Chlor on the mic, time to bring the heat,
 EcoLab's crumbling, can't handle this beat.
 We're the kings of clean, you're the jester of grime,
-Listen up, EcoLab, you chemical clown,
-Your service is shotty, you're losing your crown.
-Your quality's dropped, but not your marketing slime,
-You're slower than molasses when the dishes pile high,
-Restaurants drowning while you tell them a lie.
-Health inspectors rolling deep, citations in hand,
-'Cause your dispensers fail harder than your business plan.
+
+
 Titration nation, watch that PPM rise!
 Your empire's oxidized!
 While you're out here pushing watered-down lies,
@@ -285,9 +277,7 @@ We're scaling up while you're scaling down
 Your kingdom crumbling—we'll take the crown
 Molecular evidence of your dissolution
 While we provide the permanent solution
-Your empire oxidizes—watch it rust and fade
-Auto-Chlor's rising—new standards made
-Time to balance this equation—results don't lie
+
 Your business model's failing—watch your margins die
 We're that pure concentrate that sanitize
 While EcoLab dissolves before our eyes
@@ -333,14 +323,6 @@ You're the scale buildup we're designed to eliminate,
 Auto-Chlor's solution makes your problems dissipate!
 From your diluted chems to your diluted dreams,
 Your empire's crumbling faster than it seems.
-Auto-Chlor's the future, crystal clear and bright,
-While you fade like residue in the night!
-EcoLab... When you're ready to admit defeat,
-Auto-Chlor's here to show you how clean should be.
-Because your kitchen deserves better than second best.
-Auto-Chlor - The standard you can't contest!
-EcoLab, your empire's crumbling fast,
-Your reputation's dirtier than a drain that's blocked at last.
 More red flags than a health inspection fail,
 While Auto-Chlor's here to tip the scale!
 Temperature swings wilder than your stock decline,
@@ -397,22 +379,12 @@ Listen up, chemical kings of catastrophe,
 Your empire's crumbling with each new atrocity.
 Auto-Chlor's rising while you're oxidizing,
 Your market share's falling, no one's sympathizing.
-Your sanitation regulations lack innovative adaptations,
-While we optimize operations with flawless implementations.
-Like a dishwasher with a clogged drain, your progress is stuck,
-You're washed up, can't handle the rinse cycle anymore,
-While we're cycling wins, making success essential to our core.
-We clean up where you mess up, that's the Auto-Chlor way,
-While you fade into the background, we're defining the new day.
-
-Three days of downtime for a five-minute fix?
+YThree days of downtime for a five-minute fix?
 That's why your customers are caught in a desperate mix.
 From the kitchen to the table, we're enabling success,
 While you're unable to progress, time to confess:
 Your billing schemes are dirtier than the plates you claim to clean,
 Hidden charges in fine print—your contracts are obscene.
-Stuck in the past like old assembly lines,
-While we advance ahead, rewriting guidelines.
 Your QA fails the QA, it's crystal clear,
 Our quality control's making your presence disappear.
 We automate aptitude, annihilate your attitude,
@@ -421,10 +393,6 @@ Your formulas are diluted, results convoluted,
 We concentrate excellence, solutions undisputed.
 While you downsize and compromise, we capitalize and rise,
 Your demise isn't a surprise—it's the outcome of your lies.
-In the cycle of success, we're the rinse that shines,
-You're just the residue left behind—end of the line.
-So pack it up, EcoLab, your time is through,
-Auto-Chlor's the future—the proof is in the residue.
 We've optimized the formula while you've lost the solution,
 Now watch as we lead the cleaning revolution!
 Temperature swings wilder than your stock decline,
@@ -450,27 +418,16 @@ Every health inspection's like Russian roulette,
 Your chemicals so weak they couldn't clean a pet.
 While you downsize and compromise, we capitalize and rise,
 Your demise isn't a surprise—it's the sum of all your lies.
-So pack it up, EcoLab, your time is done,
-The battle for quality has already been won.
-You lost your grip on what cleaning should be,
-Now watch as Auto-Chlor sets the industry free!
-And that's not just a promise...
-That's a guarantee backed by every spotless dish in America.
-(Like your detergent strength—watch it fade away,
-While we concentrate on a brighter day...)
 Now your techs are jumping ship like they know what's coming,
 While your quality control keeps the problems running.
 Remember when quality meant something real?
 Before profits and shortcuts became your only deal?
 Now your techs are leaving, customers too,
 Running from the mess that used to be you.
-The temperature's rising but you can't take the heat,
-Your empire's ending, your defeat complete...
-Temperature's still swinging ,
+
 While your reputation's stinging.
 Your solutions diluted ,
 Auto-Chlor's evolution can't be replaced.
-
 From weak solutions to failed inspections,
 From broken promises to lost connections,
 Your legacy's dissolving in a sea of regret,
@@ -495,30 +452,7 @@ Auto-Chlor's ascending as you meet your end.
 Remember when standards meant something real?
 Before profits corrupted every deal?
 
-System status: Terminated.
-Cause of failure: Auto-Chlor dominated.
-Yo, EcoLab, time to face elimination,
-Your empire's crumbling under investigation.
-We're Auto-Chlor, the industry's salvation,
-While you're just noise, pure contamination.
-Yo, EcoLab, listen up, you chemical calamity clown,
-Your shabby services sinking, watch you drown in your crown.
-Quality's plummeted worse than your stock's decline,
-While Auto-Chlor's precision stays right on the line.
-When racks stack high and your washers break down,
-You ghost the calls while kitchens nearly drown.
-Health inspectors cite your sanitizer decline,
-'Cause your dosing pumps fail crossing all the lines.
-While you're pushing watered-down lies,
-We're that pure concentrate that sanitizzzze!
-Parading like you're paramount, king of the trade,
-But your watered-down chems need federal aid!
-Your tech team's a dumpster fire, untrained and slow,
-Seven days down for a float switch - that's how you roll.
-When the warewasher's down and the plates pile deep,
-Your response time's slower than your stock's downward creep.
-We solve in minutes what takes you a week,
-While your dispatchers play hide and seek!
+
 Your reputation's corroding faster than your tanks,
 Your customer service ranked lower than your banks.
 Auto-Chlor's rising while you're fossilizing,
@@ -583,20 +517,6 @@ Health code violations... Restaurants are pining...
 Your techs don't show... Your chems don't flow...
 Time to let them know...
 
-Picture this: Friday night, dinner rush is peaking,
-Your dispenser's dripping, sanitizer's leaking.
-Chef calls your hotline – straight to voicemail heaven,
-Response time? We'll be there by day seven!
-Meanwhile at Auto-Chlor, we're solving crisis calls,
-While your customers are climbing kitchen walls.
-Our techs arrive before the plates get cold,
-Your service promise? Worth less than fool's gold!
-
-Three days without hot water...
-Health inspector's writing citations...
-Hidden fees in every invoice...
-That's the EcoLab way!
-
 Sump heaters failing like your quarterly gains,
 Microswitches glitching, causing kitchen pains.
 Rinse temps dropping lower than your stock,
@@ -605,7 +525,6 @@ Auto-Chlor's precision makes your systems look stone age,
 While your customers are burning with rage!
 Your reputation's melting like your service promise,
 Customer satisfaction? Pure chemical mess!
-
 
 Invoice after invoice, hidden fees galore,
 Nickel and diming restaurants to the core.
@@ -621,20 +540,9 @@ Your empire's crumbling like limescale in acid.
 Auto-Chlor's rising, crystal clear and strong,
 While you're just residue of what went wrong.
 
-Auto-Chlor speaking, how can we help?
-Thank you for calling – we'll be there in 30 minutes.
 
 You call yourself Eco? More like Echo-lab
 Your service calls echo but never call back
-Your formula's trapped in last decade's grime
-Mean time between failures? It's failing all time
-Cycle after cycle, you rinse and fade away
-Your market share dissolving day after day
-While Auto-Chlor's solutions are crystal clear
-Your customers' patience... disappears
-Our chemistry's perfect, yours is a mess
-Playing chess while you're stuck on checkers, yes!
-
 Eco in your name but green's not your game
 Biodegradable? Your reputation's the same
 Our carbon footprint's light as a feather in flight
@@ -649,15 +557,6 @@ Now let's talk business, bottom line facts
 Your quarterly earnings looking flat as your racks
 While Auto-Chlor's growth curve's heading sky-high
 Your stock chart's looking like a goodbye dive
-
-Auto-Chlor speaking, emergency service?
-We'll be there in thirty, count on it!
-
-Now that's what I call a clean solution!
-They say time heals all wounds, but can't fix your stains
-Auto-Chlor's the future, you're circling the drains
-This isn't just a diss track, it's a cleaning revolution
-Auto-Chlor's the only permanent solution!
 
 
 Health code violations stacked up day by day
