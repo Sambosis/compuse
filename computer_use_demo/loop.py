@@ -419,8 +419,9 @@ def truncate_message_content(content: Any, max_length: int = 450000) -> Any:
     return content
 
 # In the sampling_loop function, before calling client.beta.messages.create:
-@retry(stop=stop_after_attempt(3), wait=wait_fixed(2))
+@retry(stop=stop_after_attempt(3), wait=wait_fixed(10))
 async def call_llm_with_retry(client, messages, max_tokens, model, system, tools, betas):
+    rr("trying to call llm")
     return client.beta.messages.create(
         max_tokens=max_tokens,
         messages=messages,
@@ -461,6 +462,8 @@ async def sampling_loop(*, model: str, messages: List[BetaMessageParam], api_key
         if os.path.exists(JOURNAL_FILE):
             with open(JOURNAL_FILE, 'r',encoding='utf-8') as f:
                 journal_entry_count = sum(1 for line in f if line.startswith("Entry #")) + 1
+        else:
+            journal_entry_count = 1
 
         # Add journal contents to messages
         messages.append({
@@ -469,7 +472,7 @@ async def sampling_loop(*, model: str, messages: List[BetaMessageParam], api_key
         })
 
         while running:
-            reload_prompts()
+            # reload_prompts()
             rr(f"\n[bold yellow]Iteration {i}[/bold yellow] 🔄")
             enable_prompt_caching = True
             betas = [COMPUTER_USE_BETA_FLAG, PROMPT_CACHING_BETA_FLAG]
@@ -516,7 +519,7 @@ async def sampling_loop(*, model: str, messages: List[BetaMessageParam], api_key
                         for_looking_at_messages_as_json = json.dumps(msg, indent=4)
                         f.write(for_looking_at_messages_as_json)
                         f.write("\n\n")
-
+                rr("b4 call")
                 response = await call_llm_with_retry(
                     client=client,
                     messages=truncated_messages,  # Use truncated messages
@@ -828,18 +831,20 @@ async def main_async():
         # Create new prompt
         filename = Prompt.ask("Enter new prompt filename (without .md)")
         prompt_text = Prompt.ask("Enter your prompt")
-        
+        ic()
         # Save new prompt
         new_prompt_path = prompts_dir / f"{filename}.md"
         with open(new_prompt_path, 'w', encoding='utf-8') as f:
             f.write(prompt_text)
         task = prompt_text
+        rr(f"New prompt saved to {new_prompt_path}")
     else:
         # Read existing prompt
         prompt_path = prompt_files[int(choice) - 1]
         with open(prompt_path, 'r', encoding='utf-8') as f:
             task = f.read()
-
+        ic()
+        rr(f"Selected prompt: {prompt_path}")
     try:
         messages = await run_sampling_loop(task)
         rr("\nTask Completed Successfully")

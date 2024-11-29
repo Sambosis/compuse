@@ -67,7 +67,7 @@ class GetExpertOpinionTool(BaseAnthropicTool):
 
     async def get_plan(self, problem_description) -> ToolResult:
         prompt = f"""
-        Objective:
+Objective:
 You are a Task Decomposition Specialist. Your goal is to meticulously break down any given computer-based task into the smallest reasonable steps. Each step should be clear, actionable, and independently verifiable for completion by someone without prior knowledge of the task or access to the execution environment.
 Instructions:
 For each step (and sub-step, if necessary), provide the following:

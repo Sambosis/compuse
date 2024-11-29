@@ -225,7 +225,9 @@ async def run(
     truncate_after: int | None = MAX_RESPONSE_LEN,
 ):
     """Run a shell command asynchronously with a timeout."""
+    ic()
     cmd = convert_bash_to_powershell(cmd)
+    ic()
     process = await asyncio.create_subprocess_shell(
         cmd, stdout=asyncio.subprocess.PIPE, stderr=asyncio.subprocess.PIPE
     )
