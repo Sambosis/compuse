@@ -424,6 +424,7 @@ def truncate_message_content(content: Any, max_length: int = 450000) -> Any:
 # In the sampling_loop function, before calling client.beta.messages.create:
 @retry(stop=stop_after_attempt(6), wait=wait_fixed(10))
 async def call_llm_with_retry(client, messages, max_tokens, model, system, tools, betas):
+    rr("trying to call llm")
     return client.beta.messages.create(
         max_tokens=max_tokens,
         messages=messages,
@@ -464,6 +465,8 @@ async def sampling_loop(*, model: str, messages: List[BetaMessageParam], api_key
         if os.path.exists(JOURNAL_FILE):
             with open(JOURNAL_FILE, 'r',encoding='utf-8') as f:
                 journal_entry_count = sum(1 for line in f if line.startswith("Entry #")) + 1
+        else:
+            journal_entry_count = 1
 
         # Add journal contents to messages
         messages.append({
@@ -518,7 +521,7 @@ async def sampling_loop(*, model: str, messages: List[BetaMessageParam], api_key
                         for_looking_at_messages_as_json = json.dumps(msg, indent=4)
                         f.write(for_looking_at_messages_as_json)
                         f.write("\n\n")
-
+                rr("b4 call")
                 response = await call_llm_with_retry(
                     client=client,
                     messages=truncated_messages,  # Use truncated messages
@@ -833,7 +836,7 @@ async def main_async():
         # Create new prompt
         filename = Prompt.ask("Enter new prompt filename (without .md)")
         prompt_text = Prompt.ask("Enter your prompt")
-        
+        ic()
         # Save new prompt
         new_prompt_path = prompts_dir / f"{filename}.md"
         with open(new_prompt_path, 'w', encoding='utf-8') as f:

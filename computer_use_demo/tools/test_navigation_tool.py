@@ -1,4 +1,22 @@
-{
+# windows_navigation_tool.py
+# windows_navigation_tool.py
+
+from numpy import short
+import pyautogui
+import time
+from typing import Optional
+from rich import print as rr
+# Define available shortcuts
+# shortcuts = {
+#     "switch_window": {"keys": ["alt", "tab"]},
+#     "open_start_menu": {"keys": ["win"]},
+#     "minimize_window": {"keys": ["win", "down"]},
+#     "maximize_window": {"keys": ["win", "up"]},
+#     "close_window": {"keys": ["alt", "f4"]},
+#     "take_screenshot": {"keys": ["win", "printscreen"]},
+#     # Add more shortcuts as needed
+# }
+shortcuts = {
     "switch_window": {
         "keys": ["alt", "tab"]
                     },
@@ -82,3 +100,41 @@
                     }
 
 }
+
+def windows_navigate(action: str, modifier: Optional[str] = None, target: Optional[str] = None) -> str:
+    """
+    Execute the requested Windows action.
+
+    Args:
+        action (str): The action to perform.
+        modifier (Optional[str]): Optional modifier key(s).
+        target (Optional[str]): Optional target for the action.
+
+    Returns:
+        str: Result message.
+    """
+    try:
+        shortcut = shortcuts.get(action)
+        if not shortcut:
+            return f"Unknown action: {action}"
+
+        keys = shortcut["keys"]
+        if modifier:
+            keys = [modifier] + keys
+
+        # Activate target window if specified
+        if target:
+            windows = pyautogui.getWindowsWithTitle(target)
+            if windows:
+                windows[0].activate()
+                time.sleep(0.5)
+            else:
+                return f"No window found with title '{target}'"
+
+        # Execute the key combination
+        pyautogui.hotkey(*keys)
+        time.sleep(0.1)
+
+        return f"Successfully executed '{action}'"
+    except Exception as e:
+        return f"Failed to execute '{action}': {str(e)}"
